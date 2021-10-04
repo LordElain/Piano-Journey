@@ -1,5 +1,13 @@
 {
+  "scopedRegistries":[
+    {
+      "name": "Keijiro",
+      "url": "https://registry.npmjs.com",
+      "scopes": [ "jp.keijiro" ]
+    }
+  ],
   "dependencies": {
+    "jp.keijiro.minis": "1.0.10",
     "com.unity.2d.animation": "5.0.5",
     "com.unity.2d.pixel-perfect": "4.0.1",
     "com.unity.2d.psdimporter": "4.0.2",

@@ -1,0 +1,15 @@
+{
+  "scopedRegistries": [
+    {
+      "name": "Keijiro",
+      "url": "https://registry.npmjs.com",
+      "scopes": [
+        "jp.keijiro"
+      ]
+    }
+  ],
+  "dependencies": {
+    "com.unity.timeline": "1.4.5",
+    "com.unity.modules.uielements": "1.0.0"
+  }
+}
