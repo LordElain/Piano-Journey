@@ -36,7 +36,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\MovementTest.cs" />
+     <Compile Include="Assets\Scripts\ScaleByInputValue.cs" />
+     <Compile Include="Assets\Scripts\DeviceQuery.cs" />
+     <Compile Include="Assets\Scripts\PlayByInputAction.cs" />
+     <Compile Include="Assets\InputTest.cs" />
+     <Compile Include="Assets\Scripts\AxisActionConverter.cs" />
+     <Compile Include="Assets\Scripts\DeviceCallback.cs" />
+     <Compile Include="Assets\Inputs\PianoJourney.cs" />
+     <Compile Include="Assets\Scripts\ControlCallback.cs" />
+     <Compile Include="Assets\Scripts\NoteCallback.cs" />
+     <Compile Include="Assets\Inputs\InputMaster.cs" />
     <Reference Include="UnityEngine">
         <HintPath>D:/Unity/2020.3.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

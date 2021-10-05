@@ -1,14 +1,14 @@
 {
-    "name": "Piano Journey",
+    "name": "InputMaster",
     "maps": [
         {
             "name": "Player",
-            "id": "90e846b8-bd20-4437-8759-4343e30d2faf",
+            "id": "480ae024-5ea4-4aed-a220-53bbd03ac8dd",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "50aac128-34f2-4786-bff6-1ab08ca0710f",
+                    "id": "6aa09f5e-003d-4fcc-9013-f7604333d02c",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -16,7 +16,7 @@
                 {
                     "name": "Look",
                     "type": "Value",
-                    "id": "43dfd241-a357-440c-8a8b-42555559e3ee",
+                    "id": "167d5d1d-e1ab-4380-afb3-06d7bf8d168f",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -24,15 +24,7 @@
                 {
                     "name": "Fire",
                     "type": "Button",
-                    "id": "6c77b47f-ef54-4d0c-8696-3e5f0e099cf6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "PianoNotes",
-                    "type": "Button",
-                    "id": "acc12054-4d27-46db-a26c-3c9669fa9bc8",
+                    "id": "1f98b444-4148-488e-a23e-5377598b5a8c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -258,28 +250,17 @@
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8835d5f5-9975-415c-b8f3-5d8e10d380da",
-                    "path": "<MidiDevice>/note000",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MIDI",
-                    "action": "PianoNotes",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
         {
             "name": "UI",
-            "id": "24de0e1f-fe27-4324-858c-9387a4cccaa9",
+            "id": "f757fa2e-6988-44c0-8676-94f730b6dcb7",
             "actions": [
                 {
                     "name": "Navigate",
                     "type": "Value",
-                    "id": "bec5278e-820c-4e85-ba57-3404774eae8f",
+                    "id": "02b29f86-2a8e-442a-95a5-d645c7f56f7f",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -287,7 +268,7 @@
                 {
                     "name": "Submit",
                     "type": "Button",
-                    "id": "eba2a7e4-34ae-4c59-b95c-a4c48b6af0c1",
+                    "id": "f679d25c-40d4-4219-afb9-456be5653bb2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -295,7 +276,7 @@
                 {
                     "name": "Cancel",
                     "type": "Button",
-                    "id": "8459a69a-65d0-45ef-ad5c-cf871f06859a",
+                    "id": "e1619c86-e8be-48ed-a375-4d3fe1b028b5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -303,7 +284,7 @@
                 {
                     "name": "Point",
                     "type": "PassThrough",
-                    "id": "b5d596f2-bc6a-44b5-9af2-616f09fc5cbe",
+                    "id": "47be69ba-4edf-4df5-8fa0-acff63dc26db",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -311,7 +292,7 @@
                 {
                     "name": "Click",
                     "type": "PassThrough",
-                    "id": "0e387857-ce9a-495a-95d1-b6ed81a78aac",
+                    "id": "ea881381-2652-4669-b5fd-c126cc897c77",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -319,7 +300,7 @@
                 {
                     "name": "ScrollWheel",
                     "type": "PassThrough",
-                    "id": "f25b74ae-e471-42be-b97d-3b4fbcb8efa6",
+                    "id": "5e33cd24-ffd5-426f-9863-8ea8f90b9c04",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -327,7 +308,7 @@
                 {
                     "name": "MiddleClick",
                     "type": "PassThrough",
-                    "id": "2b705ee0-f21a-4ba1-88f4-d701516cbb66",
+                    "id": "7bc0b469-1646-4053-bf7a-da7d5c937200",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -335,7 +316,7 @@
                 {
                     "name": "RightClick",
                     "type": "PassThrough",
-                    "id": "a29dc051-a746-4bf5-abf3-902583c0faf3",
+                    "id": "1f5a3e99-4c97-416e-a89c-fd5cc077e54c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -343,7 +324,7 @@
                 {
                     "name": "TrackedDevicePosition",
                     "type": "PassThrough",
-                    "id": "cb9c68b1-7bc5-4dfc-9142-8b75c7fc012c",
+                    "id": "87ba4532-e607-4631-8b24-a06b2c0784ae",
                     "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": ""
@@ -351,7 +332,7 @@
                 {
                     "name": "TrackedDeviceOrientation",
                     "type": "PassThrough",
-                    "id": "8ca989b6-4a3f-4b79-884b-de8554ea4790",
+                    "id": "66b1772c-614f-4918-8748-eb2e44d02e79",
                     "expectedControlType": "Quaternion",
                     "processors": "",
                     "interactions": ""
@@ -835,17 +816,6 @@
             "devices": [
                 {
                     "devicePath": "<XRController>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "MIDI",
-            "bindingGroup": "MIDI",
-            "devices": [
-                {
-                    "devicePath": "<MidiDevice>",
                     "isOptional": false,
                     "isOR": false
                 }
