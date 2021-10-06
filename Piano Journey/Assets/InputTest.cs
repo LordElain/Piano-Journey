@@ -1,44 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
- using UnityEngine;
+using Minis;
+using UnityEngine;
  using UnityEngine.InputSystem;
  
  public class InputTest : MonoBehaviour, PianoJourney.IPlayerActions
  {
-     public InputAction pianoAction;
-     public InputActionMap pianoActionMap;
- 
- 
-     public PianoJourney controls;
+ PianoJourney controls;
  
  
      private void Awake()
      {
-        
+        controls = new PianoJourney();
+        controls.Player.SetCallbacks(this);
+  
      }
- 
-     public void OnEnable()
+
+    public void OnEnable()
      {
         Debug.Log("Enable");
-        pianoAction.Enable();
-        pianoActionMap.Enable();
+        controls.Enable();
      }
 
 
      public void OnDisable()
      {
         Debug.Log("Disable");
-        pianoAction.Disable();
-        pianoActionMap.Disable();
+        controls.Disable();
      }
 
     public void OnPianoNotes(InputAction.CallbackContext context)
     {
-        Debug.Log("PIANO");
+        controls.Player.PianoNotes.performed += _ => 
+        {
+            Debug.Log("PIANO ON");
+        };
+
+        controls.Player.PianoNotes.canceled += _ =>
+        {
+            Debug.Log("PIANO SCRIPT OFF");
+        };
+
+        //MidiDevice.current.
+        
+        
     }
 
-    public void OnPianoAction(InputAction.CallbackContext context)
-    {
-        Debug.Log("PIANO");
-    }
 }

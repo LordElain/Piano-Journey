@@ -235,7 +235,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743910873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbc746139fb88904d8e0c4214e63bf72, type: 3}
   m_Name: 
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743910873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3772d559974ddc44b85c33dd09df428, type: 3}
   m_Name: 
@@ -324,72 +324,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743910873}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6de01a0cd9709834cbb34ae3963890c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pianoAction:
-    m_Name: Piano
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 6abdd454-0a98-4bff-bd92-59a677975fbc
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 0483c103-7ca8-4074-8ddf-a24ea76f94c7
-      m_Path: <MidiDevice>/note024
-      m_Interactions: Tap
-      m_Processors: 
-      m_Groups: 
-      m_Action: Piano
-      m_Flags: 0
-  pianoActionMap:
-    m_Name: Piano
-    m_Id: 33f8a7f4-dfbb-467a-8af6-b445ea2148c6
-    m_Asset: {fileID: 0}
-    m_Actions:
-    - m_Name: Piano Keys
-      m_Type: 1
-      m_ExpectedControlType: Button
-      m_Id: 2e5a619b-cd6c-409e-861e-f099fa7c5f69
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Bindings:
-    - m_Name: 
-      m_Id: 63ee4b50-95db-4034-948f-13a4577b49dc
-      m_Path: <MidiDevice>/note002
-      m_Interactions: Tap
-      m_Processors: 
-      m_Groups: 
-      m_Action: Piano Keys
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 166c6f82-d473-401e-a947-df2924a0dad9
-      m_Path: <MidiDevice>/note004
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Piano Keys
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 7a8480fe-f6d0-4431-8aea-15aeb159c94d
-      m_Path: <MidiDevice>/note036
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Piano Keys
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 8b3b77f9-f2e1-4d43-a18e-9b3d1474695a
-      m_Path: <MidiDevice>/note048
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Piano Keys
-      m_Flags: 0
 --- !u!114 &743910879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,7 +356,19 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Hello
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11500000, guid: 6de01a0cd9709834cbb34ae3963890c4, type: 3}
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+        m_MethodName: set_name
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 'Test '
           m_BoolArgument: 0
         m_CallState: 2
   m_DeviceRegainedEvent:
@@ -429,13 +380,13 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 743910878}
+        m_TargetAssemblyTypeName: InputTest, Assembly-CSharp
+        m_MethodName: OnPianoNotes
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -443,48 +394,8 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: acc12054-4d27-46db-a26c-3c9669fa9bc8
     m_ActionName: Player/PianoNotes
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: bec5278e-820c-4e85-ba57-3404774eae8f
-    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: eba2a7e4-34ae-4c59-b95c-a4c48b6af0c1
-    m_ActionName: UI/Submit[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8459a69a-65d0-45ef-ad5c-cf871f06859a
-    m_ActionName: UI/Cancel[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b5d596f2-bc6a-44b5-9af2-616f09fc5cbe
-    m_ActionName: UI/Point[/Mouse/position,/Pen/position,/Touchscreen/touch0/position,/Touchscreen/touch1/position,/Touchscreen/touch2/position,/Touchscreen/touch3/position,/Touchscreen/touch4/position,/Touchscreen/touch5/position,/Touchscreen/touch6/position,/Touchscreen/touch7/position,/Touchscreen/touch8/position,/Touchscreen/touch9/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0e387857-ce9a-495a-95d1-b6ed81a78aac
-    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip,/Touchscreen/touch0/press,/Touchscreen/touch1/press,/Touchscreen/touch2/press,/Touchscreen/touch3/press,/Touchscreen/touch4/press,/Touchscreen/touch5/press,/Touchscreen/touch6/press,/Touchscreen/touch7/press,/Touchscreen/touch8/press,/Touchscreen/touch9/press]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f25b74ae-e471-42be-b97d-3b4fbcb8efa6
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2b705ee0-f21a-4ba1-88f4-d701516cbb66
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a29dc051-a746-4bf5-abf3-902583c0faf3
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: cb9c68b1-7bc5-4dfc-9142-8b75c7fc012c
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8ca989b6-4a3f-4b79-884b-de8554ea4790
-    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: MIDI
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
