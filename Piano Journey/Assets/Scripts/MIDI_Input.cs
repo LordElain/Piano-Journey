@@ -5,7 +5,7 @@ using Minis;
 using UnityEngine;
  using UnityEngine.InputSystem;
  
- public class Midi_Input : MonoBehaviour, PianoJourney.IPlayerActions
+ public class MIDI_Input : MonoBehaviour, PianoJourney.IPlayerActions
  {
  PianoJourney controls;
  

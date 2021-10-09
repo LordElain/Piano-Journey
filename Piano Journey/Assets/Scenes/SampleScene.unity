@@ -219,8 +219,8 @@ GameObject:
   - component: {fileID: 743910874}
   - component: {fileID: 743910877}
   - component: {fileID: 743910879}
-  - component: {fileID: 743910878}
   - component: {fileID: 743910882}
+  - component: {fileID: 743910878}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743910873}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbc746139fb88904d8e0c4214e63bf72, type: 3}
   m_Name: 
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743910873}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3772d559974ddc44b85c33dd09df428, type: 3}
   m_Name: 
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 743910878}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InputTest, Assembly-CSharp
         m_MethodName: OnPianoNotes
         m_Mode: 0
@@ -485,3 +485,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15476fc40589d8747a772752c848457a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BPM: 0
+  m_Position: 0
+  m_TimePlayed: 0

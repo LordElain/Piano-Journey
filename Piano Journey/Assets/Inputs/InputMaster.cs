@@ -1116,8 +1116,4 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
     }
-
-    internal interface IPlayerMapActions
-    {
-    }
 }

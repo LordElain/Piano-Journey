@@ -59,5 +59,6 @@
         "Lerp",
         "Mathf",
         "WASD"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }
