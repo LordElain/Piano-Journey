@@ -19,7 +19,6 @@ public class NotesController : MonoBehaviour
 
     public string m_Path;
 
-    private static Playback m_Play;
 
 
     // Start is called before the first frame update
@@ -27,9 +26,9 @@ public class NotesController : MonoBehaviour
     {
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
-        DisplayNotes(m_File, m_Duration);
-        PlayMidi(m_Play);
-        GetDevices();
+       // DisplayNotes(m_File, m_Duration);
+       // PlayMidi(m_Play, m_File);
+        GetDevices(m_File);
     }
 
     // Update is called once per frame
@@ -72,31 +71,13 @@ public class NotesController : MonoBehaviour
     {
 
     }
+  
 
-   private void PlayMidi(Playback play)
-    {       
-            
-            var midiFile = MidiFile.Read("The Greatest Song Ever.mid");
-            var outputDevice = OutputDevice.GetByName("Microsoft GS Wavetable Synth");
-            
-
-            play = midiFile.GetPlayback(outputDevice);
-            //play.NotesPlaybackStarted += OnNotesPlaybackStarted;
-            play.Start();
-
-            SpinWait.SpinUntil(() => !play.IsRunning);
-
-            Console.WriteLine("Playback stopped or finished.");
-
-            outputDevice.Dispose();
-            play.Dispose();
-    }
-
-    private void GetDevices()
+    private void GetDevices(MidiFile File)
     {
         foreach (var outputDevice in OutputDevice.GetAll())
         {
-            Console.WriteLine(outputDevice.Name);
+            Debug.Log(outputDevice.Name);
         }
     }
 }

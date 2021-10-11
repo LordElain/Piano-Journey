@@ -58,6 +58,7 @@
         "Dpad",
         "Lerp",
         "Mathf",
+        "Melanchall",
         "WASD"
     ],
     "git.ignoreLimitWarning": true
