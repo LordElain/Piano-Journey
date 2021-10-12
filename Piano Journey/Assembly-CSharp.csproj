@@ -819,7 +819,7 @@
         <HintPath>E:/PROGS/Piano-Journey/Piano Journey/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Melanchall.DryWetMidi">
-        <HintPath>E:/PROGS/Piano-Journey/Piano Journey/Assets/Plugins/drywetmidi-5.2.1/DryWetMidi/obj/Debug/net45/Melanchall.DryWetMidi.dll</HintPath>
+        <HintPath>E:/PROGS/Piano-Journey/Piano Journey/Assets/MIDI/drywetmidi-5.2.1/DryWetMidi/obj/Debug/net45/Melanchall.DryWetMidi.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
         <HintPath>D:/Unity/2020.3.11f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

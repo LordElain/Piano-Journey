@@ -16,8 +16,10 @@ public class NotesController : MonoBehaviour
     public float m_Position;
     public float m_TimePlayed;
     private int[] m_Notes;
-
     public string m_Path;
+    public InputDevice[] m_InputDevices;
+    public OutputDevice[] m_OutputDevices;
+    public Playback m_playback;
 
 
 
@@ -27,8 +29,9 @@ public class NotesController : MonoBehaviour
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
        // DisplayNotes(m_File, m_Duration);
-       // PlayMidi(m_Play, m_File);
-        GetDevices(m_File);
+        m_InputDevices = GetInputDevices();
+        m_OutputDevices = GetOutputDevices();
+        PlayMidi(m_playback, m_File, m_OutputDevices);
     }
 
     // Update is called once per frame
@@ -39,7 +42,7 @@ public class NotesController : MonoBehaviour
 
     private MidiFile ReadFile(string Path)
     {
-        var m_File = MidiFile.Read(Path, new ReadingSettings
+        var File = MidiFile.Read(Path, new ReadingSettings
         {
             InvalidChannelEventParameterValuePolicy = InvalidChannelEventParameterValuePolicy.ReadValid,
             InvalidChunkSizePolicy = InvalidChunkSizePolicy.Ignore,
@@ -52,7 +55,22 @@ public class NotesController : MonoBehaviour
             UnknownChunkIdPolicy = UnknownChunkIdPolicy.ReadAsUnknownChunk,
             UnknownFileFormatPolicy = UnknownFileFormatPolicy.Ignore,
         });
-        return m_File;
+        return File;
+    }
+
+    private void PlayMidi(Playback play, MidiFile File, OutputDevice[] OutPut)
+    {
+       
+        play = File.GetPlayback(OutPut[1]);
+        //play.NotesPlaybackStarted += OnNotesPlaybackStarted;
+        play.Start();
+
+        SpinWait.SpinUntil(() => !play.IsRunning);
+        Debug.Log("Playback stopped or finished");
+        OutPut[1].Dispose();
+        play.Dispose();
+
+       
     }
 
     private TimeSpan GetDuration(MidiFile File)
@@ -73,11 +91,29 @@ public class NotesController : MonoBehaviour
     }
   
 
-    private void GetDevices(MidiFile File)
+    private InputDevice[] GetInputDevices()
     {
-        foreach (var outputDevice in OutputDevice.GetAll())
+
+        InputDevice[] inputList = InputDevice.GetAll().ToArray();
+        for (int i = 0; i <= inputList.Length-1; i++)
         {
-            Debug.Log(outputDevice.Name);
+            Debug.Log("Input" + inputList[i] + "Nummer im Array" + i);
         }
+
+        return inputList;
+      
+    }
+
+    private OutputDevice[] GetOutputDevices()
+    {
+
+        OutputDevice[] outputList = OutputDevice.GetAll().ToArray();
+        for (int i = 0; i <= outputList.Length-1; i++)
+        {
+            Debug.Log("Output" + outputList[i] + "Nummer im Array" + i);
+        }
+
+        return outputList;
+      
     }
 }
