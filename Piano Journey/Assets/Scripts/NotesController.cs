@@ -19,7 +19,8 @@ public class NotesController : MonoBehaviour
     public string m_Path;
     public InputDevice[] m_InputDevices;
     public OutputDevice[] m_OutputDevices;
-    public Playback m_playback;
+    public static Playback m_playback;
+
 
 
 
@@ -31,7 +32,8 @@ public class NotesController : MonoBehaviour
        // DisplayNotes(m_File, m_Duration);
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
-        PlayMidi(m_playback, m_File, m_OutputDevices);
+        PlayMidi(m_File, m_OutputDevices);
+        WriteNotes(m_InputDevices);
     }
 
     // Update is called once per frame
@@ -58,20 +60,32 @@ public class NotesController : MonoBehaviour
         return File;
     }
 
-    private void PlayMidi(Playback play, MidiFile File, OutputDevice[] OutPut)
+    private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut)
     {
        
-        play = File.GetPlayback(OutPut[1]);
-        //play.NotesPlaybackStarted += OnNotesPlaybackStarted;
-        play.Start();
+        m_playback = File.GetPlayback(OutPut[1]);
+        m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
+        m_playback.Start();
 
-        SpinWait.SpinUntil(() => !play.IsRunning);
+
+        SpinWait.SpinUntil(() => !m_playback.IsRunning);
+        while (m_playback.IsRunning) {
+            yield return null;
+            m_playback.TickClock();
+        }
+
         Debug.Log("Playback stopped or finished");
         OutPut[1].Dispose();
-        play.Dispose();
+        m_playback.Dispose();
 
        
     }
+    
+    private static void OnNotesPlaybackStarted(object sender, NotesEventArgs e)
+        {
+            if (e.Notes.Any(n => n.NoteName == Melanchall.DryWetMidi.MusicTheory.NoteName.B))
+                m_playback.Stop();
+        }
 
     private TimeSpan GetDuration(MidiFile File)
     {
@@ -85,9 +99,25 @@ public class NotesController : MonoBehaviour
 
     }
 
-    private void WriteNotes()
+    private void WriteNotes(InputDevice[] InputPiano)
     {
+        var recording = new Recording(TempoMap.Default, InputPiano[0]);
+        InputPiano[0].EventReceived += OnEventReceived;
+        InputPiano[0].StartEventsListening();
+        Debug.Log("Input Piano working");
 
+        Console.WriteLine("Input device is listening for events. Press any key to exit...");
+        Console.ReadKey();
+        
+        (InputPiano[0] as IDisposable)?.Dispose();
+    
+        
+    }
+
+     private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
+    {
+        var midiDevice = (MidiDevice)sender;
+        Debug.Log("Event received from " + midiDevice.Name + ": " + e.Event); // does not run
     }
   
 
