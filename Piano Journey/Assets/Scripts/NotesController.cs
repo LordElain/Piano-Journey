@@ -32,7 +32,7 @@ public class NotesController : MonoBehaviour
        // DisplayNotes(m_File, m_Duration);
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
-        PlayMidi(m_File, m_OutputDevices);
+        StartCoroutine(PlayMidi(m_File, m_OutputDevices));
         WriteNotes(m_InputDevices);
     }
 
@@ -64,9 +64,12 @@ public class NotesController : MonoBehaviour
     {
        
         m_playback = File.GetPlayback(OutPut[1]);
-        m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
         m_playback.Start();
-
+        Debug.Log("Playback started");
+        m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
+        PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
+        PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
+        PlaybackCurrentTimeWatcher.Instance.Start();
 
         SpinWait.SpinUntil(() => !m_playback.IsRunning);
         while (m_playback.IsRunning) {
@@ -77,7 +80,7 @@ public class NotesController : MonoBehaviour
         Debug.Log("Playback stopped or finished");
         OutPut[1].Dispose();
         m_playback.Dispose();
-
+        PlaybackCurrentTimeWatcher.Instance.Dispose();
        
     }
     
@@ -127,7 +130,7 @@ public class NotesController : MonoBehaviour
         InputDevice[] inputList = InputDevice.GetAll().ToArray();
         for (int i = 0; i <= inputList.Length-1; i++)
         {
-            Debug.Log("Input" + inputList[i] + "Nummer im Array" + i);
+            Debug.Log("Input " + inputList[i] + " Nummer im Array " + i);
         }
 
         return inputList;
@@ -140,10 +143,29 @@ public class NotesController : MonoBehaviour
         OutputDevice[] outputList = OutputDevice.GetAll().ToArray();
         for (int i = 0; i <= outputList.Length-1; i++)
         {
-            Debug.Log("Output" + outputList[i] + "Nummer im Array" + i);
+            Debug.Log("Output " + outputList[i] + " Nummer im Array " + i);
         }
 
         return outputList;
       
     }
+
+private static void OnCurrentTimeChanged(object sender, PlaybackCurrentTimeChangedEventArgs e)
+{
+    foreach (var playbackTime in e.Times)
+    {
+        var playback = playbackTime.Playback;
+        var time = (MidiTimeSpan)playbackTime.Time;
+
+        Console.WriteLine($"Current time is {time}.");
+    }
+}
+
+      private void OnApplicationQuit() 
+      {
+        m_playback.Stop();
+        m_playback.Dispose();
+        PlaybackCurrentTimeWatcher.Instance.Dispose();
+    }
+
 }
