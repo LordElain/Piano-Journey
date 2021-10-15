@@ -33,7 +33,7 @@ public class NotesController : MonoBehaviour
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
         StartCoroutine(PlayMidi(m_File, m_OutputDevices));
-        WriteNotes(m_InputDevices);
+        WriteNotes(m_InputDevices, m_OutputDevices);
     }
 
     // Update is called once per frame
@@ -62,6 +62,7 @@ public class NotesController : MonoBehaviour
 
     private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut)
     {
+
        
         m_playback = File.GetPlayback(OutPut[1]);
         m_playback.Start();
@@ -102,13 +103,16 @@ public class NotesController : MonoBehaviour
 
     }
 
-    private void WriteNotes(InputDevice[] InputPiano)
+    private void WriteNotes(InputDevice[] InputPiano, OutputDevice[] Output)
     {
+        var connector = new DevicesConnector(InputPiano[0], Output[0], Output[1]);
+        connector.Connect();
         var recording = new Recording(TempoMap.Default, InputPiano[0]);
         InputPiano[0].EventReceived += OnEventReceived;
         InputPiano[0].StartEventsListening();
         Debug.Log("Input Piano working");
 
+        
         Console.WriteLine("Input device is listening for events. Press any key to exit...");
         Console.ReadKey();
         
