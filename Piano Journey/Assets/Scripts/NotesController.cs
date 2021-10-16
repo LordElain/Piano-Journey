@@ -6,8 +6,11 @@ using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.Devices;
+using Melanchall.DryWetMidi.Standards;
 using System.Threading;
 using System.Linq;
+
+
 
 public class NotesController : MonoBehaviour
 {
@@ -20,7 +23,7 @@ public class NotesController : MonoBehaviour
     public InputDevice[] m_InputDevices;
     public OutputDevice[] m_OutputDevices;
     public static Playback m_playback;
-
+    private MidiClock m_clock;
 
 
 
@@ -32,7 +35,7 @@ public class NotesController : MonoBehaviour
        // DisplayNotes(m_File, m_Duration);
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
-        StartCoroutine(PlayMidi(m_File, m_OutputDevices));
+        StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration));
         WriteNotes(m_InputDevices, m_OutputDevices);
     }
 
@@ -60,11 +63,14 @@ public class NotesController : MonoBehaviour
         return File;
     }
 
-    private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut)
+    private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration)
     {
-
        
-        m_playback = File.GetPlayback(OutPut[1]);
+        var Playback = new PlaybackSettings();
+        var Clock = Playback.ClockSettings ?? new MidiClockSettings();
+        m_clock = new MidiClock(false, Clock.CreateTickGeneratorCallback(), Duration);
+      
+        m_playback = File.GetPlayback();
         m_playback.Start();
         Debug.Log("Playback started");
         m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
@@ -165,8 +171,8 @@ private static void OnCurrentTimeChanged(object sender, PlaybackCurrentTimeChang
     }
 }
 
-      private void OnApplicationQuit() 
-      {
+private void OnApplicationQuit() 
+    {
         m_playback.Stop();
         m_playback.Dispose();
         PlaybackCurrentTimeWatcher.Instance.Dispose();

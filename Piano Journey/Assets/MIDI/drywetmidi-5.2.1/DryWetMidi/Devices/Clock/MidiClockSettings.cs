@@ -10,7 +10,7 @@ namespace Melanchall.DryWetMidi.Devices
     {
         #region Fields
 
-        private Func<TickGenerator> _createTickGeneratorCallback = () => new HighPrecisionTickGenerator();
+        private Func<TickGenerator> _createTickGeneratorCallback = () => new RegularPrecisionTickGenerator();
 
         #endregion
 
