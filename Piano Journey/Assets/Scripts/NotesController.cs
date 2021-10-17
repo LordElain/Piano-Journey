@@ -23,7 +23,6 @@ public class NotesController : MonoBehaviour
     public InputDevice[] m_InputDevices;
     public OutputDevice[] m_OutputDevices;
     public static Playback m_playback;
-    private MidiClock m_clock;
 
 
 
@@ -35,8 +34,10 @@ public class NotesController : MonoBehaviour
        // DisplayNotes(m_File, m_Duration);
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
-        StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration));
+        //PlayMidi(m_File, m_OutputDevices,m_Duration);
         WriteNotes(m_InputDevices, m_OutputDevices);
+        
+        
     }
 
     // Update is called once per frame
@@ -63,13 +64,8 @@ public class NotesController : MonoBehaviour
         return File;
     }
 
-    private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration)
-    {
-       
-        var Playback = new PlaybackSettings();
-        var Clock = Playback.ClockSettings ?? new MidiClockSettings();
-        m_clock = new MidiClock(false, Clock.CreateTickGeneratorCallback(), Duration);
-      
+    private void PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration)
+    {     
         m_playback = File.GetPlayback();
         m_playback.Start();
         Debug.Log("Playback started");
@@ -79,10 +75,7 @@ public class NotesController : MonoBehaviour
         PlaybackCurrentTimeWatcher.Instance.Start();
 
         SpinWait.SpinUntil(() => !m_playback.IsRunning);
-        while (m_playback.IsRunning) {
-            yield return null;
-            m_playback.TickClock();
-        }
+
 
         Debug.Log("Playback stopped or finished");
         OutPut[1].Dispose();
@@ -93,7 +86,7 @@ public class NotesController : MonoBehaviour
     
     private static void OnNotesPlaybackStarted(object sender, NotesEventArgs e)
         {
-            if (e.Notes.Any(n => n.NoteName == Melanchall.DryWetMidi.MusicTheory.NoteName.B))
+            if (e.Notes.Any(n => n.Length == Melanchall.DryWetMidi.MusicTheory.Interval.Eight))
                 m_playback.Stop();
         }
 
@@ -111,26 +104,18 @@ public class NotesController : MonoBehaviour
 
     private void WriteNotes(InputDevice[] InputPiano, OutputDevice[] Output)
     {
-        var connector = new DevicesConnector(InputPiano[0], Output[0], Output[1]);
-        connector.Connect();
-        var recording = new Recording(TempoMap.Default, InputPiano[0]);
+        var devicesConnector = new DevicesConnector(InputPiano[0], Output[0], Output[1]);
+        devicesConnector.Connect();
         InputPiano[0].EventReceived += OnEventReceived;
         InputPiano[0].StartEventsListening();
         Debug.Log("Input Piano working");
-
-        
-        Console.WriteLine("Input device is listening for events. Press any key to exit...");
-        Console.ReadKey();
-        
-        (InputPiano[0] as IDisposable)?.Dispose();
-    
         
     }
 
      private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
     {
         var midiDevice = (MidiDevice)sender;
-        Debug.Log("Event received from " + midiDevice.Name + ": " + e.Event); // does not run
+        Debug.Log("Event received from " + midiDevice.Name + ": " + e.Event); 
     }
   
 
@@ -176,6 +161,9 @@ private void OnApplicationQuit()
         m_playback.Stop();
         m_playback.Dispose();
         PlaybackCurrentTimeWatcher.Instance.Dispose();
+        m_OutputDevices[0].Dispose();
+        m_OutputDevices[1].Dispose();
+        m_InputDevices[0].Dispose();
     }
 
 }

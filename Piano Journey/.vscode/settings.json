@@ -59,6 +59,7 @@
         "Lerp",
         "Mathf",
         "Melanchall",
+        "Nummer",
         "WASD"
     ],
     "git.ignoreLimitWarning": true
