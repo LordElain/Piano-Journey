@@ -20,9 +20,13 @@ public class NotesController : MonoBehaviour
     public float m_TimePlayed;
     private int[] m_Notes;
     public string m_Path;
+
+    public DevicesConnector m_DeviceConnector;
     public InputDevice[] m_InputDevices;
     public OutputDevice[] m_OutputDevices;
     public static Playback m_playback;
+
+    public GameObject m_Prefab;
 
 
 
@@ -31,9 +35,11 @@ public class NotesController : MonoBehaviour
     {
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
-       // DisplayNotes(m_File, m_Duration);
+
+        DisplayNotes(m_File, m_Duration);
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
+        setDevices(m_InputDevices, m_OutputDevices);
         //PlayMidi(m_File, m_OutputDevices,m_Duration);
         WriteNotes(m_InputDevices, m_OutputDevices);
         
@@ -99,13 +105,16 @@ public class NotesController : MonoBehaviour
 
     private void DisplayNotes(MidiFile File, TimeSpan Duration)
     {
-
+        TempoMap tempoMap = File.GetTempoMap();
+        IEnumerable<Note> notes = File.GetNotes(); 
+        foreach(var note in notes)
+        {
+            Debug.Log(note);
+        }
     }
 
     private void WriteNotes(InputDevice[] InputPiano, OutputDevice[] Output)
     {
-        var devicesConnector = new DevicesConnector(InputPiano[0], Output[0], Output[1]);
-        devicesConnector.Connect();
         InputPiano[0].EventReceived += OnEventReceived;
         InputPiano[0].StartEventsListening();
         Debug.Log("Input Piano working");
@@ -145,25 +154,32 @@ public class NotesController : MonoBehaviour
       
     }
 
-private static void OnCurrentTimeChanged(object sender, PlaybackCurrentTimeChangedEventArgs e)
-{
-    foreach (var playbackTime in e.Times)
+    private void setDevices(InputDevice[] Input, OutputDevice[] Output)
     {
-        var playback = playbackTime.Playback;
-        var time = (MidiTimeSpan)playbackTime.Time;
-
-        Console.WriteLine($"Current time is {time}.");
+        m_DeviceConnector = new DevicesConnector(Input[0], Output[0], Output[1]);
+        m_DeviceConnector.Connect();
     }
-}
 
-private void OnApplicationQuit() 
+    private static void OnCurrentTimeChanged(object sender, PlaybackCurrentTimeChangedEventArgs e)
     {
-        m_playback.Stop();
-        m_playback.Dispose();
-        PlaybackCurrentTimeWatcher.Instance.Dispose();
-        m_OutputDevices[0].Dispose();
-        m_OutputDevices[1].Dispose();
-        m_InputDevices[0].Dispose();
+        foreach (var playbackTime in e.Times)
+        {
+            var playback = playbackTime.Playback;
+            var time = (MidiTimeSpan)playbackTime.Time;
+
+            Console.WriteLine($"Current time is {time}.");
+        }
     }
+
+    private void OnApplicationQuit() 
+        {
+            m_playback.Stop();
+            m_playback.Dispose();
+            PlaybackCurrentTimeWatcher.Instance.Dispose();
+            m_OutputDevices[0].Dispose();
+            m_OutputDevices[1].Dispose();
+            m_InputDevices[0].Dispose();
+            
+        }
 
 }

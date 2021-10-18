@@ -42,7 +42,7 @@ using UnityEngine;
             Debug.Log("PIANO SCRIPT OFF");
         };
 
-        //MidiDevice.current.
+       
         
         
     }
