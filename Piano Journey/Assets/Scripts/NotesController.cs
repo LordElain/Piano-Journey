@@ -35,8 +35,9 @@ public class NotesController : MonoBehaviour
     {
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
+        var m_NoteObject = GameObject.Find("MIDI_Notes");
 
-        DisplayNotes(m_File, m_Duration);
+        DisplayNotes(m_File, m_Duration, m_NoteObject);
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
         setDevices(m_InputDevices, m_OutputDevices);
@@ -103,13 +104,19 @@ public class NotesController : MonoBehaviour
     }
     
 
-    private void DisplayNotes(MidiFile File, TimeSpan Duration)
+    private void DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes)
     {
-        TempoMap tempoMap = File.GetTempoMap();
+        TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes(); 
         foreach(var note in notes)
         {
-            Debug.Log(note);
+            var notelength = note.Length;
+            var notename = note.NoteName;
+            var notepos = transform.position + new Vector3(0,0,0);
+            GameObject NoteBox = Instantiate(PrefabNotes, notepos, Quaternion.identity);
+
+            NoteBox.SetActive(true);
+            //Debug.Log(note);
         }
     }
 
