@@ -58,8 +58,20 @@ public class NotesController : MonoBehaviour
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
         setDevices(m_InputDevices, m_OutputDevices);
-        StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
+
+         m_playback = m_File.GetPlayback(m_OutputDevices[0]);
+            m_playback.InterruptNotesOnStop = true;
+            m_playback.Start(); 
+            m_playback.Loop = false;
+            Debug.Log("Playback started");
+            m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
+            PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
+            PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
+            PlaybackCurrentTimeWatcher.Instance.Start();
+
         DisplayNotes(m_File, m_Duration, m_NoteObject, m_GridObject);
+        StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
+        
        // WriteNotes(m_InputDevices, m_OutputDevices);
         
         
@@ -68,7 +80,39 @@ public class NotesController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+         if (Input.GetKey(KeyCode.DownArrow))
+            m_Camera.transform.position += new Vector3(0f, -Time.deltaTime*10f, 0f);
+
+        else if (Input.GetKey(KeyCode.UpArrow))
+            m_Camera.transform.position += new Vector3(0f, Time.deltaTime*10f, 0f);
+
+        if(m_playback.IsRunning)
+        {
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if(m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds>5000000)
+                {
+                    m_playback.Stop();
+                    m_playback.Play();
+                                Debug.Log("Left Arrow Pressed");
+                    m_playback.MoveBack(new MetricTimeSpan(5000000));
+                }
+               
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds + 5000000 < m_playback.GetDuration<MetricTimeSpan>().TotalMicroseconds)
+                {
+                                Debug.Log("Right Arrow Pressed");
+                    m_playback.Stop();
+                    m_playback.Play();
+                    m_playback.MoveForward(new MetricTimeSpan(5000000));
+                }
+                   
+            }
+        }
+       
     }
 
     private MidiFile ReadFile(string Path)
@@ -93,16 +137,11 @@ public class NotesController : MonoBehaviour
     {
         //System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
         Debug.Log("Playback Function started, Status is " + PlayStatus);
+           
 
         while (PlayStatus == true)     
         {
-            m_playback = File.GetPlayback();
-            m_playback.Start();
-            Debug.Log("Playback started");
-            m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
-            PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
-            PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
-            PlaybackCurrentTimeWatcher.Instance.Start();
+
 
             var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
 
@@ -111,11 +150,11 @@ public class NotesController : MonoBehaviour
             Camera.transform.position = new Vector3(currentTime + width / 2f, Camera.transform.position.y, Camera.transform.position.z);
 
             yield return null;
-
+            m_playback.TickClock();
             
         }
             Debug.Log("Playback stopped or finished");
-            OutPut[1].Dispose();
+            OutPut[0].Dispose();
             m_playback.Dispose();
             PlaybackCurrentTimeWatcher.Instance.Dispose();
 
@@ -159,7 +198,7 @@ public class NotesController : MonoBehaviour
 
 
                 GameObject nObj = Instantiate(PrefabGrid, notePos, Quaternion.identity);
-                nObj.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel);
+                nObj.GetComponent<GameNote>().InitGameNote(-noteTime, noteNumber,noteLength,noteChannel);
                 nObj.SetActive(true);
             }
         /* 
