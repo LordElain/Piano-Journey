@@ -14,25 +14,28 @@ using System.Linq;
 
 public class NotesController : MonoBehaviour
 {
-    //MIDI Eigenschaften
+    //MIDI Properties
     public int m_BPM;
     public float m_Position;
     public float m_TimePlayed;
 
     public string m_Path;
 
+
+    //Playback Related
     public DevicesConnector m_DeviceConnector;
     public InputDevice[] m_InputDevices;
     public OutputDevice[] m_OutputDevices;
     public static Playback m_playback;
+    public bool m_PlayStatus;
+    public GameObject m_Camera;
 
 
 
-    //Noten Generierung
+    //Notes Generating
     public GameObject m_Prefab_Notes;
     public GameObject m_Prefab_Grid;
     private int[] m_Notes;
-
     [SerializeField] private int m_Row;
     [SerializeField] private int m_Column;
     [SerializeField] private float m_XStartPos;
@@ -51,12 +54,13 @@ public class NotesController : MonoBehaviour
         var m_NoteObject = GameObject.Find("ObjectNotes");
         var m_GridObject = GameObject.Find("GRID_Square");
 
-        DisplayNotes(m_File, m_Duration, m_NoteObject, m_GridObject);
+        
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
         setDevices(m_InputDevices, m_OutputDevices);
-        //PlayMidi(m_File, m_OutputDevices,m_Duration);
-        WriteNotes(m_InputDevices, m_OutputDevices);
+        StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
+        DisplayNotes(m_File, m_Duration, m_NoteObject, m_GridObject);
+       // WriteNotes(m_InputDevices, m_OutputDevices);
         
         
     }
@@ -85,23 +89,36 @@ public class NotesController : MonoBehaviour
         return File;
     }
 
-    private void PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration)
-    {     
-        m_playback = File.GetPlayback();
-        m_playback.Start();
-        Debug.Log("Playback started");
-        m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
-        PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
-        PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
-        PlaybackCurrentTimeWatcher.Instance.Start();
+    private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration, bool PlayStatus, GameObject Camera)
+    {
+        //System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
+        Debug.Log("Playback Function started, Status is " + PlayStatus);
 
-        SpinWait.SpinUntil(() => !m_playback.IsRunning);
+        while (PlayStatus == true)     
+        {
+            m_playback = File.GetPlayback();
+            m_playback.Start();
+            Debug.Log("Playback started");
+            m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
+            PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
+            PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
+            PlaybackCurrentTimeWatcher.Instance.Start();
 
+            var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
 
-        Debug.Log("Playback stopped or finished");
-        OutPut[1].Dispose();
-        m_playback.Dispose();
-        PlaybackCurrentTimeWatcher.Instance.Dispose();
+            var height = 2000.0f;
+            var width = height * Screen.width / Screen.height;
+            Camera.transform.position = new Vector3(currentTime + width / 2f, Camera.transform.position.y, Camera.transform.position.z);
+
+            yield return null;
+
+            
+        }
+            Debug.Log("Playback stopped or finished");
+            OutPut[1].Dispose();
+            m_playback.Dispose();
+            PlaybackCurrentTimeWatcher.Instance.Dispose();
+
        
     }
     
@@ -132,19 +149,17 @@ public class NotesController : MonoBehaviour
          foreach (var note in notes)
             {
                 float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
-                Debug.Log("NoteTime " + noteTime);
                 int noteNumber = note.NoteNumber;
-                Debug.Log("NoteNumber " + noteNumber);
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f * NoteWidth;
-                Debug.Log("Note Length " + noteLength);
                 float noteChannel = note.Channel;
-                Debug.Log("Note Channel " + noteChannel);
+               /*Debug.Log("NoteTime " + noteTime);
+                Debug.Log("NoteNumber " + noteNumber);
+                Debug.Log("Note Length " + noteLength);
+                Debug.Log("Note Channel " + noteChannel);*/
 
 
                 GameObject nObj = Instantiate(PrefabGrid, notePos, Quaternion.identity);
-                Debug.Log("Instanz");
                 nObj.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel);
-                Debug.Log("foreach läuft");
                 nObj.SetActive(true);
             }
         /* 
@@ -247,13 +262,13 @@ public class NotesController : MonoBehaviour
 
     private void OnApplicationQuit() 
         {
-/*           m_playback.Stop();
+            m_playback.Stop();
             m_playback.Dispose();
             PlaybackCurrentTimeWatcher.Instance.Dispose();
             m_OutputDevices[0].Dispose();
-           m_OutputDevices[1].Dispose();
+            m_OutputDevices[1].Dispose();
             m_InputDevices[0].Dispose();
-            */
+            
         }
 
 }
