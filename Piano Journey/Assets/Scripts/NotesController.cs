@@ -12,9 +12,10 @@ using System.Linq;
 
 
 
-public class NotesController : MonoBehaviour
+public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 {
     //MIDI Properties
+     PianoJourney controls;
     public int m_BPM;
     public float m_Position;
     public float m_TimePlayed;
@@ -59,15 +60,7 @@ public class NotesController : MonoBehaviour
         m_OutputDevices = GetOutputDevices();
         setDevices(m_InputDevices, m_OutputDevices);
 
-         m_playback = m_File.GetPlayback(m_OutputDevices[0]);
-            m_playback.InterruptNotesOnStop = true;
-            m_playback.Start(); 
-            m_playback.Loop = false;
-            Debug.Log("Playback started");
-            m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
-            PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
-            PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
-            PlaybackCurrentTimeWatcher.Instance.Start();
+       
 
         DisplayNotes(m_File, m_Duration, m_NoteObject, m_GridObject);
         StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
@@ -80,38 +73,11 @@ public class NotesController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if (Input.GetKey(KeyCode.DownArrow))
+        /*  if (Input.GetKey(KeyCode.DownArrow))
             m_Camera.transform.position += new Vector3(0f, -Time.deltaTime*10f, 0f);
 
         else if (Input.GetKey(KeyCode.UpArrow))
-            m_Camera.transform.position += new Vector3(0f, Time.deltaTime*10f, 0f);
-
-        if(m_playback.IsRunning)
-        {
-
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                if(m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds>5000000)
-                {
-                    m_playback.Stop();
-                    m_playback.Play();
-                                Debug.Log("Left Arrow Pressed");
-                    m_playback.MoveBack(new MetricTimeSpan(5000000));
-                }
-               
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                if (m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds + 5000000 < m_playback.GetDuration<MetricTimeSpan>().TotalMicroseconds)
-                {
-                                Debug.Log("Right Arrow Pressed");
-                    m_playback.Stop();
-                    m_playback.Play();
-                    m_playback.MoveForward(new MetricTimeSpan(5000000));
-                }
-                   
-            }
-        }
+            m_Camera.transform.position += new Vector3(0f, Time.deltaTime*10f, 0f); */
        
     }
 
@@ -138,13 +104,18 @@ public class NotesController : MonoBehaviour
         //System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
         Debug.Log("Playback Function started, Status is " + PlayStatus);
            
-
+          m_playback = File.GetPlayback(m_OutputDevices[0]);
+            m_playback.InterruptNotesOnStop = true;
+            m_playback.Start(); 
+            m_playback.Loop = false;
+            Debug.Log("Playback started");
+            m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
+            PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
+            PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
+            PlaybackCurrentTimeWatcher.Instance.Start();
         while (PlayStatus == true)     
         {
-
-
             var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
-
             var height = 2000.0f;
             var width = height * Screen.width / Screen.height;
             Camera.transform.position = new Vector3(currentTime + width / 2f, Camera.transform.position.y, Camera.transform.position.z);
@@ -198,43 +169,9 @@ public class NotesController : MonoBehaviour
 
 
                 GameObject nObj = Instantiate(PrefabGrid, notePos, Quaternion.identity);
-                nObj.GetComponent<GameNote>().InitGameNote(-noteTime, noteNumber,noteLength,noteChannel);
+                nObj.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel);
                 nObj.SetActive(true);
             }
-        /* 
-        foreach(var note in notes)
-        {
-            var notelength = note.Length;
-            var notename = note.NoteName;
-            var notepos = transform.position + new Vector3(0,0,0);
-            
-           
-            for(int i = 0; i < m_Column * m_Row; i++)
-            {
-                var gridPos = new Vector3(m_XStartPos + (m_XSpace * (i % m_Column)), -m_YStartPos + (m_YSpace * (i / m_Column)));
-                GameObject Grid = Instantiate(PrefabGrid, gridPos,Quaternion.identity);
-                Grid.SetActive(false);
-            }
-
-            for(int i = 0; i < m_Column * m_Row; i++)
-            {
-                var notePos = new Vector3(m_XStartPos + (m_XSpace * (i % m_Column)), -m_YStartPos + (m_YSpace * (i / m_Column)));
-                GameObject Notes = Instantiate(PrefabNotes, notePos, Quaternion.identity);
-                Notes.SetActive(true);
-            }
-
-         
-
-
-
-
-            
-            GameObject NoteBox = Instantiate(PrefabNotes, notepos, Quaternion.identity);
-
-            NoteBox.SetActive(true);
-            Debug.Log(note);
-        }
-        */
 
           
     }
@@ -310,4 +247,22 @@ public class NotesController : MonoBehaviour
             
         }
 
+    public void OnPianoNotes(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        controls.Player.PianoNotes.performed += _ => 
+        {
+              m_playback.Stop();
+              Debug.Log("Status: " + m_playback.IsRunning);
+                   // m_playback.Play();
+                    Debug.Log("Left Arrow Pressed");
+                    m_playback.MoveBack(new MetricTimeSpan(5000000));
+            Debug.Log("PIANO ON");
+        };
+
+        controls.Player.PianoNotes.canceled += _ =>
+        {
+            Debug.Log("PIANO SCRIPT OFF");
+        };
+
+    }
 }

@@ -42,8 +42,13 @@ using UnityEngine;
             Debug.Log("PIANO SCRIPT OFF");
         };
 
-       
+    
         
+        
+    }
+
+    public void OnArrow(InputAction.CallbackContext context)
+    {
         
     }
 
