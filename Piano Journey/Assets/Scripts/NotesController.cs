@@ -54,6 +54,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         var m_Duration = GetDuration(m_File);
         var m_NoteObject = GameObject.Find("ObjectNotes");
         var m_GridObject = GameObject.Find("GRID_Square");
+        var m_Camera = GameObject.Find("Main Camera");
 
         
         m_InputDevices = GetInputDevices();
@@ -99,7 +100,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         return File;
     }
 
-    private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration, bool PlayStatus, GameObject Camera)
+    private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration, bool PlayStatus, GameObject Kamera)
     {
         //System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
         Debug.Log("Playback Function started, Status is " + PlayStatus);
@@ -116,9 +117,9 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         while (PlayStatus == true)     
         {
             var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
-            var height = 2000.0f;
+            var height = Camera.main.orthographicSize * 2.0f;
             var width = height * Screen.width / Screen.height;
-            Camera.transform.position = new Vector3(currentTime + width / 2f, Camera.transform.position.y, Camera.transform.position.z);
+            Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime - width / 200f, Kamera.transform.position.z);
 
             yield return null;
             m_playback.TickClock();
