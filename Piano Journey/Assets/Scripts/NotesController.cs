@@ -65,6 +65,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
         DisplayNotes(m_File, m_Duration, m_NoteObject, m_GridObject);
         StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
+       
         
        // WriteNotes(m_InputDevices, m_OutputDevices);
         
@@ -74,6 +75,18 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     // Update is called once per frame
     void Update()
     {
+        var m_File = ReadFile(m_Path);
+        var m_Duration = GetDuration(m_File);
+        var m_NoteObject = GameObject.Find("ObjectNotes");
+        var m_GridObject = GameObject.Find("GRID_Square");
+        var m_Camera = GameObject.Find("Main Camera");
+
+         if(m_PlayStatus == false)
+         m_playback.Stop();
+         
+         else
+         m_playback.Start();
+         CameraMovement(m_Camera);
         /*  if (Input.GetKey(KeyCode.DownArrow))
             m_Camera.transform.position += new Vector3(0f, -Time.deltaTime*10f, 0f);
 
@@ -114,21 +127,14 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
             PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
             PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
             PlaybackCurrentTimeWatcher.Instance.Start();
-        while (PlayStatus == true)     
-        {
-            var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
-            var height = Camera.main.orthographicSize * 2.0f;
-            var width = height * Screen.width / Screen.height;
-            Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime - width / 200f, Kamera.transform.position.z);
 
-            yield return null;
-            m_playback.TickClock();
-            
-        }
-            Debug.Log("Playback stopped or finished");
-            OutPut[0].Dispose();
-            m_playback.Dispose();
-            PlaybackCurrentTimeWatcher.Instance.Dispose();
+            while (m_playback.IsRunning)     
+            {
+                CameraMovement(Kamera);
+                yield return null;           
+            }
+
+           
 
        
     }
@@ -163,15 +169,15 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
                 int noteNumber = note.NoteNumber;
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f * NoteWidth;
                 float noteChannel = note.Channel;
+               
                /*Debug.Log("NoteTime " + noteTime);
                 Debug.Log("NoteNumber " + noteNumber);
                 Debug.Log("Note Length " + noteLength);
                 Debug.Log("Note Channel " + noteChannel);*/
 
-
-                GameObject nObj = Instantiate(PrefabGrid, notePos, Quaternion.identity);
-                nObj.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel);
-                nObj.SetActive(true);
+                GameObject noteObject = Instantiate(PrefabGrid, notePos, Quaternion.identity);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel);
+                noteObject.SetActive(true);
             }
 
           
@@ -252,18 +258,27 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     {
         controls.Player.PianoNotes.performed += _ => 
         {
-              m_playback.Stop();
-              Debug.Log("Status: " + m_playback.IsRunning);
-                   // m_playback.Play();
-                    Debug.Log("Left Arrow Pressed");
-                    m_playback.MoveBack(new MetricTimeSpan(5000000));
+            m_PlayStatus = false;
+            m_playback.Stop();
             Debug.Log("PIANO ON");
         };
 
         controls.Player.PianoNotes.canceled += _ =>
         {
+            m_PlayStatus = true;
+            m_playback.Start();
             Debug.Log("PIANO SCRIPT OFF");
         };
 
+    }
+
+    public void CameraMovement(GameObject Kamera)
+    {
+                var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
+                var cameraheight = Camera.main.orthographicSize * 2.0f;
+                var camerawidth = cameraheight * Screen.width / Screen.height;
+                Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime - camerawidth / 200f, Kamera.transform.position.z);
+            
+                m_playback.TickClock();
     }
 }
