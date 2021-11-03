@@ -1108,7 +1108,7 @@ MonoBehaviour:
     m_ActionId: acc12054-4d27-46db-a26c-3c9669fa9bc8
     m_ActionName: Player/PianoNotes[/MidiDevice/note021,/MidiDevice/note023,/MidiDevice/note024,/MidiDevice/note026,/MidiDevice/note028,/MidiDevice/note029,/MidiDevice/note031,/MidiDevice/note033,/MidiDevice/note035,/MidiDevice/note036,/MidiDevice/note038,/MidiDevice/note040,/MidiDevice/note041,/MidiDevice/note043,/MidiDevice/note045,/MidiDevice/note047,/MidiDevice/note048,/MidiDevice/note050,/MidiDevice/note052,/MidiDevice/note053,/MidiDevice/note055,/MidiDevice/note057,/MidiDevice/note059,/MidiDevice/note060,/MidiDevice/note062,/MidiDevice/note064,/MidiDevice/note065,/MidiDevice/note067,/MidiDevice/note069,/MidiDevice/note071,/MidiDevice/note072,/MidiDevice/note074,/MidiDevice/note076,/MidiDevice/note077,/MidiDevice/note079,/MidiDevice/note081,/MidiDevice/note083,/MidiDevice/note084,/MidiDevice/note086,/MidiDevice/note088,/MidiDevice/note089,/MidiDevice/note091,/MidiDevice/note093,/MidiDevice/note095,/MidiDevice/note096,/MidiDevice/note022,/MidiDevice/note025,/MidiDevice/note027,/MidiDevice/note030,/MidiDevice/note032,/MidiDevice/note034,/MidiDevice/note037,/MidiDevice/note039,/MidiDevice/note042,/MidiDevice/note044,/MidiDevice/note046,/MidiDevice/note049,/MidiDevice/note051,/MidiDevice/note054,/MidiDevice/note056,/MidiDevice/note058,/MidiDevice/note061,/MidiDevice/note063,/MidiDevice/note066,/MidiDevice/note070,/MidiDevice/note075,/MidiDevice/note078,/MidiDevice/note080,/MidiDevice/note082,/MidiDevice/note085,/MidiDevice/note087,/MidiDevice/note090,/MidiDevice/note092,/MidiDevice/note094,/MidiDevice/note097,/MidiDevice/note099,/MidiDevice/note102,/MidiDevice/note106]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: MIDI
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -1340,6 +1340,57 @@ Transform:
   m_Father: {fileID: 2055563252}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1571459923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6241339406464075385, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+  m_PrefabInstance: {fileID: 2055563251}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1571459924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571459923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 4b2a29c55d819ce48b4a879a246443d1, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: acc12054-4d27-46db-a26c-3c9669fa9bc8
+    m_ActionName: Player/PianoNotes[/MidiDevice/note021,/MidiDevice/note023,/MidiDevice/note024,/MidiDevice/note026,/MidiDevice/note028,/MidiDevice/note029,/MidiDevice/note031,/MidiDevice/note033,/MidiDevice/note035,/MidiDevice/note036,/MidiDevice/note038,/MidiDevice/note040,/MidiDevice/note041,/MidiDevice/note043,/MidiDevice/note045,/MidiDevice/note047,/MidiDevice/note048,/MidiDevice/note050,/MidiDevice/note052,/MidiDevice/note053,/MidiDevice/note055,/MidiDevice/note057,/MidiDevice/note059,/MidiDevice/note060,/MidiDevice/note062,/MidiDevice/note064,/MidiDevice/note065,/MidiDevice/note067,/MidiDevice/note069,/MidiDevice/note071,/MidiDevice/note072,/MidiDevice/note074,/MidiDevice/note076,/MidiDevice/note077,/MidiDevice/note079,/MidiDevice/note081,/MidiDevice/note083,/MidiDevice/note084,/MidiDevice/note086,/MidiDevice/note088,/MidiDevice/note089,/MidiDevice/note091,/MidiDevice/note093,/MidiDevice/note095,/MidiDevice/note096,/MidiDevice/note022,/MidiDevice/note025,/MidiDevice/note027,/MidiDevice/note030,/MidiDevice/note032,/MidiDevice/note034,/MidiDevice/note037,/MidiDevice/note039,/MidiDevice/note042,/MidiDevice/note044,/MidiDevice/note046,/MidiDevice/note049,/MidiDevice/note051,/MidiDevice/note054,/MidiDevice/note056,/MidiDevice/note058,/MidiDevice/note061,/MidiDevice/note063,/MidiDevice/note066,/MidiDevice/note070,/MidiDevice/note075,/MidiDevice/note078,/MidiDevice/note080,/MidiDevice/note082,/MidiDevice/note085,/MidiDevice/note087,/MidiDevice/note090,/MidiDevice/note092,/MidiDevice/note094,/MidiDevice/note097,/MidiDevice/note099,/MidiDevice/note102,/MidiDevice/note106]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1571459925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571459923}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de01a0cd9709834cbb34ae3963890c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1588897301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,6 +1640,10 @@ PrefabInstance:
     - target: {fileID: 6241339406464075385, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_Name
       value: Piano
+      objectReference: {fileID: 0}
+    - target: {fileID: 6241339406464075385, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}

@@ -15,7 +15,7 @@ using System.Linq;
 public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 {
     //MIDI Properties
-     PianoJourney controls;
+    PianoJourney controls;
     public int m_BPM;
     public float m_Position;
     public float m_TimePlayed;
@@ -50,6 +50,9 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     // Start is called before the first frame update
     void Start()
     {
+        controls = new PianoJourney();
+        controls.Player.SetCallbacks(this);
+        controls.Enable();
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
         var m_NoteObject = GameObject.Find("ObjectNotes");
@@ -65,9 +68,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
         DisplayNotes(m_File, m_Duration, m_NoteObject, m_GridObject);
         StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
-       
-        
-       // WriteNotes(m_InputDevices, m_OutputDevices);
+        //WriteNotes(m_InputDevices, m_OutputDevices);
         
         
     }
@@ -81,17 +82,15 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         var m_GridObject = GameObject.Find("GRID_Square");
         var m_Camera = GameObject.Find("Main Camera");
 
+        
          if(m_PlayStatus == false)
          m_playback.Stop();
          
          else
          m_playback.Start();
          CameraMovement(m_Camera);
-        /*  if (Input.GetKey(KeyCode.DownArrow))
-            m_Camera.transform.position += new Vector3(0f, -Time.deltaTime*10f, 0f);
 
-        else if (Input.GetKey(KeyCode.UpArrow))
-            m_Camera.transform.position += new Vector3(0f, Time.deltaTime*10f, 0f); */
+
        
     }
 
@@ -118,7 +117,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         //System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
         Debug.Log("Playback Function started, Status is " + PlayStatus);
            
-          m_playback = File.GetPlayback(m_OutputDevices[0]);
+            m_playback = File.GetPlayback(m_OutputDevices[0]);
             m_playback.InterruptNotesOnStop = true;
             m_playback.Start(); 
             m_playback.Loop = false;
@@ -135,14 +134,13 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
             }
 
            
-
        
     }
     
     private static void OnNotesPlaybackStarted(object sender, NotesEventArgs e)
         {
-            if (e.Notes.Any(n => n.Length == Melanchall.DryWetMidi.MusicTheory.Interval.Eight))
-                m_playback.Stop();
+            /*if (e.Notes.Any(n => n.Length == Melanchall.DryWetMidi.MusicTheory.Interval.Eight))
+                m_playback.Stop();*/
         }
 
     private TimeSpan GetDuration(MidiFile File)
@@ -156,9 +154,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     private void DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes, GameObject PrefabGrid)
     {
         TempoMap tempo = File.GetTempoMap();
-        Debug.Log(tempo);
         IEnumerable<Note> notes = File.GetNotes(); 
-        Debug.Log("Notes laden " + notes);
         var NoteWidth = 5f;
 
         var notePos = new Vector3(1,1,1);
@@ -256,6 +252,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     public void OnPianoNotes(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        Debug.Log("Jump in ONPIANONOTES");
         controls.Player.PianoNotes.performed += _ => 
         {
             m_PlayStatus = false;
