@@ -35,7 +35,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     //Notes Generating
     public GameObject m_Prefab_Notes;
-    public GameObject m_Prefab_Grid;
+  //  public GameObject m_Prefab_Grid;
     private int[] m_Notes;
     [SerializeField] private int m_Row;
     [SerializeField] private int m_Column;
@@ -55,9 +55,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         controls.Enable();
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
-        var m_NoteObject = GameObject.Find("ObjectNotes");
-        var m_GridObject = GameObject.Find("GRID_Square");
-        var m_Camera = GameObject.Find("Main Camera");
+       // var m_Camera = GameObject.Find("Main Camera");
 
         
         m_InputDevices = GetInputDevices();
@@ -66,7 +64,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
        
 
-        DisplayNotes(m_File, m_Duration, m_NoteObject, m_GridObject);
+        DisplayNotes(m_File, m_Duration, m_Prefab_Notes);
         StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
         //WriteNotes(m_InputDevices, m_OutputDevices);
         
@@ -151,7 +149,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     }
     
 
-    private void DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes, GameObject PrefabGrid)
+    private void DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes)
     {
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes(); 
@@ -171,7 +169,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
                 Debug.Log("Note Length " + noteLength);
                 Debug.Log("Note Channel " + noteChannel);*/
 
-                GameObject noteObject = Instantiate(PrefabGrid, notePos, Quaternion.identity);
+                GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel);
                 noteObject.SetActive(true);
             }
