@@ -94,6 +94,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private MidiFile ReadFile(string Path)
     {
+        //Read MidiFile with ReadingSettings
         var File = MidiFile.Read(Path, new ReadingSettings
         {
             InvalidChannelEventParameterValuePolicy = InvalidChannelEventParameterValuePolicy.ReadValid,
@@ -112,6 +113,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration, bool PlayStatus, GameObject Kamera)
     {
+        //Reading Midi File and playing it
         //System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
         Debug.Log("Playback Function started, Status is " + PlayStatus);
            
@@ -119,7 +121,9 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
             m_playback.InterruptNotesOnStop = true;
             m_playback.Start(); 
             m_playback.Loop = false;
+
             Debug.Log("Playback started");
+            
             m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
             PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
             PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
@@ -143,6 +147,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private TimeSpan GetDuration(MidiFile File)
     {
+        //Get Duration of Midi File
         TimeSpan midiFileDuration = File.GetDuration<MetricTimeSpan>();
         //Debug.Log("Duration " + midiFileDuration);
         return midiFileDuration;
@@ -151,6 +156,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private void DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes)
     {
+        //Create Note Blocks
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes(); 
         var NoteWidth = 5f;
@@ -179,6 +185,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private void WriteNotes(InputDevice[] InputPiano, OutputDevice[] Output)
     {
+        //Write Midi Files
         InputPiano[0].EventReceived += OnEventReceived;
         InputPiano[0].StartEventsListening();
         Debug.Log("Input Piano working");
@@ -194,7 +201,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private InputDevice[] GetInputDevices()
     {
-
+        //Get All InputDevices
         InputDevice[] inputList = InputDevice.GetAll().ToArray();
         for (int i = 0; i <= inputList.Length-1; i++)
         {
@@ -207,7 +214,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private OutputDevice[] GetOutputDevices()
     {
-
+        //Get All OutputDevices
         OutputDevice[] outputList = OutputDevice.GetAll().ToArray();
         for (int i = 0; i <= outputList.Length-1; i++)
         {
@@ -220,6 +227,8 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     private void setDevices(InputDevice[] Input, OutputDevice[] Output)
     {
+        //Connect the Input and Output Devices
+        //Output on Piano and InGame
         m_DeviceConnector = new DevicesConnector(Input[0], Output[0], Output[1]);
         m_DeviceConnector.Connect();
     }

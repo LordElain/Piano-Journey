@@ -568,6 +568,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de01a0cd9709834cbb34ae3963890c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1571459926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571459923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51dfd92881b14f44d859de8a82ef20ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_KeyID: 
+  m_PianoKeys: {fileID: 1653528030}
+  m_MaxKeys: 88
+  m_Keys:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - F
+  - G
+  m_AllKeys: []
 --- !u!1 &1653528030
 GameObject:
   m_ObjectHideFlags: 0
