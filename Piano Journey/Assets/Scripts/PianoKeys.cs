@@ -6,10 +6,11 @@ public class PianoKeys : MonoBehaviour
 {
 
 
-    public string m_KeyID;
+    public int m_KeyID;
     public GameObject m_PianoKeys;
 
     public int m_MaxKeys;
+    public float m_KeyHeight;
 
     public string[] m_Keys;
     public string[] m_AllKeys;
@@ -18,6 +19,7 @@ public class PianoKeys : MonoBehaviour
     {
         
         FillArray_Numbers();
+       // GenerateKeys(m_PianoKeys);
     }
 
     // Update is called once per frame
@@ -26,14 +28,6 @@ public class PianoKeys : MonoBehaviour
         
     }
 
-    public void InitPianoKeys(string KeyID)
-    {
-        transform.position = new Vector3();
-        /*transform.position = new Vector3(noteNumber,timeOfNote);
-        GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
-        GetComponent<SpriteRenderer>().size = new Vector2(duration, 1f);
-        GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);*/
-    }
 
     public void SetMaxkeys(int max)
     {
@@ -43,25 +37,49 @@ public class PianoKeys : MonoBehaviour
 
     public void FillArray_Numbers()
     {
-        string[] m_AllKeys = new string [89];   
-        var MaxOctave = 7;
-        for (int i = 0; i < m_MaxKeys; i++)
-        {
-            for (int j = 0; j < MaxOctave; j++)
-            {
-                m_AllKeys[i] = m_Keys[j] + i;
-                Debug.Log("All Keys: (j) " + m_AllKeys[j]);
-            };
+        string[] m_AllKeys = new string [100];   
+        int MaxOctave = 7;
+        int counter = 0;
+
+        for (int i = 0; i < m_MaxKeys-1; i++)
+        {  
+            for (int j = 0; j <= 7; j++)
+            {    
+                for (int k = 0; k < 50 ; k++)
+                {
+                    m_AllKeys[k] = m_Keys[i] + j;
+                    Debug.Log("All Keys: (j) " + m_AllKeys[k]);
+                    Debug.Log("i" + i);
+                    Debug.Log("j " + j);
+                    Debug.Log("k" + k);
+                    
+                };
+                
+            }; 
+           
         };
     }
 
-    public void GenerateKeys()
+    public void GenerateKeys(GameObject PianoKeys)
     {
+        var KeyPos = new Vector3(1,1,1);
         for (int i = 0; i <= m_MaxKeys; i++)
         {
             m_KeyID += i;
-            InitPianoKeys(m_KeyID);
+            GameObject PKeyObject = Instantiate(PianoKeys, KeyPos, Quaternion.identity);
+            PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys);
+            PKeyObject.SetActive(true);
 
         }
+    }
+
+    
+    public void InitPianoKeys(int KeyID, string[] PianoKeys)
+    {
+        transform.position = new Vector3(KeyID,m_KeyHeight);
+        /*transform.position = new Vector3(noteNumber,timeOfNote);
+        GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
+        GetComponent<SpriteRenderer>().size = new Vector2(duration, 1f);
+        GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);*/
     }
 }
