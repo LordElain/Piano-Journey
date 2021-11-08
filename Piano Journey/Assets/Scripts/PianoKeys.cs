@@ -9,8 +9,9 @@ public class PianoKeys : MonoBehaviour
     public int m_KeyID;
     public GameObject m_PianoKeys;
 
-    public int m_MaxKeys;
-    public float m_KeyHeight;
+    public int m_MaxKeysOctave; //Keys per Octave
+    public int m_MaxAllKeys; //All Keys on Piano
+    public float m_KeyHeight; //Pixel Height
 
     public string[] m_Keys;
     public string[] m_AllKeys;
@@ -19,7 +20,7 @@ public class PianoKeys : MonoBehaviour
     {
         
         FillArray_Numbers();
-       // GenerateKeys(m_PianoKeys);
+        GenerateKeys(m_PianoKeys);
     }
 
     // Update is called once per frame
@@ -37,13 +38,13 @@ public class PianoKeys : MonoBehaviour
 
     public void FillArray_Numbers()
     {
-        string[] m_AllKeys = new string [100];   
+        string[] m_AllKeys = new string [m_MaxAllKeys];
         int MaxOctave = 7;
-        int counter = 0;
 
-        for (int i = 0; i < m_MaxKeys-1; i++)
+        //Create WhiteKeys
+        for (int i = 0; i < m_MaxKeysOctave-1; i++)
         {  
-            for (int j = 0; j <= 7; j++)
+            for (int j = 0; j <= MaxOctave; j++)
             {    
                 for (int k = 0; k < 50 ; k++)
                 {
@@ -62,21 +63,41 @@ public class PianoKeys : MonoBehaviour
 
     public void GenerateKeys(GameObject PianoKeys)
     {
-        var KeyPos = new Vector3(1,1,1);
-        for (int i = 0; i <= m_MaxKeys; i++)
+        float KeyOffset_Left = 0; //White Key Left
+        float KeyOffset_Right = 0.1f; // White Key Right
+        float KeyOffset = 0;
+        
+        for (int i = 0; i <= m_AllKeys.Length; i++)
         {
-            m_KeyID += i;
+            var KeyPos = new Vector3(i,0,0);
+            
             GameObject PKeyObject = Instantiate(PianoKeys, KeyPos, Quaternion.identity);
-            PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys);
+            SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>();
+            
+
+            if(KeyPos.x % 2 == 0)
+            {
+                KeyOffset += KeyOffset_Left;
+            }
+            else
+            {
+                KeyOffset += KeyOffset_Right;
+                m_SpriteRenderer.flipX = true;
+            }
+            
+            m_KeyID += i;
+            
+            PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys, KeyPos, KeyOffset);
             PKeyObject.SetActive(true);
 
         }
     }
 
     
-    public void InitPianoKeys(int KeyID, string[] PianoKeys)
+    public void InitPianoKeys(int KeyID, string[] PianoKeys, Vector3 KeyPos, float KeyOffset)
     {
-        transform.position = new Vector3(KeyID,m_KeyHeight);
+        int Object_KeyID = KeyID;
+        transform.position = new Vector3(KeyPos.x+KeyOffset,m_KeyHeight);
         /*transform.position = new Vector3(noteNumber,timeOfNote);
         GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
         GetComponent<SpriteRenderer>().size = new Vector2(duration, 1f);
