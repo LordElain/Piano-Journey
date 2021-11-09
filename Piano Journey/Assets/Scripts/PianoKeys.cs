@@ -7,7 +7,7 @@ public class PianoKeys : MonoBehaviour
 
 
     public int m_KeyID;
-    public GameObject m_PianoKeys;
+    public GameObject[] m_PianoKeys;
 
     public int m_MaxKeysOctave; //Keys per Octave
     public int m_MaxAllKeys; //All Keys on Piano
@@ -61,35 +61,69 @@ public class PianoKeys : MonoBehaviour
         };
     }
 
-    public void GenerateKeys(GameObject PianoKeys)
+    public void GenerateKeys(GameObject[] PianoKeys)
     {
         float KeyOffset_Left = 0; //White Key Left
+        float KeyOffset_Middle = 1f;
         float KeyOffset_Right = 0.1f; // White Key Right
         float KeyOffset = 0;
+        int [] KeyPerOctave = new int[5];
         
-        for (int i = 0; i <= m_AllKeys.Length; i++)
+        //KeyGenerating first half of white keys
+        for (int i = 0; i < KeyPerOctave.Length-1; i++)
         {
             var KeyPos = new Vector3(i,0,0);
-            
-            GameObject PKeyObject = Instantiate(PianoKeys, KeyPos, Quaternion.identity);
-            SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>();
-            
-
-            if(KeyPos.x % 2 == 0)
-            {
-                KeyOffset += KeyOffset_Left;
-            }
-            else
-            {
-                KeyOffset += KeyOffset_Right;
-                m_SpriteRenderer.flipX = true;
-            }
-            
             m_KeyID += i;
-            
-            PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys, KeyPos, KeyOffset);
-            PKeyObject.SetActive(true);
-
+            for (int j = 0; j < PianoKeys.Length-1; j++)
+            {
+                GameObject PKeyObject = Instantiate(PianoKeys[j], KeyPos, Quaternion.identity);
+                SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>();
+                
+                    if(KeyPos.x % 2 == 0)
+                    {
+                        KeyOffset += KeyOffset_Middle;
+                    }
+                    else
+                    {
+                        KeyOffset += KeyOffset_Right;
+                        m_SpriteRenderer.flipX = true;
+                    }
+              
+                Debug.Log("KeyOffset ist bei i: " + i + " " + KeyOffset);            
+                PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys, KeyPos, KeyOffset);
+                PKeyObject.SetActive(true);
+            }
+        }
+        for (int i = 0; i < KeyPerOctave.Length-1; i++)
+        {
+            var KeyPos = new Vector3(i,0,0);
+            m_KeyID += i;
+            for (int j = 0; j < PianoKeys.Length-1; j++)
+            {
+                GameObject PKeyObject = Instantiate(PianoKeys[j], KeyPos, Quaternion.identity);
+                SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>();
+                
+    	        if (j == 0)
+                {
+                    if(KeyPos.x % 2 == 0)
+                    {
+                        KeyOffset += KeyOffset_Left;
+                    }
+                    else
+                    {
+                        KeyOffset += KeyOffset_Right;
+                        m_SpriteRenderer.flipX = true;
+                    }
+                }
+                else
+                {
+                    KeyOffset += KeyOffset_Middle;
+                }
+              
+                Debug.Log("KeyOffset ist bei i: " + i + " " + KeyOffset);            
+                PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys, KeyPos, KeyOffset);
+                PKeyObject.SetActive(true);
+            }
         }
     }
 
