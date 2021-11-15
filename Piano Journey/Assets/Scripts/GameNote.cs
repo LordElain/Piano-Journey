@@ -19,7 +19,7 @@ public class GameNote : MonoBehaviour
     public void InitGameNote(float timeOfNote,int noteNumber,float duration,float instrument)
     {
         transform.position = new Vector3(noteNumber,timeOfNote);
-        GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
+        //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
         GetComponent<SpriteRenderer>().size = new Vector2(duration, 1f);
         GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);
     }

@@ -74,20 +74,13 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     // Update is called once per frame
     void Update()
     {
-        var m_File = ReadFile(m_Path);
-        var m_Duration = GetDuration(m_File);
-        var m_NoteObject = GameObject.Find("ObjectNotes");
-        var m_GridObject = GameObject.Find("GRID_Square");
-        var m_Camera = GameObject.Find("Main Camera");
-
-        
+       
          if(m_PlayStatus == false)
          m_playback.Stop();
          
          else
          m_playback.Start();
          CameraMovement(m_Camera);
-
 
        
     }
@@ -161,7 +154,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         IEnumerable<Note> notes = File.GetNotes(); 
         var NoteWidth = 5f;
 
-        var notePos = new Vector3(1,1,1);
+        var notePos = new Vector3(30,0,0);
 
          foreach (var note in notes)
             {
@@ -284,5 +277,12 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
                 Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime - camerawidth / 200f, Kamera.transform.position.z);
             
                 m_playback.TickClock();
+    }
+
+    private void OnCollisionEnter(Collision collision) 
+    {
+        ContactPoint contact = collision.contacts[0];
+        Debug.Log(contact + " Counter Zähler");
+
     }
 }
