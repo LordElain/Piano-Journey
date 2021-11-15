@@ -271,11 +271,14 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     public void CameraMovement(GameObject Kamera)
     {
+                
+                var camerawidth =   Camera.main.orthographicSize * 2.0f;
+                var cameraheight =  camerawidth * Screen.width / Screen.height;
+
                 var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
-                var cameraheight = Camera.main.orthographicSize * 2.0f;
-                var camerawidth = cameraheight * Screen.width / Screen.height;
-                Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime - camerawidth / 200f, Kamera.transform.position.z);
-            
+
+                  Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime + cameraheight/8f, Kamera.transform.position.z);
+
                 m_playback.TickClock();
     }
 

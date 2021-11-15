@@ -62,7 +62,11 @@
         "Melanchall",
         "Noten",
         "Nummer",
-        "WASD"
+        "Offfset",
+        "ONPIANONOTES",
+        "WASD",
+        "ypos",
+        "Zähler"
     ],
     "git.ignoreLimitWarning": true
 }
