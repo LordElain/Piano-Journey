@@ -35,16 +35,6 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
     //Notes Generating
     public GameObject m_Prefab_Notes;
-  //  public GameObject m_Prefab_Grid;
-    private int[] m_Notes;
-    [SerializeField] private int m_Row;
-    [SerializeField] private int m_Column;
-    [SerializeField] private float m_XStartPos;
-    [SerializeField] private float m_YStartPos;
-    [SerializeField] private float m_XSpace;
-    [SerializeField] private float m_YSpace;
-
-
 
 
     // Start is called before the first frame update
@@ -154,22 +144,20 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         IEnumerable<Note> notes = File.GetNotes(); 
         var NoteWidth = 5f;
 
-        var notePos = new Vector3(30,0,0);
+        var notePos = new Vector3(0,0,0);
 
          foreach (var note in notes)
             {
                 float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
                 int noteNumber = note.NoteNumber;
+                var noteName = note.NoteName.ToString();
+                var noteOctave = note.Octave.ToString();
+                string noteNameOctave = noteName + noteOctave;
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f * NoteWidth;
                 float noteChannel = note.Channel;
-               
-               /*Debug.Log("NoteTime " + noteTime);
-                Debug.Log("NoteNumber " + noteNumber);
-                Debug.Log("Note Length " + noteLength);
-                Debug.Log("Note Channel " + noteChannel);*/
 
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel,noteNameOctave);
                 noteObject.SetActive(true);
             }
 

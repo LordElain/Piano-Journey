@@ -64,11 +64,7 @@ public class PianoKeys : MonoBehaviour
                 for (int k = 0; k < 50 ; k++)
                 {
                     m_AllKeys[k] = m_NoteKeys[i] + j;
-              /*       Debug.Log("All Keys: (j) " + m_AllKeys[k]);
-                    Debug.Log("i" + i);
-                    Debug.Log("j " + j);
-                    Debug.Log("k" + k); */
-                    
+             
                 };
                 
             }; 
@@ -258,14 +254,12 @@ public class PianoKeys : MonoBehaviour
 
     public void TransForm (Camera Kamera, GameObject[] PianoKeys)
     {
-        var Offfset = new Vector3(0,30,0);
+        var Offfset = new Vector3(0,28,0);
         for (int i = 0; i <= m_Counter-1; i++)
         {
             Vector3 ypos = PianoKeys[i].transform.position;
-            Debug.Log(PianoKeys[i]);
             ypos.y = Kamera.transform.position.y + HeightOffsetArray[i];
             PianoKeys[i].transform.position = ypos - Offfset;
-            Debug.Log("PianoKeys " + i);
         }
     }
        
