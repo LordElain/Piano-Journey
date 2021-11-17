@@ -1,6 +1,8 @@
+using System.Runtime.CompilerServices;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PianoKeys : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class PianoKeys : MonoBehaviour
     public Camera m_Camera;
     private GameObject Piano;
 
+    public Text m_Text;
     public int m_MaxNotesOctave; //Notes per Octave
     public int m_MaxAllKeys; //All Keys on Piano
     public float m_KeyHeight; //Pixel Height
@@ -27,6 +30,7 @@ public class PianoKeys : MonoBehaviour
     private GameObject[] KeyObjects;
     private float[] HeightOffsetArray;
     private int m_Counter;
+    private int m_CounterArrayCopy;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +38,7 @@ public class PianoKeys : MonoBehaviour
         FillArray_Numbers();
         KeyObjects = new GameObject[m_MaxAllKeys];
         HeightOffsetArray = new float [m_MaxAllKeys];
+        m_AllKeys = new string [m_MaxAllKeys];
         GenerateWhiteKeys(m_WhitePianoKeysObject);
         
     }
@@ -45,15 +50,9 @@ public class PianoKeys : MonoBehaviour
     }
 
 
-    public void SetMaxkeys(int max)
-    {
-
-    }
-
-
     public void FillArray_Numbers()
     {
-        string[] m_AllKeys = new string [m_MaxAllKeys];
+        
         int MaxOctave = 7;
 
         //Create WhiteKeys
@@ -61,15 +60,29 @@ public class PianoKeys : MonoBehaviour
         {  
             for (int j = 0; j <= MaxOctave; j++)
             {    
-                for (int k = 0; k < 50 ; k++)
+                var KeyObject = m_NoteKeys[i]+j;
+                Debug.Log(KeyObject);
+                KeyObject.ToString();
+                CopyArray(KeyObject);
+               /*  for (int k = 0; k < 50 ; k++)
                 {
                     m_AllKeys[k] = m_NoteKeys[i] + j;
              
                 };
-                
+                 */
             }; 
            
         };
+    }
+
+    public void CopyArray (string NoteKeys)
+    {
+        if (m_CounterArrayCopy <= m_MaxAllKeys-1)
+        {
+            m_AllKeys[m_CounterArrayCopy] = NoteKeys;
+            Debug.Log(m_AllKeys[m_CounterArrayCopy]);
+            m_CounterArrayCopy++;
+        } 
     }
 
     public void GenerateWhiteKeys(GameObject[] WhitePianoKeysObject)
@@ -233,10 +246,7 @@ public class PianoKeys : MonoBehaviour
             KeyObjects[m_Counter] = PianoKeyObject;
             HeightOffsetArray[m_Counter] = Offset;
             m_Counter++;
-            Debug.Log(m_Counter);
         }
-
-
     }
 
     public float KeyOffsetAddition(float KeyOffset, float KeyOffsetAdd)
@@ -248,7 +258,7 @@ public class PianoKeys : MonoBehaviour
     
     public void InitPianoKeys(int KeyID, string[] PianoKeys, Vector3 KeyPos, float KeyOffset, float KeyHeight, float KeyZ)
     {
-        int Object_KeyID = KeyID;
+        string Object_KeyID = PianoKeys[KeyID];
         transform.position = new Vector3(KeyPos.x+KeyOffset,KeyHeight, KeyZ);
     }
 

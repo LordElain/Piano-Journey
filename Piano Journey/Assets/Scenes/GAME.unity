@@ -496,7 +496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30.86, y: -0.14}
+  m_AnchoredPosition: {x: -30.039467, y: -0.14}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &900861328
@@ -514,6 +514,7 @@ MonoBehaviour:
   m_KeyID: 0
   m_WhitePianoKeysObject: []
   m_Camera: {fileID: 0}
+  m_Text: {fileID: 0}
   m_MaxNotesOctave: 0
   m_MaxAllKeys: 0
   m_KeyHeight: 0
@@ -676,7 +677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -33.11, y: 2.26}
+  m_AnchoredPosition: {x: -31.8792, y: 2.26}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1238741685
@@ -694,6 +695,7 @@ MonoBehaviour:
   m_KeyID: 0
   m_WhitePianoKeysObject: []
   m_Camera: {fileID: 0}
+  m_Text: {fileID: 0}
   m_MaxNotesOctave: 0
   m_MaxAllKeys: 0
   m_KeyHeight: 0
@@ -1146,6 +1148,7 @@ MonoBehaviour:
   - {fileID: 1238741683}
   - {fileID: 1653528030}
   m_Camera: {fileID: 519420031}
+  m_Text: {fileID: 0}
   m_MaxNotesOctave: 8
   m_MaxAllKeys: 88
   m_KeyHeight: 10
@@ -1389,7 +1392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -34.68, y: -0.15}
+  m_AnchoredPosition: {x: -33.859467, y: -0.15}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653528035
@@ -1407,6 +1410,7 @@ MonoBehaviour:
   m_KeyID: 0
   m_WhitePianoKeysObject: []
   m_Camera: {fileID: 0}
+  m_Text: {fileID: 0}
   m_MaxNotesOctave: 0
   m_MaxAllKeys: 0
   m_KeyHeight: 0
