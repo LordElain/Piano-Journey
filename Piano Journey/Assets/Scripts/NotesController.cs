@@ -159,6 +159,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel,noteNameOctave);
                 noteObject.SetActive(true);
+                noteObject.tag = "Note";
             }
 
           

@@ -21,16 +21,17 @@ public class PianoKeys : MonoBehaviour
     public string[] m_NoteKeys;
     public string[] m_AllKeys;
 
-    public Vector3 m_Vec3;
+    public Vector3[] m_PianoPosition;
 
     //Key Parameter
     public float m_KeyHeightWhite;
     public float m_KeyHeightBlack;
 
-    private GameObject[] KeyObjects;
+    public GameObject[] KeyObjects;
     private float[] HeightOffsetArray;
     private int m_Counter;
     private int m_CounterArrayCopy;
+    public List<GameObject> m_KeyList;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,8 +50,13 @@ public class PianoKeys : MonoBehaviour
         TransForm(m_Camera, KeyObjects);
     }
 
+    public void FillList()
+    {
 
-    public void FillArray_Numbers()
+    }
+
+     
+    public void FillArray_Numbers() 
     {
         
         int MaxOctave = 7;
@@ -61,15 +67,6 @@ public class PianoKeys : MonoBehaviour
             for (int j = 0; j <= MaxOctave; j++)
             {    
                 var KeyObject = m_NoteKeys[i]+j;
-                Debug.Log(KeyObject);
-                KeyObject.ToString();
-                CopyArray(KeyObject);
-               /*  for (int k = 0; k < 50 ; k++)
-                {
-                    m_AllKeys[k] = m_NoteKeys[i] + j;
-             
-                };
-                 */
             }; 
            
         };
@@ -115,6 +112,7 @@ public class PianoKeys : MonoBehaviour
             for (int j = 0; j < WhitePianoKeysObject.Length; j++)
             {
               GameObject PKeyObject = Instantiate(WhitePianoKeysObject[j], KeyPos, Quaternion.identity);
+              PKeyObject.tag = "Key";
               SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
               KeyZPos = 0;
               KeyHeight = 0;        
