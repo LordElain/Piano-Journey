@@ -8,14 +8,13 @@ public class GameNote : MonoBehaviour
     public float m_ZPos;
     public Text m_Text;
 
-    private Vector3 m_NotePosition;
-    private Vector3 m_PianoPosition;
-    private int m_PianoArrayInt;
+    private GameObject[] Key_List;
+    private GameObject[] Note_List;
     // Start is called before the first frame update
     void Start()
     {
-        
-
+        Key_List = GameObject.FindGameObjectsWithTag("Key");
+        Note_List = GameObject.FindGameObjectsWithTag("Note");
     }
 
     // Update is called once per frame
@@ -32,9 +31,8 @@ public class GameNote : MonoBehaviour
         GetComponent<SpriteRenderer>().size = new Vector2(duration, 3f);
         GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);
     }
-
-    public void CheckNoteKeyPosition()
+    private void OnTriggerEnter(Collider other)
     {
-
+        Debug.Log("TRIGGER");
     }
 }
