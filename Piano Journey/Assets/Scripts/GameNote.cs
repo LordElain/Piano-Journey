@@ -31,8 +31,5 @@ public class GameNote : MonoBehaviour
         GetComponent<SpriteRenderer>().size = new Vector2(duration, 3f);
         GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("TRIGGER");
-    }
+
 }

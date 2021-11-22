@@ -97,8 +97,6 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     private IEnumerator PlayMidi(MidiFile File, OutputDevice[] OutPut, TimeSpan Duration, bool PlayStatus, GameObject Kamera)
     {
         //Reading Midi File and playing it
-        //System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
-        Debug.Log("Playback Function started, Status is " + PlayStatus);
            
             m_playback = File.GetPlayback(m_OutputDevices[0]);
             m_playback.InterruptNotesOnStop = true;
@@ -143,7 +141,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes(); 
         var NoteWidth = 5f;
-
+        int noteAnzahl = 0;
         var notePos = new Vector3(0,0,0);
 
          foreach (var note in notes)
@@ -155,6 +153,8 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
                 string noteNameOctave = noteName + noteOctave;
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f * NoteWidth;
                 float noteChannel = note.Channel;
+                noteAnzahl++;
+                
 
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel,noteNameOctave);
@@ -162,6 +162,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
                 noteObject.tag = "Note";
             }
 
+        Debug.Log(noteAnzahl);
           
     }
 
