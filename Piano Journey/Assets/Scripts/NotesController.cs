@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Minis;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
@@ -12,10 +13,10 @@ using System.Linq;
 
 
 
-public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
+public class NotesController : MonoBehaviour
 {
     //MIDI Properties
-    PianoJourney controls;
+
     public int m_BPM;
     public float m_Position;
     public float m_TimePlayed;
@@ -40,12 +41,8 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     // Start is called before the first frame update
     void Start()
     {
-        controls = new PianoJourney();
-        controls.Player.SetCallbacks(this);
-        controls.Enable();
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
-       // var m_Camera = GameObject.Find("Main Camera");
 
         
         m_InputDevices = GetInputDevices();
@@ -65,12 +62,17 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
     void Update()
     {
        
-         if(m_PlayStatus == false)
-         m_playback.Stop();
+        if(m_PlayStatus == false)
+        {
+            m_playback.Stop();
+        }
          
-         else
-         m_playback.Start();
-         CameraMovement(m_Camera);
+        else
+        {
+            m_playback.Start();
+            CameraMovement(m_Camera);
+        }
+         
 
        
     }
@@ -101,7 +103,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
             m_playback = File.GetPlayback(m_OutputDevices[0]);
             m_playback.InterruptNotesOnStop = true;
             m_playback.Start(); 
-            m_playback.Loop = false;
+            m_playback.Loop = true;
 
             Debug.Log("Playback started");
             
@@ -159,6 +161,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel,noteNameOctave);
                 noteObject.SetActive(true);
+                noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";
             }
 
@@ -177,7 +180,7 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
 
      private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
     {
-        var midiDevice = (MidiDevice)sender;
+        var midiDevice = (Melanchall.DryWetMidi.Devices.MidiDevice)sender;
         Debug.Log("Event received from " + midiDevice.Name + ": " + e.Event); 
     }
   
@@ -239,25 +242,6 @@ public class NotesController : MonoBehaviour, PianoJourney.IPlayerActions
             m_InputDevices[0].Dispose();
             
         }
-
-    public void OnPianoNotes(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        Debug.Log("Jump in ONPIANONOTES");
-        controls.Player.PianoNotes.performed += _ => 
-        {
-            m_PlayStatus = false;
-            m_playback.Stop();
-            Debug.Log("PIANO ON");
-        };
-
-        controls.Player.PianoNotes.canceled += _ =>
-        {
-            m_PlayStatus = true;
-            m_playback.Start();
-            Debug.Log("PIANO SCRIPT OFF");
-        };
-
-    }
 
     public void CameraMovement(GameObject Kamera)
     {

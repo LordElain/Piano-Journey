@@ -56,6 +56,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\Quantizer\LengthedObjectsQuantizer\LengthedObjectsQuantizingSettings.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\IMusicalObject.cs" />
      <Compile Include="Assets\Scripts\NotesController.cs" />
+     <Compile Include="Assets\Scripts\KeyGameLogic.cs" />
      <Compile Include="Assets\Inputs\InputMaster.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Composing\Descriptors\NoteDescriptor.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Meta\SetTempoEvent.cs" />
@@ -535,7 +536,6 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\UnknownFileFormatPolicy.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\Clock\MidiClockSettings.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\SystemCommon\MidiTimeCodeType.cs" />
-     <Compile Include="Assets\Scripts\KeyGameLogic.cs" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\MultiSequence\Large\Dark_Forces.txt" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\MultiSequence\Middle\crixmus.txt" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\MultiSequence\Small\gromas.txt" />

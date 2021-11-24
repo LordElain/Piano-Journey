@@ -10,6 +10,7 @@ public class GameNote : MonoBehaviour
 
     private GameObject[] Key_List;
     private GameObject[] Note_List;
+    public string m_NoteName;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class GameNote : MonoBehaviour
     {
         transform.position = new Vector3(noteNumber,timeOfNote,m_ZPos);
         m_Text.text = NoteNameOctave;
+        m_NoteName = NoteNameOctave;
         //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
         GetComponent<SpriteRenderer>().size = new Vector2(duration, 3f);
         GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);
