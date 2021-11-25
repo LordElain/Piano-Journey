@@ -40,18 +40,18 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         {
             miniMidiDevice.onWillNoteOn += (note, velocity) => 
             {
-                Debug.Log(note.shortDisplayName);
+                //Debug.Log(note.shortDisplayName);
 
                  if (m_Trigger == true)
                 {
                     if (m_NoteName == note.shortDisplayName)
                     {
                         Debug.Log("Hitbox Check");
-                        Check();
+                        
                     }
                     else
                     {
-                        Debug.Log("Wrong Note");
+                        //Debug.Log("Wrong Note");
                     }
                 }
                
@@ -65,6 +65,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
             m_Trigger = true;
             m_TriggerCase = other.gameObject.tag;
             m_NoteName = other.transform.parent.name;
+            //Check();
         
     }
 
