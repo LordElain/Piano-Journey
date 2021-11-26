@@ -395,7 +395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 105.9, y: 52.63, z: -10}
+  m_LocalPosition: {x: 150, y: 52.63, z: -10}
   m_LocalScale: {x: 1, y: 0, z: 1}
   m_Children:
   - {fileID: 2166940608673239581}
@@ -914,7 +914,7 @@ MonoBehaviour:
   - 
   m_PianoPosition: []
   m_KeyHeightWhite: 0
-  m_KeyHeightBlack: 4
+  m_KeyHeightBlack: 3.5
   KeyObjects: []
   m_KeyList: []
 --- !u!50 &1571459928

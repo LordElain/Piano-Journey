@@ -47,11 +47,11 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                     if (m_NoteName == note.shortDisplayName)
                     {
                         Debug.Log("Hitbox Check");
-                        
+                        Check(m_NoteName);
                     }
                     else
                     {
-                        //Debug.Log("Wrong Note");
+                        m_Score -= m_MissingPoints;
                     }
                 }
                
@@ -64,8 +64,9 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     {
             m_Trigger = true;
             m_TriggerCase = other.gameObject.tag;
+            //other.transform.parent.gameObject.SetActive(false);
             m_NoteName = other.transform.parent.name;
-            //Check();
+
         
     }
 
@@ -74,15 +75,16 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         m_Trigger = false;
     }
 
-    public void Check()
+    public void Check(string NoteName)
      {
+        Debug.Log(NoteName);
         switch(m_TriggerCase)
         {
                             case "EARLY":
                             {
                                 Debug.Log("EARLY");
                                 m_Score += m_EarlyPoints;
-                                m_Trigger = false;
+
                                 break;
                             }
                                 
@@ -90,7 +92,6 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                             {
                                 Debug.Log("RIGHT");
                                 m_Score += m_RightPoints;
-                                m_Trigger = false;
                                 break;
                             }
                                 
@@ -98,13 +99,12 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                             {
                                 Debug.Log("LATE");
                                 m_Score += m_LatePoints;
-                                m_Trigger = false;
                                 break;
                             }
                             
                             default:
                             Debug.Log("MISSING");
-                            m_Score += m_MissingPoints;
+                            m_Score -= m_MissingPoints;
                             m_Trigger = false;
                             break;
         }

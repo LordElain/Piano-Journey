@@ -142,8 +142,10 @@ public class NotesController : MonoBehaviour
         //Create Note Blocks
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes(); 
-        var NoteWidth = 5f;
+        var NoteWidth = 6f;
         int noteAnzahl = 0;
+        float noteOffset = 1;
+        float noteOffsetPos = 0;
         var notePos = new Vector3(0,0,0);
 
          foreach (var note in notes)
@@ -159,7 +161,7 @@ public class NotesController : MonoBehaviour
                 
 
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber,noteLength,noteChannel,noteNameOctave);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber*noteOffset,noteLength,noteChannel,noteNameOctave);
                 noteObject.SetActive(true);
                 noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";
@@ -167,6 +169,12 @@ public class NotesController : MonoBehaviour
 
         Debug.Log(noteAnzahl);
           
+    }
+
+    private float NoteOffsetAddition(float NoteOffset, float NoteOffsetAdd)
+    {
+        NoteOffset += NoteOffsetAdd;
+        return NoteOffset;
     }
 
     private void WriteNotes(InputDevice[] InputPiano, OutputDevice[] Output)

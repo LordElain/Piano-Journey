@@ -91,8 +91,8 @@ public class PianoKeys : MonoBehaviour
 
         float KOB_Base = 1;
         float KeyOffsetBlackFirst = 1.1f;
-        float KeyOffsetBlackSecond = 1.9f;
-        float KeyOffsetBlackThird = 1.8f;
+        float KeyOffsetBlackSecond = 1.7f;
+        float KeyOffsetBlackThird = 1.2f;
         bool BlackCheck = false;
 
 
@@ -101,7 +101,7 @@ public class PianoKeys : MonoBehaviour
         float KeyZPos_Black = 10;
 
         float KeyHeight = 0;
-        var KeyPos = new Vector3(30,0,0);
+        var KeyPos = new Vector3(m_Camera.transform.position.x - 76,0,0);
     
         
         //KeyGenerating WhiteKeys
