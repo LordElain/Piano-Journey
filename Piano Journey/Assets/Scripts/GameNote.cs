@@ -30,7 +30,7 @@ public class GameNote : MonoBehaviour
         m_Text.text = NoteNameOctave;
         m_NoteName = NoteNameOctave;
         //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
-        GetComponent<SpriteRenderer>().size = new Vector2(duration, 12f);
+        //GetComponent<SpriteRenderer>().size = new Vector2(duration, 3f);
         GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);
     }
 

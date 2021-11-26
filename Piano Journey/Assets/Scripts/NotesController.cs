@@ -144,7 +144,7 @@ public class NotesController : MonoBehaviour
         IEnumerable<Note> notes = File.GetNotes(); 
         var NoteWidth = 6f;
         int noteAnzahl = 0;
-        float noteOffset = 1;
+        float noteOffset = 1f;
         float noteOffsetPos = 0;
         var notePos = new Vector3(0,0,0);
 
@@ -157,11 +157,23 @@ public class NotesController : MonoBehaviour
                 string noteNameOctave = noteName + noteOctave;
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f * NoteWidth;
                 float noteChannel = note.Channel;
+                float notePosX = noteNumber+noteOffset*noteNumber;
                 noteAnzahl++;
-                
-
+                if (noteName == "C")
+                {
+                    notePosX = notePosX + noteOffset;
+                    
+                    //notePosX = noteNumber+noteOffset*noteNumber+noteOffset;
+                }
+                else
+                {
+                    //notePosX = noteNumber+noteOffset*noteNumber;
+                }
+                Debug.Log(notePos);
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime, noteNumber*noteOffset,noteLength,noteChannel,noteNameOctave);
+                
+                //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,notePosX,noteLength,noteChannel,noteNameOctave);
                 noteObject.SetActive(true);
                 noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";
