@@ -33,11 +33,11 @@ public class PianoKeys : MonoBehaviour
     public float m_KeyHeightBlack;
 
     public GameObject[] KeyObjects;
+    public float[] m_KeyPositions;
 
     private float[] HeightOffsetArray;
     private int m_Counter;
-    private int m_CounterArrayCopy;
-    public List<GameObject> m_KeyList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,8 +45,8 @@ public class PianoKeys : MonoBehaviour
         FillArray_Numbers();
         KeyObjects = new GameObject[m_MaxAllKeys];
         HeightOffsetArray = new float [m_MaxAllKeys];
+        m_KeyPositions = new float [m_MaxAllKeys];
         //m_AllKeys = new string [m_MaxAllKeys];
-        
         GenerateWhiteKeys(m_WhitePianoKeysObject);
         
     }
@@ -74,8 +74,6 @@ public class PianoKeys : MonoBehaviour
             for (int j = 0; j <= m_NoteKeys.Length-1; j++)
             {    
                 m_AllKeys[AllKeyCounter] = m_NoteKeys[j]+i;
-                
-                Debug.Log(m_AllKeys[AllKeyCounter]);
                 AllKeyCounter++;
             }; 
            
@@ -103,7 +101,7 @@ public class PianoKeys : MonoBehaviour
 
         float KeyHeight = 0;
         var KeyPos = new Vector3(m_Camera.transform.position.x - 75,0,0);
-    
+       
         
         //KeyGenerating WhiteKeys
         for (int i = 0; i < m_MaxNotesOctave-1; i++)
@@ -117,7 +115,7 @@ public class PianoKeys : MonoBehaviour
               SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
               KeyZPos = 0;
               KeyHeight = 0;
-              m_KeyID++;        
+                   
                 
                     switch(j)
                     {
@@ -212,7 +210,7 @@ public class PianoKeys : MonoBehaviour
                             break;
                         }
                     }
-
+                    
 
                     if (BlackCheck == false)
                     {
@@ -231,7 +229,7 @@ public class PianoKeys : MonoBehaviour
                 
                     }
                     BlackCheck = false;
-                    
+                    m_KeyID++; 
                     
                     
             }
@@ -261,15 +259,10 @@ public class PianoKeys : MonoBehaviour
     public void InitPianoKeys(int KeyID, string PianoKeys, Vector3 KeyPos, float KeyOffset, float KeyHeight, float KeyZ)
     {
         m_KeyName = PianoKeys;
-        Debug.Log(m_KeyName);
         m_FinalKeyPosX = KeyPos.x+KeyOffset;
+        m_KeyPositions = new float [120];
+        m_KeyPositions[KeyID] = m_FinalKeyPosX;
         transform.position = new Vector3(m_FinalKeyPosX,KeyHeight, KeyZ);
-    }
-
-    public float GetFinalKeyPosition()
-    {
-        
-        return m_FinalKeyPosX;
     }
     public void TransForm (Camera Kamera, GameObject[] PianoKeys)
     {
@@ -282,4 +275,6 @@ public class PianoKeys : MonoBehaviour
         }
     }
        
+
+    
 }

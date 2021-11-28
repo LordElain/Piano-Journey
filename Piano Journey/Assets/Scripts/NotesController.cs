@@ -32,6 +32,7 @@ public class NotesController : MonoBehaviour
     public bool m_PlayStatus;
     public GameObject m_Camera;
     public GameObject m_Piano;
+    public GameObject[] Key_List;
 
 
 
@@ -44,6 +45,7 @@ public class NotesController : MonoBehaviour
     {
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
+        
 
         
         m_InputDevices = GetInputDevices();
@@ -52,7 +54,7 @@ public class NotesController : MonoBehaviour
 
        
 
-        DisplayNotes(m_File, m_Duration, m_Prefab_Notes);
+        StartCoroutine(DisplayNotes(m_File, m_Duration, m_Prefab_Notes));
         StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
         //WriteNotes(m_InputDevices, m_OutputDevices);
         
@@ -138,23 +140,22 @@ public class NotesController : MonoBehaviour
     }
     
 
-    private void DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes)
+    private IEnumerator DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes)
     {
         //Create Note Blocks
         TempoMap tempo = File.GetTempoMap();
-        IEnumerable<Note> notes = File.GetNotes(); 
+        IEnumerable<Note> notes = File.GetNotes();
+        
         
         var NoteWidth = 6f;
         float noteOffset = 3f;
         float noteOffset2 = 4f;
         float noteOffsetPos = 0;
-        var notePos = new Vector3(0,0,0);
+        var notePos = new Vector3(-4f,0,0);        
         
-        
-    
         
         //int KeyName = m_Piano.gameObject.;
-        float NotePosition = 0;
+        
          foreach (var note in notes)
             {
                 float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
@@ -164,6 +165,20 @@ public class NotesController : MonoBehaviour
                 string noteNameOctave = noteName + noteOctave;
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
                 float noteChannel = note.Channel;
+                
+                var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
+                
+                if(noteName == "B" || noteName == "E")
+                {
+                   NotePosition.x = NotePosition.x - 1.5f;
+                }
+                else
+                {
+                    NotePosition.x = NotePosition.x - 1f;
+                }
+                
+               
+                
                 
                /*  Debug.Log("KeyName: " + KeyName + " NoteNumber: " + noteNumber);
                 if (KeyName == noteNumber)
@@ -177,10 +192,11 @@ public class NotesController : MonoBehaviour
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
                 //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition,noteLength,noteChannel,noteNameOctave, noteName);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName);
                 noteObject.SetActive(true);
                 noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";
+                yield return null;
             }
           
     }

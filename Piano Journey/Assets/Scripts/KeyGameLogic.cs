@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
 {
@@ -10,6 +11,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public float m_LatePoints;
     public float m_MissingPoints;
 
+    public Text m_ScoreText;
     private bool m_Trigger;
     private string m_TriggerCase;
 
@@ -29,7 +31,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     // Update is called once per frame
     void Update()
     {
-        
+       // m_ScoreText.text = m_Score.ToString();
     }
 
     
