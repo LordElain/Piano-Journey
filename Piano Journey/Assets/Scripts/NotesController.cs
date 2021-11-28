@@ -31,6 +31,7 @@ public class NotesController : MonoBehaviour
     public static Playback m_playback;
     public bool m_PlayStatus;
     public GameObject m_Camera;
+    public GameObject m_Piano;
 
 
 
@@ -142,12 +143,18 @@ public class NotesController : MonoBehaviour
         //Create Note Blocks
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes(); 
+        
         var NoteWidth = 6f;
-        int noteAnzahl = 0;
-        float noteOffset = 1f;
+        float noteOffset = 3f;
+        float noteOffset2 = 4f;
         float noteOffsetPos = 0;
         var notePos = new Vector3(0,0,0);
-
+        
+        
+    
+        
+        //int KeyName = m_Piano.gameObject.;
+        float NotePosition = 0;
          foreach (var note in notes)
             {
                 float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
@@ -155,31 +162,26 @@ public class NotesController : MonoBehaviour
                 var noteName = note.NoteName.ToString();
                 var noteOctave = note.Octave.ToString();
                 string noteNameOctave = noteName + noteOctave;
-                float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f * NoteWidth;
+                float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
                 float noteChannel = note.Channel;
-                float notePosX = noteNumber+noteOffset*noteNumber;
-                noteAnzahl++;
-                if (noteName == "C")
+                
+               /*  Debug.Log("KeyName: " + KeyName + " NoteNumber: " + noteNumber);
+                if (KeyName == noteNumber)
                 {
-                    notePosX = notePosX + noteOffset;
-                    
-                    //notePosX = noteNumber+noteOffset*noteNumber+noteOffset;
+                    NotePosition = Key.m_FinalKeyPosX;
                 }
                 else
                 {
-                    //notePosX = noteNumber+noteOffset*noteNumber;
-                }
-                Debug.Log(notePos);
+                    Debug.Log("MIST");
+                }  */
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
                 //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,notePosX,noteLength,noteChannel,noteNameOctave);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition,noteLength,noteChannel,noteNameOctave, noteName);
                 noteObject.SetActive(true);
                 noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";
             }
-
-        Debug.Log(noteAnzahl);
           
     }
 

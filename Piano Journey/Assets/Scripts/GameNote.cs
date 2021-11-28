@@ -24,13 +24,54 @@ public class GameNote : MonoBehaviour
 
     }
 
-    public void InitGameNote(float timeOfNote,float noteNumber,float duration,float instrument, string NoteNameOctave)
+    public void InitGameNote(float timeOfNote,float noteNumber,float duration,float instrument, string NoteNameOctave, string NoteName)
     {
-        transform.position = new Vector3(noteNumber,timeOfNote,m_ZPos);
+        switch (NoteName)
+        {
+            case "C":
+            {
+                transform.position = new Vector3(noteNumber,timeOfNote,m_ZPos);
+                break;
+            }
+            case "D":
+            {
+                transform.position = new Vector3(noteNumber+1F,timeOfNote,m_ZPos);
+                break;
+            }
+            case "E":
+            {
+                transform.position = new Vector3(noteNumber+2f,timeOfNote,m_ZPos);
+                break;
+            }
+            case "F":
+            {
+                transform.position = new Vector3(noteNumber+3f,timeOfNote,m_ZPos);
+                break;
+            }
+            case "G":
+            {
+                transform.position = new Vector3(noteNumber+4f,timeOfNote,m_ZPos);
+                break;
+            }
+            case "A":
+            {
+                transform.position = new Vector3(noteNumber+5f,timeOfNote,m_ZPos);
+                break;
+            }
+            case "B":
+            {
+                transform.position = new Vector3(noteNumber+6f,timeOfNote,m_ZPos);
+                break;
+            }
+            default:
+            break;
+        }
+       // transform.position = new Vector3(noteNumber,timeOfNote,m_ZPos);
         m_Text.text = NoteNameOctave;
         m_NoteName = NoteNameOctave;
+        transform.localScale = new Vector2(3, duration/4);
         //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
-        //GetComponent<SpriteRenderer>().size = new Vector2(duration, 3f);
+        //GetComponent<SpriteRenderer>().size = new Vector3(10f, duration,30);
         GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);
     }
 

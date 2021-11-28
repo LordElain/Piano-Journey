@@ -17,17 +17,23 @@ public class PianoKeys : MonoBehaviour
     public int m_MaxNotesOctave; //Notes per Octave
     public int m_MaxAllKeys; //All Keys on Piano
     public float m_KeyHeight; //Pixel Height
+    public float m_FinalKeyPosX;
+    public string Object_KeyID;
 
     public string[] m_NoteKeys;
     public string[] m_AllKeys;
+    public string m_KeyName;
 
+    
     public Vector3[] m_PianoPosition;
+    
 
     //Key Parameter
     public float m_KeyHeightWhite;
     public float m_KeyHeightBlack;
 
     public GameObject[] KeyObjects;
+
     private float[] HeightOffsetArray;
     private int m_Counter;
     private int m_CounterArrayCopy;
@@ -35,11 +41,12 @@ public class PianoKeys : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_FinalKeyPosX = 0;
         FillArray_Numbers();
         KeyObjects = new GameObject[m_MaxAllKeys];
         HeightOffsetArray = new float [m_MaxAllKeys];
-        m_AllKeys = new string [m_MaxAllKeys];
+        //m_AllKeys = new string [m_MaxAllKeys];
+        
         GenerateWhiteKeys(m_WhitePianoKeysObject);
         
     }
@@ -59,32 +66,26 @@ public class PianoKeys : MonoBehaviour
     public void FillArray_Numbers() 
     {
         
-        int MaxOctave = 7;
-
+        int MaxOctave = 8;
+        int AllKeyCounter = 1;
         //Create WhiteKeys
-        for (int i = 0; i < m_MaxNotesOctave-1; i++)
+        for (int i = 0; i < MaxOctave; i++)
         {  
-            for (int j = 0; j <= MaxOctave; j++)
+            for (int j = 0; j <= m_NoteKeys.Length-1; j++)
             {    
-                var KeyObject = m_NoteKeys[i]+j;
+                m_AllKeys[AllKeyCounter] = m_NoteKeys[j]+i;
+                
+                Debug.Log(m_AllKeys[AllKeyCounter]);
+                AllKeyCounter++;
             }; 
            
         };
     }
 
-    public void CopyArray (string NoteKeys)
-    {
-        if (m_CounterArrayCopy <= m_MaxAllKeys-1)
-        {
-            m_AllKeys[m_CounterArrayCopy] = NoteKeys;
-            Debug.Log(m_AllKeys[m_CounterArrayCopy]);
-            m_CounterArrayCopy++;
-        } 
-    }
-
     public void GenerateWhiteKeys(GameObject[] WhitePianoKeysObject)
     {
-        float KeyOffset_Left = 2.6f; //White Key Left Offset
+        float KeyOffset_Left = 3f; //White Key Left Offset
+        float KeyOffset_Left2 = 2f; //White Key Left Offset
         float KeyOffset_Middle = 3f; // White Key Middle Offset
         float KeyOffset_Right = 3f; // White Key Right Offset
         float KeyOffset = 0;
@@ -101,27 +102,28 @@ public class PianoKeys : MonoBehaviour
         float KeyZPos_Black = 10;
 
         float KeyHeight = 0;
-        var KeyPos = new Vector3(m_Camera.transform.position.x - 76,0,0);
+        var KeyPos = new Vector3(m_Camera.transform.position.x - 75,0,0);
     
         
         //KeyGenerating WhiteKeys
         for (int i = 0; i < m_MaxNotesOctave-1; i++)
         {
             KeyPos.x++;   
-            m_KeyID += i;
+            
             for (int j = 0; j < WhitePianoKeysObject.Length; j++)
             {
               GameObject PKeyObject = Instantiate(WhitePianoKeysObject[j], KeyPos, Quaternion.identity);
               PKeyObject.tag = "Key";
               SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
               KeyZPos = 0;
-              KeyHeight = 0;        
+              KeyHeight = 0;
+              m_KeyID++;        
                 
                     switch(j)
                     {
                         case 0:
                                 {
-                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left);
+                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left2);
                                     KeyZPos = KeyZPos_White;
                                     break;
                                 }
@@ -205,7 +207,7 @@ public class PianoKeys : MonoBehaviour
                                 }
                         default: 
                         {
-                            KeyOffset = KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left);
+                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left2);
                             KeyZPos = KeyZPos_White;
                             break;
                         }
@@ -214,15 +216,17 @@ public class PianoKeys : MonoBehaviour
 
                     if (BlackCheck == false)
                     {
-                        PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys, KeyPos, KeyOffset,KeyHeight, KeyZPos);
+                        PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KeyOffset,KeyHeight, KeyZPos);
                         PKeyObject.SetActive(true);
+                        PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
                         FillKeyArray(PKeyObject, KeyHeight);
                              
                     }
                     else
                     {
-                        PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys, KeyPos, KOB_Base,KeyHeight, KeyZPos);
+                        PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KOB_Base,KeyHeight, KeyZPos);
                         PKeyObject.SetActive(true);
+                        PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
                         FillKeyArray(PKeyObject, KeyHeight);
                 
                     }
@@ -254,12 +258,19 @@ public class PianoKeys : MonoBehaviour
     }
 
     
-    public void InitPianoKeys(int KeyID, string[] PianoKeys, Vector3 KeyPos, float KeyOffset, float KeyHeight, float KeyZ)
+    public void InitPianoKeys(int KeyID, string PianoKeys, Vector3 KeyPos, float KeyOffset, float KeyHeight, float KeyZ)
     {
-        string Object_KeyID = PianoKeys[KeyID];
-        transform.position = new Vector3(KeyPos.x+KeyOffset,KeyHeight, KeyZ);
+        m_KeyName = PianoKeys;
+        Debug.Log(m_KeyName);
+        m_FinalKeyPosX = KeyPos.x+KeyOffset;
+        transform.position = new Vector3(m_FinalKeyPosX,KeyHeight, KeyZ);
     }
 
+    public float GetFinalKeyPosition()
+    {
+        
+        return m_FinalKeyPosX;
+    }
     public void TransForm (Camera Kamera, GameObject[] PianoKeys)
     {
         var Offfset = new Vector3(0,28,0);
