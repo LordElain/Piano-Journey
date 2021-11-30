@@ -170,11 +170,11 @@ public class NotesController : MonoBehaviour
                 
                 if(noteName == "B" || noteName == "E")
                 {
-                   NotePosition.x = NotePosition.x - 1.5f;
+                    NotePosition.x = NotePosition.x - 2.5f;
                 }
                 else
                 {
-                    NotePosition.x = NotePosition.x - 1f;
+                    NotePosition.x = NotePosition.x - 1.5f;
                 }
                 
                

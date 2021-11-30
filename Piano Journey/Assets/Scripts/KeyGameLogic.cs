@@ -48,7 +48,6 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 {
                     if (m_NoteName == note.shortDisplayName)
                     {
-                        Debug.Log("Hitbox Check");
                         Check(m_NoteName);
                     }
                     else
