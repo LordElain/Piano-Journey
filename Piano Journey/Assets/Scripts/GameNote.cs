@@ -29,7 +29,7 @@ public class GameNote : MonoBehaviour
     {
         m_Text.text = NoteNameOctave;
         m_NoteName = NoteNameOctave;
-        transform.localScale = new Vector2(1.5f, duration/4);
+        transform.localScale = new Vector2(1, duration/12f);
         transform.position = new Vector3(noteNumber,timeOfNote,m_ZPos);
         //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
         //GetComponent<SpriteRenderer>().size = new Vector3(10f, duration,30);

@@ -284,7 +284,7 @@ public class NotesController : MonoBehaviour
     public void CameraMovement(GameObject Kamera)
     {
                 
-                var camerawidth =   Camera.main.orthographicSize * 2.0f;
+                var camerawidth =   Camera.main.orthographicSize*2f;
                 var cameraheight =  camerawidth * Screen.width / Screen.height;
 
                 var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
