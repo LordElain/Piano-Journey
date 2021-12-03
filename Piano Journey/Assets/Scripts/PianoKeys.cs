@@ -115,6 +115,7 @@ public class PianoKeys : MonoBehaviour
               SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
               KeyZPos = 0;
               KeyHeight = 0;
+              m_KeyID++; 
                    
                 
                     switch(j)
@@ -229,7 +230,7 @@ public class PianoKeys : MonoBehaviour
                 
                     }
                     BlackCheck = false;
-                    m_KeyID++; 
+                    
                     
                     
             }

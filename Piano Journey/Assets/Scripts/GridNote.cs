@@ -5,11 +5,15 @@ using UnityEngine;
 public class GridNote : MonoBehaviour
 {
     Grid grid;
+    public Camera m_Camera;
 
     // Start is called before the first frame update
     void Start()
     {
-        grid = new Grid(20, 10, 1);
+        Vector3 Pos = GameObject.Find("Piano").transform.position;
+        Debug.Log(m_Camera.transform.position);
+        Debug.Log(Pos);
+        grid = new Grid(200, 100, 3, m_Camera, Pos);
     }
 
     // Update is called once per frame

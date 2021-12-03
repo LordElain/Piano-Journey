@@ -9,16 +9,18 @@ public class Grid
     private int[,] gridArray;
     private float cellSize;
     // Start is called before the first frame update
-    public Grid(int width, int height, float cellSize)
+    public Grid(int width, int height, float cellSize, Camera Kamera, Vector3 Position)
     {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
+        
         gridArray = new int[width,height];
-        for (int x=0; x < gridArray.GetLength(0); x++)
+        for (float x = Kamera.transform.position.x; x < gridArray.GetLength(0); x++)
         {
-            for (int y=0; y < gridArray.GetLength(1); y++)
+            for (float y= Kamera.transform.position.y; y < gridArray.GetLength(1); y++)
             {
+                Debug.Log("x " + x + " " + y);
                 Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x,y+1), Color.green, 1000f,false);
                 Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x+1,y), Color.green, 1000f,false);
             }
@@ -27,7 +29,7 @@ public class Grid
         Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.green, 1000f,false);
     }
 
-    private Vector3 GetWorldPosition (int x, int y)
+    private Vector3 GetWorldPosition (float x, float y)
     {
         return new Vector3(x,y) * cellSize;
     }
