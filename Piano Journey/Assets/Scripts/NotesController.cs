@@ -176,19 +176,6 @@ public class NotesController : MonoBehaviour
                 {
                     NotePosition.x = NotePosition.x - 1.5f;
                 }
-                
-               
-                
-                
-               /*  Debug.Log("KeyName: " + KeyName + " NoteNumber: " + noteNumber);
-                if (KeyName == noteNumber)
-                {
-                    NotePosition = Key.m_FinalKeyPosX;
-                }
-                else
-                {
-                    Debug.Log("MIST");
-                }  */
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
                 //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);

@@ -16,17 +16,21 @@ public class Grid
         this.cellSize = cellSize;
         
         gridArray = new int[width,height];
-        for (float x = Kamera.transform.position.x; x < gridArray.GetLength(0); x++)
+        Debug.Log(Position);
+        Debug.Log(gridArray.Length);
+        for (float x = 0; x < gridArray.GetLength(0); x++)
         {
-            for (float y= Kamera.transform.position.y; y < gridArray.GetLength(1); y++)
+            for (float y= 0; y < gridArray.GetLength(1); y++)
             {
-                Debug.Log("x " + x + " " + y);
-                Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x,y+1), Color.green, 1000f,false);
-                Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x+1,y), Color.green, 1000f,false);
+                Debug.Log(x + "x " + y + "y " );
+                //Vertical
+                Debug.DrawLine(GetWorldPosition(Position.x+x-2.5f,Position.y-7f), GetWorldPosition(Position.x+x-2.5f,Position.y+y-7f), Color.blue, 1000f,false);
+                //Horizontal
+                Debug.DrawLine(GetWorldPosition(Position.x+x,Position.y+y-7f), GetWorldPosition(Position.x-2.5f+x,Position.y+y-7f), Color.green, 1000f,false);
             }
         }
-        Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.green, 1000f,false);
-        Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.green, 1000f,false);
+        /* Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.green, 1000f,false);
+        Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.green, 1000f,false); */
     }
 
     private Vector3 GetWorldPosition (float x, float y)
