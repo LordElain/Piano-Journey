@@ -25,6 +25,11 @@ public class GridNote : MonoBehaviour
             Debug.Log(mousePos.x);
             Debug.Log(mousePos.y);
             grid.SetValue(mousePos, 100);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+
         }   
     }
 
@@ -50,7 +55,7 @@ public class GridNote : MonoBehaviour
         Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
         Vector3 Pos = GameObject.Find("Piano").transform.position;
         Debug.Log(StartPosition);
-        grid = new Grid(200, 100, 3f, m_Camera, StartPosition);
+        grid = new Grid(120, 100, 1.85f, m_Camera, StartPosition);
     }
 
     public void saveFile()

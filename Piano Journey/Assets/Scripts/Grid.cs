@@ -16,17 +16,14 @@ public class Grid
         this.cellSize = cellSize;
         
         gridArray = new int[width,height];
-        Debug.Log(Position);
-        Debug.Log(gridArray.Length);
         for (float x = 0; x < gridArray.GetLength(0); x++)
         {
             for (float y= 0; y < gridArray.GetLength(1); y++)
             {
-                Debug.Log(x + "x " + y + "y " );
                 //Vertical
-                Debug.DrawLine(GetWorldPosition(Position.x+x-2.5f,Position.y-7f), GetWorldPosition(Position.x+x-2.5f,Position.y+y-7f), Color.blue, 1000f,false);
+                Debug.DrawLine(GetWorldPosition(Position.x+x-2.4f,Position.y-11f), GetWorldPosition(Position.x+x-2.4f,Position.y+y-11f), Color.blue, 1000f,false);
                 //Horizontal
-                Debug.DrawLine(GetWorldPosition(Position.x+x,Position.y+y-7f), GetWorldPosition(Position.x-2.5f+x,Position.y+y-7f), Color.green, 1000f,false);
+                Debug.DrawLine(GetWorldPosition(Position.x+x,Position.y+y-11f), GetWorldPosition(Position.x-2.4f+x,Position.y+y-11f), Color.green, 1000f,false);
             }
         }
         /* Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.green, 1000f,false);

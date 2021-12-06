@@ -1205,6 +1205,35 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2166940609386067438, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
   m_PrefabInstance: {fileID: 1428197821}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1428197830
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428197827}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.13, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1428197831
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428197827}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1603772970
 GameObject:
   m_ObjectHideFlags: 0
