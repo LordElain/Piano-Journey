@@ -8,6 +8,9 @@ public class Grid
     private int height;
     private int[,] gridArray;
     private float cellSize;
+
+    private Sprite m_NoteSprite;
+    private SpriteRenderer m_sr;
     // Start is called before the first frame update
     public Grid(int width, int height, float cellSize, Camera Kamera, Vector3 Position)
     {
@@ -30,21 +33,26 @@ public class Grid
         Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.green, 1000f,false); */
     }
 
-    private Vector3 GetWorldPosition (float x, float y)
+    public Vector3 GetWorldPosition (float x, float y)
     {
+        //Convert Grid Position to World
         return new Vector3(x,y) * cellSize;
     }
 
-    private void GetXY(Vector3 worldPosition, out int x, out int y )
+    public Vector3 GetXY(Vector3 worldPosition)
     {
-        x = Mathf.FloorToInt(worldPosition.x / cellSize);
-        y = Mathf.FloorToInt(worldPosition.y / cellSize);
-        Debug.Log(x + " " + y);
+        //Convert World Position to Grid
+        Vector3 Gridposition;
+        worldPosition.x = worldPosition.x / cellSize;
+        worldPosition.y = worldPosition.y / cellSize;
+        Gridposition = new Vector3(worldPosition.x, worldPosition.y,0);
+        Debug.Log("Neue Position: " + Gridposition);
+        return Gridposition;
+
     }
 
     public void SetValue(int x, int y, int value)
     {
-        Debug.Log(x+" " + y + " " + value);
         if(x >= 0 && y >= 0 && x < width && y < height)
         {
             gridArray[x,y] = value;
@@ -52,13 +60,15 @@ public class Grid
             Debug.Log(gridArray[x+3,y+4]);
             
         }
+
+      
     }
 
-    public void SetValue(Vector3 worldPosition, int value)
+   /*  public void SetValue(Vector3 worldPosition, int value)
     {
         int x, y;
         
         GetXY(worldPosition, out x, out y);
         SetValue(x,y,value);
-    }
+    } */
 }
