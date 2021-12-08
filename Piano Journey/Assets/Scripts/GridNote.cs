@@ -11,6 +11,8 @@ public class GridNote : MonoBehaviour
     private Sprite m_NoteSprite;
     private SpriteRenderer m_sr;
     public GameObject m_Note;
+    private int m_NoteCounter;
+    private List<int> m_NoteCounterArray = new List<int>();
 
     private bool m_LeftClick;
 
@@ -18,10 +20,13 @@ public class GridNote : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        m_NoteCounter = 0;
         CreateNoteArray();
         CreateGrid();
         
     }
+
 
     // Update is called once per frame
     void Update()
@@ -84,6 +89,10 @@ public class GridNote : MonoBehaviour
         GameObject note = Instantiate(m_Note,mousePos, Quaternion.identity);
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
+        note.name = m_NoteCounter.ToString();
+        m_NoteCounterArray.Add(m_NoteCounter);
+        Debug.Log(m_NoteCounterArray[m_NoteCounter]);
+        m_NoteCounter++;
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
         m_sr.sprite = m_NoteSprite;
         m_sr.transform.position = mousePos;
