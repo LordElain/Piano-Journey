@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +41,8 @@ public class GridNote : MonoBehaviour
             //Right Hand Notes
             Vector3 mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
+            mousePos.x = Mathf.RoundToInt(mousePos.x);
+            mousePos.y = Mathf.RoundToInt(mousePos.y);
             Debug.Log("Maus X: " + mousePos.x + " Maus Y: " + mousePos.y);
             m_LeftClick = true;
             CreateNoteBlock(x,y,mousePos,m_LeftClick);
@@ -80,7 +83,7 @@ public class GridNote : MonoBehaviour
         Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
         Vector3 Pos = GameObject.Find("Piano").transform.position;
         Debug.Log(StartPosition);
-        grid = new Grid(120, 100, 1.85f, m_Camera, StartPosition);
+        grid = new Grid(81, 100, 1.85f, m_Camera, StartPosition);
     }
 
 
@@ -91,7 +94,6 @@ public class GridNote : MonoBehaviour
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
         m_NoteCounterArray.Add(m_NoteCounter);
-        Debug.Log(m_NoteCounterArray[m_NoteCounter]);
         m_NoteCounter++;
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
         m_sr.sprite = m_NoteSprite;

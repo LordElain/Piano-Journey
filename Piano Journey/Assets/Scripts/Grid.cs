@@ -26,7 +26,7 @@ public class Grid
                 //Vertical
                 Debug.DrawLine(GetWorldPosition(Position.x+x-2.4f,Position.y-11f), GetWorldPosition(Position.x+x-2.4f,Position.y+y-11f), Color.blue, 1000f,false);
                 //Horizontal
-                Debug.DrawLine(GetWorldPosition(Position.x+x,Position.y+y-11f), GetWorldPosition(Position.x-2.4f+x,Position.y+y-11f), Color.green, 1000f,false);
+                Debug.DrawLine(GetWorldPosition(Position.x,Position.y+y-11f), GetWorldPosition(Position.x-2.4f+x,Position.y+y-11f), Color.green, 1000f,false);
             }
         }
         /* Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.green, 1000f,false);
