@@ -34,15 +34,15 @@ public class GridNote : MonoBehaviour
     {
         int x,y;
         
-        x = Mathf.FloorToInt(15f);
-        y = Mathf.FloorToInt(15f);
+        x = Mathf.FloorToInt(18.99999f);
+        y = Mathf.FloorToInt(18.99999f);
         if (Input.GetMouseButtonDown(0))
         {
             //Right Hand Notes
             Vector3 mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            mousePos.x = Mathf.RoundToInt(mousePos.x);
-            mousePos.y = Mathf.RoundToInt(mousePos.y);
+            /* mousePos.x = Mathf.Round(mousePos.x);
+            mousePos.y = Mathf.Round(mousePos.y); */
             Debug.Log("Maus X: " + mousePos.x + " Maus Y: " + mousePos.y);
             m_LeftClick = true;
             CreateNoteBlock(x,y,mousePos,m_LeftClick);
@@ -97,7 +97,15 @@ public class GridNote : MonoBehaviour
         m_NoteCounter++;
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
         m_sr.sprite = m_NoteSprite;
-        m_sr.transform.position = mousePos;
+        if (mouseclick == true)
+        {
+            m_sr.color = Color.red;
+        }
+        else
+        {
+            m_sr.color = Color.yellow;
+        }
+        m_sr.transform.position = grid.GetXY(mousePos);
         
     }
 

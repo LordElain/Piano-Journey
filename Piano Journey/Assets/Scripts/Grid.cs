@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,9 +44,10 @@ public class Grid
     {
         //Convert World Position to Grid
         Vector3 Gridposition;
-        worldPosition.x = worldPosition.x / cellSize;
-        worldPosition.y = worldPosition.y / cellSize;
-        Gridposition = new Vector3(worldPosition.x, worldPosition.y,0);
+        worldPosition.x = Mathf.Round(worldPosition.x / cellSize)-0.39f;
+        worldPosition.y = Mathf.Floor(worldPosition.y / cellSize)+0.01f;
+        
+        Gridposition = new Vector3(worldPosition.x * cellSize, worldPosition.y * cellSize,0);
         Debug.Log("Neue Position: " + Gridposition);
         return Gridposition;
 
