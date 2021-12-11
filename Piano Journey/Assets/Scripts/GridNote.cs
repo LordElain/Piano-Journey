@@ -17,6 +17,9 @@ public class GridNote : MonoBehaviour
 
     private bool m_LeftClick;
 
+    public float dragSpeed = 2;
+    private Vector3 newPos;
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +61,20 @@ public class GridNote : MonoBehaviour
             m_LeftClick = false;
             CreateNoteBlock(x,y,mousePos,m_LeftClick);
         }   
+
+        if (Input.GetKey(KeyCode.Mouse2) && Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Camera Movement");
+            newPos = new Vector3();
+            newPos.y = Input.GetAxis("Mouse Y") * dragSpeed * Time.deltaTime;
+            m_Camera.transform.Translate(-newPos);
+        }
+
+       /*  Vector3 pos = m_Camera.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+        Debug.Log("pos" + pos);
+        Vector3 move = new Vector3(0, 0, pos.y * dragSpeed);
+ 
+        m_Camera.transform.Translate(move, Space.World);  */
         
     }
 
@@ -97,6 +114,7 @@ public class GridNote : MonoBehaviour
         m_NoteCounter++;
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
         m_sr.sprite = m_NoteSprite;
+
         if (mouseclick == true)
         {
             m_sr.color = Color.red;
@@ -108,6 +126,7 @@ public class GridNote : MonoBehaviour
         m_sr.transform.position = grid.GetXY(mousePos);
         
     }
+
 
     public void saveFile()
     {

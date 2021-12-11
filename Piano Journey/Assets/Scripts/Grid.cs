@@ -25,19 +25,21 @@ public class Grid
             for (float y= 0; y < gridArray.GetLength(1); y++)
             {
                 //Vertical
-                Debug.DrawLine(GetWorldPosition(Position.x+x-2.4f,Position.y-11f), GetWorldPosition(Position.x+x-2.4f,Position.y+y-11f), Color.blue, 1000f,false);
+                Debug.DrawLine(GetWorldPosition(Position.x+x-2.4f,Position.y-11f,10), GetWorldPosition(Position.x+x-2.4f,Position.y+y-11f,10), Color.blue, 1000f,false);
                 //Horizontal
-                Debug.DrawLine(GetWorldPosition(Position.x,Position.y+y-11f), GetWorldPosition(Position.x-2.4f+x,Position.y+y-11f), Color.green, 1000f,false);
+                Debug.DrawLine(GetWorldPosition(Position.x,Position.y+y-11f,10), GetWorldPosition(Position.x-2.4f+x,Position.y+y-11f,10), Color.green, 1000f,false);
             }
         }
         /* Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.green, 1000f,false);
         Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.green, 1000f,false); */
     }
 
-    public Vector3 GetWorldPosition (float x, float y)
+    public Vector3 GetWorldPosition (float x, float y, float z)
     {
         //Convert Grid Position to World
-        return new Vector3(x,y) * cellSize;
+        x = x * cellSize;
+        y = y * cellSize;
+        return new Vector3(x,y,z);
     }
 
     public Vector3 GetXY(Vector3 worldPosition)
@@ -66,11 +68,4 @@ public class Grid
       
     }
 
-   /*  public void SetValue(Vector3 worldPosition, int value)
-    {
-        int x, y;
-        
-        GetXY(worldPosition, out x, out y);
-        SetValue(x,y,value);
-    } */
 }
