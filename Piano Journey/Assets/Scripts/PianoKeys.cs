@@ -57,11 +57,6 @@ public class PianoKeys : MonoBehaviour
         TransForm(m_Camera, KeyObjects);
     }
 
-    public void FillList()
-    {
-
-    }
-
      
     public void FillArray_Numbers() 
     {
@@ -96,8 +91,8 @@ public class PianoKeys : MonoBehaviour
 
 
         float KeyZPos = 0;
-        float KeyZPos_White = 50;
-        float KeyZPos_Black = 10;
+        float KeyZPos_White = -5;
+        float KeyZPos_Black = -10;
 
         float KeyHeight = 0;
         var KeyPos = new Vector3(m_Camera.transform.position.x - 75,0,0);

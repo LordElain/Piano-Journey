@@ -13,12 +13,14 @@ public class GridNote : MonoBehaviour
     private SpriteRenderer m_sr;
     public GameObject m_Note;
     private int m_NoteCounter;
-    private List<int> m_NoteCounterArray = new List<int>();
+    private List<GameObject> m_NoteCounterArray = new List<GameObject>();
 
     private bool m_LeftClick;
 
     public float dragSpeed = 2;
     private Vector3 newPos;
+    private Vector3 mousePos;
+    private Vector3 mousePosUp;
 
 
     // Start is called before the first frame update
@@ -42,25 +44,34 @@ public class GridNote : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //Right Hand Notes
-            Vector3 mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosUp = new Vector3 (0,0,0);
             mousePos.z = 0;
-            /* mousePos.x = Mathf.Round(mousePos.x);
-            mousePos.y = Mathf.Round(mousePos.y); */
             Debug.Log("Maus X: " + mousePos.x + " Maus Y: " + mousePos.y);
             m_LeftClick = true;
-            CreateNoteBlock(x,y,mousePos,m_LeftClick);
-            
+            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
         }
 
         if (Input.GetMouseButtonDown(1))
         {
             //Left Hand Notes
-            Vector3 mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosUp = new Vector3 (0,0,0);
             mousePos.z = 0;
             Debug.Log("Maus X: " + mousePos.x + " Maus Y: " + mousePos.y);
             m_LeftClick = false;
-            CreateNoteBlock(x,y,mousePos,m_LeftClick);
-        }   
+            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
+        } 
+
+        if (Input.GetMouseButton(0))
+        {
+            mousePosUp = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosUp.z = 0;
+            Debug.Log("Maus Hold");
+            Debug.Log(mousePos + "Pos" + mousePosUp + "Up");
+            m_LeftClick = true;
+            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
+        }  
 
         if (Input.GetKey(KeyCode.Mouse2) && Input.GetKey(KeyCode.Space))
         {
@@ -70,12 +81,8 @@ public class GridNote : MonoBehaviour
             m_Camera.transform.Translate(-newPos);
         }
 
-       /*  Vector3 pos = m_Camera.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        Debug.Log("pos" + pos);
-        Vector3 move = new Vector3(0, 0, pos.y * dragSpeed);
- 
-        m_Camera.transform.Translate(move, Space.World);  */
-        
+      
+
     }
 
     private void CreateNoteArray()
@@ -104,14 +111,20 @@ public class GridNote : MonoBehaviour
     }
 
 
-    private void CreateNoteBlock(int x, int y, Vector3 mousePos, bool mouseclick)
+    private void CreateNoteBlock(int x, int y, Vector3 mousePos, Vector3 mousePosUp, bool mouseclick)
     {
         GameObject note = Instantiate(m_Note,mousePos, Quaternion.identity);
+   /*      if (mousePosUp != mousePos)
+        {
+            Vector3 scale = new Vector3 (10, 10+(mousePosUp.y - mousePos.y), 10);
+            note.transform.localScale = scale; 
+        } */
+        
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
-        m_NoteCounterArray.Add(m_NoteCounter);
-        m_NoteCounter++;
+        
+        //CheckForParent(m_NoteCounterArray);
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
         m_sr.sprite = m_NoteSprite;
 
@@ -123,10 +136,30 @@ public class GridNote : MonoBehaviour
         {
             m_sr.color = Color.yellow;
         }
+        
         m_sr.transform.position = grid.GetXY(mousePos);
+        if (!m_NoteCounterArray.Equals(note))
+        {
+            Debug.Log("Kommt rein");
+            for (int i = 0; i < m_NoteCounterArray.Count; i++)
+            {
+                Debug.Log("i: " + i + "List Length" + m_NoteCounterArray.Count + "Pos" + m_sr.transform.position + "List Pos" + m_NoteCounterArray[i].transform.position);
+                if (m_NoteCounterArray[i].transform.position == m_sr.transform.position)
+                {
+                    note.SetActive(false);
+                    Debug.Log("Same Position");
+                }
+            }
+            m_NoteCounterArray.Add(note);
+            m_NoteCounter++;
+        }
         
     }
 
+    private void CheckForParent (List<int> NoteArray)
+    {
+
+    }
 
     public void saveFile()
     {
