@@ -37,9 +37,7 @@ public class Grid
     public Vector3 GetWorldPosition (float x, float y, float z)
     {
         //Convert Grid Position to World
-        x = x * cellSize;
-        y = y * cellSize;
-        return new Vector3(x,y,z);
+        return new Vector3(x,y,z) * cellSize;
     }
 
     public Vector3 GetXY(Vector3 worldPosition)
