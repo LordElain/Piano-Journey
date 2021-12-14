@@ -22,6 +22,10 @@ public class GridNote : MonoBehaviour
     private Vector3 mousePos;
     private Vector3 mousePosUp;
 
+    public int m_GridWidth;
+    public int m_GridHeight;
+    public float m_CellSize;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +33,8 @@ public class GridNote : MonoBehaviour
         
         m_NoteCounter = 0;
         CreateNoteArray();
-        CreateGrid();
+        Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
+        CreateGrid(StartPosition);
         
     }
 
@@ -75,10 +80,22 @@ public class GridNote : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse2) && Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("Camera Movement");
             newPos = new Vector3();
             newPos.y = Input.GetAxis("Mouse Y") * dragSpeed * Time.deltaTime;
             m_Camera.transform.Translate(-newPos);
+            var GridOffset = m_GridHeight + 80;
+
+            Debug.Log(m_Camera.transform.position);
+            Debug.Log(m_GridHeight);
+            if (m_Camera.transform.position.y >= GridOffset)
+            {
+                Debug.Log("HERE");
+                m_GridHeight = m_GridHeight + 100;
+                Debug.Log(m_GridHeight  + "New Height");
+                Vector3 NewPosition= GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
+                Debug.Log(NewPosition);
+                CreateGrid(NewPosition);
+            } 
         }
 
       
@@ -101,24 +118,18 @@ public class GridNote : MonoBehaviour
         };
     }
 
-    private void CreateGrid()
+    private void CreateGrid(Vector3 StartPosition)
     {
-        Debug.Log(m_AllKeys[1]);
-        Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
-        Vector3 Pos = GameObject.Find("Piano").transform.position;
-        Debug.Log(StartPosition);
-        grid = new Grid(81, 100, 1.85f, m_Camera, StartPosition);
+       // Vector3 Pos = GameObject.Find("Piano").transform.position;
+        Debug.Log(StartPosition + "Start Pos");
+        grid = new Grid(m_GridWidth, m_GridHeight, m_CellSize, m_Camera, StartPosition);
     }
 
 
     private void CreateNoteBlock(int x, int y, Vector3 mousePos, Vector3 mousePosUp, bool mouseclick)
     {
         GameObject note = Instantiate(m_Note,mousePos, Quaternion.identity);
-   /*      if (mousePosUp != mousePos)
-        {
-            Vector3 scale = new Vector3 (10, 10+(mousePosUp.y - mousePos.y), 10);
-            note.transform.localScale = scale; 
-        } */
+
         
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();

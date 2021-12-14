@@ -19,7 +19,7 @@ public class Grid
         this.height = height;
         this.cellSize = cellSize;
         
-        gridArray = new int[width,height];
+        gridArray = new int [width,height];
         for (float x = 0; x < gridArray.GetLength(0); x++)
         {
             for (float y= 0; y < gridArray.GetLength(1); y++)

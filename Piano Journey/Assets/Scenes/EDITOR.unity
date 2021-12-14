@@ -267,6 +267,9 @@ MonoBehaviour:
   m_AllKeys: []
   m_Note: {fileID: 0}
   dragSpeed: 2
+  m_GridWidth: 0
+  m_GridHeight: 0
+  m_CellSize: 0
 --- !u!1 &408722115
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +588,10 @@ MonoBehaviour:
   - 
   - 
   m_Note: {fileID: 1798916824}
-  dragSpeed: 10
+  dragSpeed: 20
+  m_GridWidth: 81
+  m_GridHeight: 100
+  m_CellSize: 1.85
 --- !u!223 &807173526
 Canvas:
   m_ObjectHideFlags: 0
@@ -1301,6 +1307,9 @@ MonoBehaviour:
   m_AllKeys: []
   m_Note: {fileID: 0}
   dragSpeed: 2
+  m_GridWidth: 0
+  m_GridHeight: 0
+  m_CellSize: 0
 --- !u!1 &1798916824
 GameObject:
   m_ObjectHideFlags: 0
