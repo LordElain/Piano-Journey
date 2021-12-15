@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Melanchall.DryWetMidi.Common;
+using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Interaction;
 using UnityEngine;
 
 public class GridNote : MonoBehaviour
@@ -25,6 +28,16 @@ public class GridNote : MonoBehaviour
     public int m_GridWidth;
     public int m_GridHeight;
     public float m_CellSize;
+
+    private NotesManager m_NotesManager;
+    private TimedEventsManager m_EventManager;
+    private ChordsManager m_ChordsManager;
+    private TempoMap m_TempoMapManger;
+    private List<Note> m_Notelist;
+    private List <Chord> m_Chordlist;
+
+    private MidiFile m_File;
+    public string m_Path;
 
 
     // Start is called before the first frame update
@@ -52,7 +65,6 @@ public class GridNote : MonoBehaviour
             mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
             mousePosUp = new Vector3 (0,0,0);
             mousePos.z = 0;
-            Debug.Log("Maus X: " + mousePos.x + " Maus Y: " + mousePos.y);
             m_LeftClick = true;
             CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
         }
@@ -63,12 +75,11 @@ public class GridNote : MonoBehaviour
             mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
             mousePosUp = new Vector3 (0,0,0);
             mousePos.z = 0;
-            Debug.Log("Maus X: " + mousePos.x + " Maus Y: " + mousePos.y);
             m_LeftClick = false;
             CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
         } 
 
-        if (Input.GetMouseButton(0))
+        /* if (Input.GetMouseButton(0))
         {
             mousePosUp = m_Camera.ScreenToWorldPoint(Input.mousePosition);
             mousePosUp.z = 0;
@@ -76,7 +87,7 @@ public class GridNote : MonoBehaviour
             Debug.Log(mousePos + "Pos" + mousePosUp + "Up");
             m_LeftClick = true;
             CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
-        }  
+        }   */
 
         if (Input.GetKey(KeyCode.Mouse2) && Input.GetKey(KeyCode.Space))
         {
@@ -120,8 +131,6 @@ public class GridNote : MonoBehaviour
 
     private void CreateGrid(Vector3 StartPosition)
     {
-       // Vector3 Pos = GameObject.Find("Piano").transform.position;
-        Debug.Log(StartPosition + "Start Pos");
         grid = new Grid(m_GridWidth, m_GridHeight, m_CellSize, m_Camera, StartPosition);
     }
 
@@ -129,11 +138,17 @@ public class GridNote : MonoBehaviour
     private void CreateNoteBlock(int x, int y, Vector3 mousePos, Vector3 mousePosUp, bool mouseclick)
     {
         GameObject note = Instantiate(m_Note,mousePos, Quaternion.identity);
-
-        
+        var noteonEvent = new NoteOnEvent();
+        var Test = GameObject.FindWithTag("Key");
+        Debug.Log(Test);
+        var PositionTest = Mathf.Floor(mousePos.x);
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
+        int KeyPosition = (int)PositionTest;
+      
+        Debug.Log(KeyPosition);
+        Debug.Log(m_AllKeys[KeyPosition]);
         
         //CheckForParent(m_NoteCounterArray);
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
@@ -142,19 +157,20 @@ public class GridNote : MonoBehaviour
         if (mouseclick == true)
         {
             m_sr.color = Color.red;
+            noteonEvent.Channel = (FourBitNumber)0;
         }
         else
         {
             m_sr.color = Color.yellow;
+            noteonEvent.Channel = (FourBitNumber)1;
         }
         
         m_sr.transform.position = grid.GetXY(mousePos);
         if (!m_NoteCounterArray.Equals(note))
         {
-            Debug.Log("Kommt rein");
             for (int i = 0; i < m_NoteCounterArray.Count; i++)
             {
-                Debug.Log("i: " + i + "List Length" + m_NoteCounterArray.Count + "Pos" + m_sr.transform.position + "List Pos" + m_NoteCounterArray[i].transform.position);
+                //Debug.Log("i: " + i + "List Length" + m_NoteCounterArray.Count + "Pos" + m_sr.transform.position + "List Pos" + m_NoteCounterArray[i].transform.position);
                 if (m_NoteCounterArray[i].transform.position == m_sr.transform.position)
                 {
                     note.SetActive(false);
@@ -172,7 +188,19 @@ public class GridNote : MonoBehaviour
 
     }
 
-    public void saveFile()
+    public void LoadFile()
+    {
+        m_File = MidiFile.Read(m_Path);
+        foreach(var note in m_File.GetNotes())
+        {
+            m_Notelist.Add(note);
+        }
+        foreach (var note in m_File.GetChords())
+        {
+            m_Chordlist.Add(note);
+        }
+    }
+    public void SaveFile()
     {
         
     }

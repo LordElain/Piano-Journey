@@ -260,6 +260,11 @@ public class PianoKeys : MonoBehaviour
         m_KeyPositions[KeyID] = m_FinalKeyPosX;
         transform.position = new Vector3(m_FinalKeyPosX,KeyHeight, KeyZ);
     }
+
+    public float GetPosition(int ID)
+    {
+        return m_KeyPositions[ID];
+    }
     public void TransForm (Camera Kamera, GameObject[] PianoKeys)
     {
         var Offfset = new Vector3(0,28,0);

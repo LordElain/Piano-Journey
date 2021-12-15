@@ -145,12 +145,7 @@ public class NotesController : MonoBehaviour
         //Create Note Blocks
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes();
-        
-        
-        var NoteWidth = 6f;
-        float noteOffset = 3f;
-        float noteOffset2 = 4f;
-        float noteOffsetPos = 0;
+
         var notePos = new Vector3(-4f,0,0);        
         
         
