@@ -170,7 +170,7 @@ public class GridNote : MonoBehaviour
         }
         
         m_sr.transform.position = grid.GetXY(mousePos);
-        TestX = new Vector3 (-1,0,0);
+        TestX = new Vector3 (-2,0,0);
         if (m_bool == false)
         {
             m_NoteCounter = 0;
