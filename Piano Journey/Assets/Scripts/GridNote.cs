@@ -43,7 +43,7 @@ public class GridNote : MonoBehaviour
 
     private MidiFile m_File;
     public string m_Path;
-    private Vector3 TestX;
+    private Vector3 PositionID;
 
     private bool m_bool;
 
@@ -170,7 +170,7 @@ public class GridNote : MonoBehaviour
         }
         
         m_sr.transform.position = grid.GetXY(mousePos);
-        TestX = new Vector3 (-2,0,0);
+        PositionID = new Vector3 (-2,0,0);
         if (m_bool == false)
         {
             m_NoteCounter = 0;
@@ -182,21 +182,21 @@ public class GridNote : MonoBehaviour
                     {
      
                         m_NoteCounter++;
-                        TestX.x = TestX.x+1f; 
-                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = TestX.x});
+                        PositionID.x = PositionID.x+1f; 
+                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
                         
                            
                         
                         Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(TestX.x + "If");
+                        Debug.Log(PositionID.x + "If");
                         break;
                     }
                     case 5: case 6: case 7: case 8: case 9: case 10:
                     {
                         
                         m_NoteCounter++;
-                        TestX.x = TestX.x+1f;
-                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = TestX.x});
+                        PositionID.x = PositionID.x+1f;
+                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
                         
                         
                         Debug.Log("NOTE COUNTER: " + m_NoteCounter);
@@ -208,23 +208,23 @@ public class GridNote : MonoBehaviour
                     {
                         
                         m_NoteCounter++;
-                        TestX.x = TestX.x+1;
-                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = TestX.x});
+                        PositionID.x = PositionID.x+1;
+                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
                         
                         Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(TestX.x + "Else");
+                        Debug.Log(PositionID.x + "Else");
                         break;
                     }
                     case 11:
                     {
                         
                         m_NoteCounter = 0;
-                        TestX.x = TestX.x+1;
-                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = TestX.x});
+                        PositionID.x = PositionID.x+1;
+                        m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
                         
                         
                         Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(TestX.x + "Else");
+                        Debug.Log(PositionID.x + "Else");
                         break;
                     }
                     default:
