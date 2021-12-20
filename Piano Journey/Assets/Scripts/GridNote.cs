@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
+using Melanchall.DryWetMidi.MusicTheory;
 using UnityEngine;
 
 public class GridNote : MonoBehaviour
@@ -34,8 +35,8 @@ public class GridNote : MonoBehaviour
     private TimedEventsManager m_EventManager;
     private ChordsManager m_ChordsManager;
     private TempoMap m_TempoMapManger;
-    private List<Note> m_Notelist;
-    private List <Chord> m_Chordlist;
+    private List<Melanchall.DryWetMidi.Interaction.Note> m_Notelist;
+    private List <Melanchall.DryWetMidi.Interaction.Chord> m_Chordlist;
 
     private List <NoteBox> m_BoxIDList = new List<NoteBox>();
     private int m_BoxID;
@@ -116,6 +117,15 @@ public class GridNote : MonoBehaviour
             } 
         }
 
+        if(Input.GetKey(KeyCode.E))
+        {//Delete
+
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Z))
+        {//Reverse Last Action
+        
+        }
       
 
     }
@@ -145,11 +155,14 @@ public class GridNote : MonoBehaviour
     private void CreateNoteBlock(int x, int y, Vector3 mousePos, Vector3 mousePosUp, bool mouseclick)
     {
         GameObject note = Instantiate(m_Note,mousePos, Quaternion.identity);
+        var noteEndTime = note.transform.position.y + transform.lossyScale.y;
         var noteonEvent = new NoteOnEvent();
         var PositionTest = Mathf.Floor(mousePos.x);
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
+        NotesCollection notes = m_NotesManager.Notes;
+        Melanchall.DryWetMidi.MusicTheory.Note resultingNote;
         
     
 
@@ -170,9 +183,10 @@ public class GridNote : MonoBehaviour
         }
         
         m_sr.transform.position = grid.GetXY(mousePos);
-        PositionID = new Vector3 (-2,0,0);
+    
         if (m_bool == false)
         {
+            PositionID = new Vector3 (-2,0,0);
             m_NoteCounter = 0;
             for (int i = 0; i < 240; i++)
             {
@@ -200,7 +214,7 @@ public class GridNote : MonoBehaviour
                         
                         
                         Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(TestX.x + "Else");
+                        Debug.Log(PositionID.x + "Else");
                         break;
                     }
                 
@@ -250,6 +264,16 @@ public class GridNote : MonoBehaviour
         {
             Debug.Log(result.BoxID);
             Debug.Log(m_AllKeys[result.BoxID]);
+            
+            var ParsedNote = resultingNote.Parse(m_AllKeys[result.BoxID]);
+             notes.Add(new Melanchall.DryWetMidi.Interaction.Note(m_BoxID,4)
+            {
+                Time = Convert.ToInt64(note.transform.position.y),
+                Length = Convert.ToInt64(noteEndTime),
+                Velocity = (SevenBitNumber)45
+
+            });
+           
         }
         else
         {
@@ -271,6 +295,7 @@ public class GridNote : MonoBehaviour
                 }
             }
             m_NoteCounterArray.Add(note);
+           
             m_NoteCounter++;
         }
         
@@ -284,17 +309,22 @@ public class GridNote : MonoBehaviour
     public void LoadFile()
     {
         m_File = MidiFile.Read(m_Path);
-        foreach(var note in m_File.GetNotes())
+/*         foreach(var note in m_File.GetNotes())
         {
             m_Notelist.Add(note);
         }
         foreach (var note in m_File.GetChords())
         {
             m_Chordlist.Add(note);
-        }
+        } */
     }
     public void SaveFile()
     {
+      /*   using (m_NotesManager)
+        {
+            NotesCollection notes = m_NotesManager.Notes;
+            notes.Add()
+        } */
         
     }
 }
