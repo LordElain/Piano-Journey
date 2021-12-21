@@ -161,9 +161,7 @@ public class GridNote : MonoBehaviour
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
-        NotesCollection notes = m_NotesManager.Notes;
-        Melanchall.DryWetMidi.MusicTheory.Note resultingNote;
-        
+        var trackChunk = new TrackChunk();
     
 
 
@@ -198,11 +196,6 @@ public class GridNote : MonoBehaviour
                         m_NoteCounter++;
                         PositionID.x = PositionID.x+1f; 
                         m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
-                        
-                           
-                        
-                        Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(PositionID.x + "If");
                         break;
                     }
                     case 5: case 6: case 7: case 8: case 9: case 10:
@@ -211,10 +204,6 @@ public class GridNote : MonoBehaviour
                         m_NoteCounter++;
                         PositionID.x = PositionID.x+1f;
                         m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
-                        
-                        
-                        Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(PositionID.x + "Else");
                         break;
                     }
                 
@@ -224,9 +213,6 @@ public class GridNote : MonoBehaviour
                         m_NoteCounter++;
                         PositionID.x = PositionID.x+1;
                         m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
-                        
-                        Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(PositionID.x + "Else");
                         break;
                     }
                     case 11:
@@ -235,10 +221,6 @@ public class GridNote : MonoBehaviour
                         m_NoteCounter = 0;
                         PositionID.x = PositionID.x+1;
                         m_BoxIDList.Add(new NoteBox{BoxID = i, BoxPos = PositionID.x});
-                        
-                        
-                        Debug.Log("NOTE COUNTER: " + m_NoteCounter);
-                        Debug.Log(PositionID.x + "Else");
                         break;
                     }
                     default:
@@ -251,7 +233,6 @@ public class GridNote : MonoBehaviour
             }
             m_bool = true;
         }
-        Debug.Log("Rounded Position: " + Mathf.Floor(m_sr.transform.position.x /m_CellSize));
         NoteBox result = m_BoxIDList.Find(
             delegate(NoteBox nb)
             {
@@ -259,28 +240,38 @@ public class GridNote : MonoBehaviour
             }
 
         );
-
-        if(result != null)
+        using (var notesManager = new NotesManager(trackChunk.Events))
         {
-            Debug.Log(result.BoxID);
-            Debug.Log(m_AllKeys[result.BoxID]);
-            
-            var ParsedNote = resultingNote.Parse(m_AllKeys[result.BoxID]);
-             notes.Add(new Melanchall.DryWetMidi.Interaction.Note(m_BoxID,4)
+            NotesCollection notes = notesManager.Notes;
+            if(result != null)
             {
-                Time = Convert.ToInt64(note.transform.position.y),
-                Length = Convert.ToInt64(noteEndTime),
-                Velocity = (SevenBitNumber)45
+                Debug.Log(result.BoxID);
+                Debug.Log(m_AllKeys[result.BoxID]);
+                var allKeyResultNote = m_AllKeys[result.BoxID];
+                string resultNote = Char.ToString(allKeyResultNote[0]);
+                Debug.Log(allKeyResultNote);
+                int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[1]);
 
-            });
-           
-        }
-        else
-        {
-            Debug.Log("ERROR");
-            Debug.Log(result);
-        }
 
+                var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
+                Debug.Log(parsedNote);
+                Debug.Log(resultOctave);
+                //var parsedOctave = Melanchall.DryWetMidi.MusicTheory.Octave.Parse(resultOctave);
+                notes.Add(new Melanchall.DryWetMidi.Interaction.Note(parsedNote.NoteName,resultOctave)
+                {
+                    Time = Convert.ToInt64(note.transform.position.y),
+                    Length = Convert.ToInt64(noteEndTime),
+                    Velocity = (SevenBitNumber)45
+
+                }); 
+            
+            }
+            else
+            {
+                Debug.Log("ERROR");
+                Debug.Log(result);
+            }
+        }
 
         
         if (!m_NoteCounterArray.Equals(note))
