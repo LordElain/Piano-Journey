@@ -270,6 +270,7 @@ MonoBehaviour:
   m_GridWidth: 0
   m_GridHeight: 0
   m_CellSize: 0
+  m_Path: 
 --- !u!1 &408722115
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +435,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756007499}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 75, y: 0, z: -11}
+  m_LocalPosition: {x: 75, y: 20, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1428197829}
@@ -592,6 +593,7 @@ MonoBehaviour:
   m_GridWidth: 81
   m_GridHeight: 100
   m_CellSize: 1.85
+  m_Path: 
 --- !u!223 &807173526
 Canvas:
   m_ObjectHideFlags: 0
@@ -1310,6 +1312,7 @@ MonoBehaviour:
   m_GridWidth: 0
   m_GridHeight: 0
   m_CellSize: 0
+  m_Path: 
 --- !u!1 &1798916824
 GameObject:
   m_ObjectHideFlags: 0

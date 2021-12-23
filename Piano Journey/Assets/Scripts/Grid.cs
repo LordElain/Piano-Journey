@@ -25,9 +25,9 @@ public class Grid
             for (float y= 0; y < gridArray.GetLength(1); y++)
             {
                 //Vertical
-                Debug.DrawLine(GetWorldPosition(Position.x+x-2.4f,Position.y-11f,10), GetWorldPosition(Position.x+x-2.4f,Position.y+y-11f,10), Color.blue, 1000f,false);
+                Debug.DrawLine(GetWorldPosition(Position.x+x-2.4f,Position.y,10), GetWorldPosition(Position.x+x-2.4f,Position.y+y,10), Color.blue, 1000f,false);
                 //Horizontal
-                Debug.DrawLine(GetWorldPosition(Position.x,Position.y+y-11f,10), GetWorldPosition(Position.x-2.4f+x,Position.y+y-11f,10), Color.green, 1000f,false);
+                Debug.DrawLine(GetWorldPosition(Position.x,Position.y+y,10), GetWorldPosition(Position.x-2.4f+x,Position.y+y,10), Color.green, 1000f,false);
             }
         }
         /* Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.green, 1000f,false);

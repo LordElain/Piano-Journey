@@ -250,7 +250,7 @@ public class GridNote : MonoBehaviour
                 var allKeyResultNote = m_AllKeys[result.BoxID];
                 string resultNote = Char.ToString(allKeyResultNote[0]);
                 Debug.Log(allKeyResultNote);
-                int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[1]);
+                int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[allKeyResultNote.Length-1]);
 
 
                 var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
