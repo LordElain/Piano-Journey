@@ -48,12 +48,15 @@ public class GridNote : MonoBehaviour
 
     private bool m_bool;
 
+    public bool m_SaveState;
+
 
     // Start is called before the first frame update
     void Start()
     {
         m_bool = false;
         m_NoteCounter = 0;
+        m_SaveState = false;
         CreateNoteArray();
         Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
         CreateGrid(StartPosition);
@@ -127,6 +130,10 @@ public class GridNote : MonoBehaviour
         
         }
       
+        if (m_SaveState == true)
+        {
+            SaveFile();
+        }
 
     }
 
@@ -240,38 +247,36 @@ public class GridNote : MonoBehaviour
             }
 
         );
-        using (var notesManager = new NotesManager(trackChunk.Events))
-        {
-            NotesCollection notes = notesManager.Notes;
+            m_NotesManager = trackChunk.ManageNotes();
+        
+            NotesCollection notes = m_NotesManager.Notes;
             if(result != null)
             {
-                Debug.Log(result.BoxID);
-                Debug.Log(m_AllKeys[result.BoxID]);
                 var allKeyResultNote = m_AllKeys[result.BoxID];
                 string resultNote = Char.ToString(allKeyResultNote[0]);
-                Debug.Log(allKeyResultNote);
                 int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[allKeyResultNote.Length-1]);
 
 
                 var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
-                Debug.Log(parsedNote);
-                Debug.Log(resultOctave);
-                //var parsedOctave = Melanchall.DryWetMidi.MusicTheory.Octave.Parse(resultOctave);
                 notes.Add(new Melanchall.DryWetMidi.Interaction.Note(parsedNote.NoteName,resultOctave)
                 {
                     Time = Convert.ToInt64(note.transform.position.y),
                     Length = Convert.ToInt64(noteEndTime),
+                    Channel = noteonEvent.Channel,
                     Velocity = (SevenBitNumber)45
 
                 }); 
-            
+            m_NotesManager.SaveChanges();
             }
             else
             {
                 Debug.Log("ERROR");
                 Debug.Log(result);
             }
-        }
+
+            Debug.Log(trackChunk.GetNotes());
+        
+        
 
         
         if (!m_NoteCounterArray.Equals(note))
@@ -311,11 +316,9 @@ public class GridNote : MonoBehaviour
     }
     public void SaveFile()
     {
-      /*   using (m_NotesManager)
-        {
-            NotesCollection notes = m_NotesManager.Notes;
-            notes.Add()
-        } */
+        m_File = new MidiFile();
+        //TimedObjectUtilities.ToFile(m_NotesManager);
+        m_File.Write("Some great song.mid");
         
     }
 }
