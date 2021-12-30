@@ -6,6 +6,7 @@ using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 using UnityEngine;
+using SimpleFileBrowser;
 
 public class GridNote : MonoBehaviour
 {
@@ -49,6 +50,8 @@ public class GridNote : MonoBehaviour
     private bool m_bool;
 
     public bool m_SaveState;
+    public bool m_LoadState;
+    private TrackChunk m_trackChunk = new TrackChunk();
 
 
     // Start is called before the first frame update
@@ -57,6 +60,7 @@ public class GridNote : MonoBehaviour
         m_bool = false;
         m_NoteCounter = 0;
         m_SaveState = false;
+        m_LoadState = false;
         CreateNoteArray();
         Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
         CreateGrid(StartPosition);
@@ -135,6 +139,11 @@ public class GridNote : MonoBehaviour
             SaveFile();
         }
 
+        if (m_LoadState == true)
+        {
+            LoadFile();
+        }
+
     }
 
     private void CreateNoteArray()
@@ -168,7 +177,7 @@ public class GridNote : MonoBehaviour
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
-        var trackChunk = new TrackChunk();
+        
     
 
 
@@ -247,7 +256,7 @@ public class GridNote : MonoBehaviour
             }
 
         );
-            m_NotesManager = trackChunk.ManageNotes();
+            m_NotesManager = m_trackChunk.ManageNotes();
         
             NotesCollection notes = m_NotesManager.Notes;
             if(result != null)
@@ -274,7 +283,7 @@ public class GridNote : MonoBehaviour
                 Debug.Log(result);
             }
 
-            Debug.Log(trackChunk.GetNotes());
+            
         
         
 
@@ -304,6 +313,10 @@ public class GridNote : MonoBehaviour
 
     public void LoadFile()
     {
+        Debug.Log("FILE LOADED");
+        FileBrowser.SetDefaultFilter(".mid");
+        FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
+        StartCoroutine( ShowLoadDialogCoroutine() );
         m_File = MidiFile.Read(m_Path);
 /*         foreach(var note in m_File.GetNotes())
         {
@@ -314,11 +327,26 @@ public class GridNote : MonoBehaviour
             m_Chordlist.Add(note);
         } */
     }
+
+    IEnumerator ShowLoadDialogCoroutine()
+    {
+        yield return FileBrowser.WaitForLoadDialog( FileBrowser.PickMode.FilesAndFolders, true, null, null, "Load Files and Folders", "Load" );
+        Debug.Log( FileBrowser.Success );
+
+		if( FileBrowser.Success )
+		{
+			// Print paths of the selected files (FileBrowser.Result) (null, if FileBrowser.Success is false)
+			for( int i = 0; i < FileBrowser.Result.Length; i++ )
+				Debug.Log( FileBrowser.Result[i] );
+
+		}
+    }
     public void SaveFile()
     {
         m_File = new MidiFile();
+        m_File.Chunks.Add(m_trackChunk);
         //TimedObjectUtilities.ToFile(m_NotesManager);
         m_File.Write("Some great song.mid");
-        
+        m_SaveState = false;
     }
 }
