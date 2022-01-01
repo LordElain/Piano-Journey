@@ -45,6 +45,7 @@ public class GridNote : MonoBehaviour
 
     private MidiFile m_File;
     public string m_Path;
+    public string m_FileName;
     private Vector3 PositionID;
 
     private bool m_bool;
@@ -61,6 +62,8 @@ public class GridNote : MonoBehaviour
         m_NoteCounter = 0;
         m_SaveState = false;
         m_LoadState = false;
+        FileBrowser.SetDefaultFilter(".mid");
+        FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
         CreateNoteArray();
         Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
         CreateGrid(StartPosition);
@@ -313,11 +316,11 @@ public class GridNote : MonoBehaviour
 
     public void LoadFile()
     {
+        m_LoadState = false;
         Debug.Log("FILE LOADED");
-        FileBrowser.SetDefaultFilter(".mid");
-        FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
         StartCoroutine( ShowLoadDialogCoroutine() );
-        m_File = MidiFile.Read(m_Path);
+        
+        
 /*         foreach(var note in m_File.GetNotes())
         {
             m_Notelist.Add(note);
@@ -337,16 +340,43 @@ public class GridNote : MonoBehaviour
 		{
 			// Print paths of the selected files (FileBrowser.Result) (null, if FileBrowser.Success is false)
 			for( int i = 0; i < FileBrowser.Result.Length; i++ )
-				Debug.Log( FileBrowser.Result[i] );
-
+            {
+                Debug.Log( FileBrowser.Result[i] );
+                
+            }
+			m_Path = FileBrowser.Result[0];	
+            m_File = MidiFile.Read(m_Path);
+            Debug.Log(m_File);
 		}
     }
     public void SaveFile()
     {
-        m_File = new MidiFile();
-        m_File.Chunks.Add(m_trackChunk);
-        //TimedObjectUtilities.ToFile(m_NotesManager);
-        m_File.Write("Some great song.mid");
         m_SaveState = false;
+        Debug.Log("FILE SAVING");
+        StartCoroutine(ShowSaveDialogCoroutine());
+       
+        
+    }
+
+    IEnumerator ShowSaveDialogCoroutine()
+    {
+        yield return FileBrowser.WaitForSaveDialog( FileBrowser.PickMode.FilesAndFolders, true, null, null, "Save Files and Folders", "Save" );
+        Debug.Log( FileBrowser.Success );
+
+		if( FileBrowser.Success )
+		{
+			// Print paths of the selected files (FileBrowser.Result) (null, if FileBrowser.Success is false)
+			for( int i = 0; i < FileBrowser.Result.Length; i++ )
+            {
+                Debug.Log( FileBrowser.Result[i] );
+                
+            }
+			m_Path = FileBrowser.Result[0];	
+            m_Path = m_Path + ".mid";
+            m_File = new MidiFile();
+            m_File.Chunks.Add(m_trackChunk);
+        //TimedObjectUtilities.ToFile(m_NotesManager);
+        m_File.Write(m_Path,true);
+		}
     }
 }
