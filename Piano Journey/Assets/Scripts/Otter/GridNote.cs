@@ -45,13 +45,14 @@ public class GridNote : MonoBehaviour
 
     private MidiFile m_File;
     public string m_Path;
-    public string m_FileName;
+    public string m_FileName; 
     private Vector3 PositionID;
 
     private bool m_bool;
 
     public bool m_SaveState;
     public bool m_LoadState;
+    public bool m_ClickState;
     private TrackChunk m_trackChunk = new TrackChunk();
 
 
@@ -62,6 +63,7 @@ public class GridNote : MonoBehaviour
         m_NoteCounter = 0;
         m_SaveState = false;
         m_LoadState = false;
+        m_ClickState = true;
         FileBrowser.SetDefaultFilter(".mid");
         FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
         CreateNoteArray();
@@ -78,7 +80,7 @@ public class GridNote : MonoBehaviour
         
         x = Mathf.FloorToInt(18.99999f);
         y = Mathf.FloorToInt(18.99999f);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && m_ClickState == true)
         {
             //Right Hand Notes
             mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
@@ -88,7 +90,7 @@ public class GridNote : MonoBehaviour
             CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && m_ClickState == true)
         {
             //Left Hand Notes
             mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
@@ -108,7 +110,7 @@ public class GridNote : MonoBehaviour
             CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
         }   */
 
-        if (Input.GetKey(KeyCode.Mouse2) && Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Mouse2) && Input.GetKey(KeyCode.Space) && m_ClickState == true)
         {
             newPos = new Vector3();
             newPos.y = Input.GetAxis("Mouse Y") * dragSpeed * Time.deltaTime;
@@ -127,23 +129,25 @@ public class GridNote : MonoBehaviour
             } 
         }
 
-        if(Input.GetKey(KeyCode.E))
+        if(Input.GetKey(KeyCode.E) && m_ClickState == true)
         {//Delete
 
         }
 
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Z))
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Z) && m_ClickState == true)
         {//Reverse Last Action
         
         }
       
         if (m_SaveState == true)
         {
+            m_ClickState = false;
             SaveFile();
         }
 
         if (m_LoadState == true)
         {
+            m_ClickState = false;
             LoadFile();
         }
 
@@ -346,8 +350,45 @@ public class GridNote : MonoBehaviour
             }
 			m_Path = FileBrowser.Result[0];	
             m_File = MidiFile.Read(m_Path);
-            Debug.Log(m_File);
+            
+            var m_Duration = m_File.GetDuration<MetricTimeSpan>();
+            TempoMap tempo = m_File.GetTempoMap();
+            IEnumerable<Melanchall.DryWetMidi.Interaction.Note> notes = m_File.GetNotes();
+
+            var notePos = new Vector3(-4f,0,0);
+            foreach (var note in notes)
+            {
+                float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
+                int noteNumber = note.NoteNumber;
+                var noteName = note.NoteName.ToString();
+                var noteOctave = note.Octave.ToString();
+                string noteNameOctave = noteName + noteOctave;
+                float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
+                float noteChannel = note.Channel;
+
+                var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
+                Debug.Log(NotePosition);
+                
+                if(noteName == "B" || noteName == "E")
+                {
+                    NotePosition.x = NotePosition.x - 2.5f;
+                }
+                else
+                {
+                    NotePosition.x = NotePosition.x - 1.5f;
+                }
+                GameObject noteObject = Instantiate(m_Note, notePos, Quaternion.identity);
+                
+                //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName);
+                noteObject.SetActive(true);
+                noteObject.name = noteNameOctave;
+                noteObject.tag = "Note";
+            }     
+            
+
 		}
+        m_ClickState = true;
     }
     public void SaveFile()
     {
@@ -378,5 +419,6 @@ public class GridNote : MonoBehaviour
         //TimedObjectUtilities.ToFile(m_NotesManager);
         m_File.Write(m_Path,true);
 		}
+        m_ClickState = true;
     }
 }

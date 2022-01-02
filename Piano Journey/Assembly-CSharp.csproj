@@ -43,7 +43,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\Playback\PlaybackSettings.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\MissedEndOfTrackPolicy.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Octave\OctaveParser.cs" />
-     <Compile Include="Assets\Scripts\Grid.cs" />
+     <Compile Include="Assets\Scripts\Otter\Grid.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\Quantizer\Utilities\NotesQuantizerUtilities.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ChunksConverters\MultiSequenceChunksConverter.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Note\NoteParser.cs" />
@@ -59,10 +59,10 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Exceptions\MidiException.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\UnexpectedTrackChunksCountPolicy.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Interval\IntervalQuality.cs" />
-     <Compile Include="Assets\Scripts\NotesController.cs" />
+     <Compile Include="Assets\Scripts\Otter\NotesController.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Chunks\Info\ChunkTypesCollection.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Base\ChannelEvent.cs" />
-     <Compile Include="Assets\Scripts\KeyGameLogic.cs" />
+     <Compile Include="Assets\Scripts\Otter\KeyGameLogic.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\MidiFile.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\Playback\PlaybackEventMetadata\TimedEventPlaybackEventMetadata.cs" />
      <Compile Include="Assets\Inputs\InputMaster.cs" />
@@ -81,7 +81,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\Notes\Utilities\GetNotesAndRests\RestSeparationPolicy.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Scale\ScaleIntervals.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Meta\CopyrightNoticeEvent.cs" />
-     <Compile Include="Assets\Scripts\DeviceQuery.cs" />
+     <Compile Include="Assets\Scripts\Mini\DeviceQuery.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\MidiFileSplitter\MidiFileSplitter.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\NotesMerger\VelocityMergers\VelocityMerger.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\DecodeTextCallback.cs" />
@@ -91,7 +91,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\Notes\NoteDetectionSettings.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\OutputDevice\MidiEventSentEventArgs.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Common\SmpteFormat.cs" />
-     <Compile Include="Assets\Scripts\PlayByInputAction.cs" />
+     <Compile Include="Assets\Scripts\Mini\PlayByInputAction.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ChunksConverters\ChunksConverterFactory.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Channel\NoteOffEvent.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\LengthedObject\LengthedObjectUtilities.cs" />
@@ -145,7 +145,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\NotesMerger\NotesMergingSettings.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Standards\GeneralMidi\GeneralMidi.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\MidiFile\ToCsv\EventParametersGetterProvider.cs" />
-     <Compile Include="Assets\Scripts\MIDI_Input.cs" />
+     <Compile Include="Assets\Scripts\Otter\MIDI_Input.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Chunks\UnknownChunk.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Utilities\TrackChunkUtilities.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimedObject\INotifyTimeChanged.cs" />
@@ -197,7 +197,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Standards\GeneralSound\Percussion\GeneralSoundJazzPercussion.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\Playback\Snapping\SnapPoint.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\SystemRealTime\TimingClockEvent.cs" />
-     <Compile Include="Assets\Scripts\AxisActionConverter.cs" />
+     <Compile Include="Assets\Scripts\Mini\AxisActionConverter.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Standards\GeneralSound\Percussion\GeneralSoundOrchestraPercussion.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\EndOfTrackStoringPolicy.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Writers\SysExEventWriter.cs" />
@@ -207,7 +207,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\MidiFile\FromCsv\ParameterParser.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Composing\Actions\MoveToTimeAction.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\TimeDivision\SmpteTimeDivision.cs" />
-     <Compile Include="Assets\Scripts\ThreadTickGenerator.cs" />
+     <Compile Include="Assets\Scripts\Otter\ThreadTickGenerator.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Writers\MetaEventWriter.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\Quantizer\Base\QuantizingSettings.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\MidiFileSplitter\Settings\SplitFileByNotesSettings.cs" />
@@ -226,7 +226,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\Common\CsvRecord.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\ExtraTrackChunkPolicy.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimedObject\TimedObjectsComparer.cs" />
-     <Compile Include="Assets\Scripts\GridNote.cs" />
+     <Compile Include="Assets\Scripts\Otter\GridNote.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ChunksConverters\MultiTrackChunksConverter.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Channel\NoteOnEvent.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Base\SystemRealTimeEvent.cs" />
@@ -288,7 +288,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Composing\Actions\SetProgram\SetGeneralMidiProgramAction.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\Notes\Utilities\ResizeNotesUtilities.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Composing\Descriptors\NoteDescriptor.cs" />
-     <Compile Include="Assets\Scripts\DeviceCallback.cs" />
+     <Compile Include="Assets\Scripts\Mini\DeviceCallback.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Composing\Actions\AddAnchorAction.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Exceptions\UnexpectedTrackChunksCountException.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\MidiReader.cs" />
@@ -332,7 +332,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\Quantizer\TimedEventsQuantizer.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\Clock\TickGenerator\TickGenerator.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Composing\PatternActionResult.cs" />
-     <Compile Include="Assets\Scripts\ScaleByInputValue.cs" />
+     <Compile Include="Assets\Scripts\Mini\ScaleByInputValue.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimedObject\TimeChangedEventArgs.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Note\Note.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\MidiFileFormat.cs" />
@@ -405,7 +405,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Common\DataTypes\SevenBitNumber.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\GetObjects\Settings\RestDetectionSettings.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimeSpan\Representations\MetricTimeSpan.cs" />
-     <Compile Include="Assets\Scripts\CustomOutput.cs" />
+     <Compile Include="Assets\Scripts\drywetmidi\CustomOutput.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Meta\SmpteOffsetEvent.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Readers\SystemCommonEventReader.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Collections\EventsCollection.cs" />
@@ -450,7 +450,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\NotesMerger\VelocityMergers\AverageVelocityMerger.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ChunksConverters\SingleTrackChunksConverter.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TempoMap\Tempo.cs" />
-     <Compile Include="Assets\Scripts\GameNote.cs" />
+     <Compile Include="Assets\Scripts\Otter\GameNote.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimedEvents\TimedEventsManagingUtilities.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\LengthedObject\ILengthedObject.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimeSpan\Converters\MathTimeSpanConverter.cs" />
@@ -461,7 +461,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\Chords\ChordsCollection.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Common\Parsing\ParsingStatus.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\Parameters\Registered\ModulationDepthRangeParameter.cs" />
-     <Compile Include="Assets\Scripts\PianoKeys.cs" />
+     <Compile Include="Assets\Scripts\Otter\PianoKeys.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\Notes\NotesBuilder.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Exceptions\InvalidMidiTimeCodeComponentException.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Meta\MarkerEvent.cs" />
@@ -502,7 +502,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimeSpan\Parsers\MusicalTimeSpanParser.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Writers\SystemRealTimeEventWriter.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Standards\GeneralMidi2\Percussion\GeneralMidi2RoomPercussion.cs" />
-     <Compile Include="Assets\Scripts\NoteBox.cs" />
+     <Compile Include="Assets\Scripts\Otter\NoteBox.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\Common\CsvReader.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Equality\Event\MidiEventEquality.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Standards\GeneralMidi2\Percussion\GeneralMidi2ElectronicPercussion.cs" />
@@ -523,7 +523,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Writers\EventWriterFactory.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Readers\SysExEventReader.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\ZeroLengthDataPolicy.cs" />
-     <Compile Include="Assets\Scripts\ControlCallback.cs" />
+     <Compile Include="Assets\Scripts\Mini\ControlCallback.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\Base\MetaEvent.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\MidiFile\FromCsv\TypeParser.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Note\NoteUtilities.cs" />
@@ -534,7 +534,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Events\SystemCommon\MidiTimeCodeComponent.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Standards\GeneralSound\Percussion\GeneralSoundTr808Percussion.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\ReadingSettings\InvalidMetaEventParameterValuePolicy.cs" />
-     <Compile Include="Assets\Scripts\NoteCallback.cs" />
+     <Compile Include="Assets\Scripts\Mini\NoteCallback.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\OutputDevice\OutputDeviceType.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimedObject\TimedObjectsCollection.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\CsvUtilities.cs" />
