@@ -596,7 +596,7 @@ MonoBehaviour:
   - 
   - 
   m_Note: {fileID: 1798916824}
-  dragSpeed: 20
+  dragSpeed: 5
   m_GridWidth: 81
   m_GridHeight: 100
   m_CellSize: 1.85

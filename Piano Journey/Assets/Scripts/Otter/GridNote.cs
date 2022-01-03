@@ -53,6 +53,7 @@ public class GridNote : MonoBehaviour
     public bool m_SaveState;
     public bool m_LoadState;
     public bool m_ClickState;
+    private bool m_AllowedPlay;
     private TrackChunk m_trackChunk = new TrackChunk();
 
 
@@ -64,6 +65,7 @@ public class GridNote : MonoBehaviour
         m_SaveState = false;
         m_LoadState = false;
         m_ClickState = true;
+        m_AllowedPlay = true;
         FileBrowser.SetDefaultFilter(".mid");
         FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
         CreateNoteArray();
@@ -87,7 +89,8 @@ public class GridNote : MonoBehaviour
             mousePosUp = new Vector3 (0,0,0);
             mousePos.z = 0;
             m_LeftClick = true;
-            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
+            m_AllowedPlay = true;
+            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick, m_AllowedPlay);
         }
 
         if (Input.GetMouseButtonDown(1) && m_ClickState == true)
@@ -97,7 +100,8 @@ public class GridNote : MonoBehaviour
             mousePosUp = new Vector3 (0,0,0);
             mousePos.z = 0;
             m_LeftClick = false;
-            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
+            m_AllowedPlay = true;
+            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick,m_AllowedPlay);
         } 
 
         /* if (Input.GetMouseButton(0))
@@ -175,7 +179,7 @@ public class GridNote : MonoBehaviour
     }
 
 
-    private void CreateNoteBlock(int x, int y, Vector3 mousePos, Vector3 mousePosUp, bool mouseclick)
+    private void CreateNoteBlock(int x, int y, Vector3 mousePos, Vector3 mousePosUp, bool mouseclick, bool isAllowedPlay)
     {
         GameObject note = Instantiate(m_Note,mousePos, Quaternion.identity);
         var noteEndTime = note.transform.position.y + transform.lossyScale.y;
@@ -184,11 +188,8 @@ public class GridNote : MonoBehaviour
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
-        
+        note.SetActive(true);   
     
-
-
-        //CheckForParent(m_NoteCounterArray);
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
         m_sr.sprite = m_NoteSprite;
 
@@ -323,16 +324,6 @@ public class GridNote : MonoBehaviour
         m_LoadState = false;
         Debug.Log("FILE LOADED");
         StartCoroutine( ShowLoadDialogCoroutine() );
-        
-        
-/*         foreach(var note in m_File.GetNotes())
-        {
-            m_Notelist.Add(note);
-        }
-        foreach (var note in m_File.GetChords())
-        {
-            m_Chordlist.Add(note);
-        } */
     }
 
     IEnumerator ShowLoadDialogCoroutine()
@@ -354,8 +345,13 @@ public class GridNote : MonoBehaviour
             var m_Duration = m_File.GetDuration<MetricTimeSpan>();
             TempoMap tempo = m_File.GetTempoMap();
             IEnumerable<Melanchall.DryWetMidi.Interaction.Note> notes = m_File.GetNotes();
-
-            var notePos = new Vector3(-4f,0,0);
+            m_AllowedPlay = false;
+            int x,y;
+        
+            x = Mathf.FloorToInt(18.99999f);
+            y = Mathf.FloorToInt(18.99999f);
+            bool channelCheck = false;
+            var notePos = new Vector3(-4f,2f,0);
             foreach (var note in notes)
             {
                 float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
@@ -365,9 +361,10 @@ public class GridNote : MonoBehaviour
                 string noteNameOctave = noteName + noteOctave;
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
                 float noteChannel = note.Channel;
+                Debug.Log("NoteChannel: " + noteChannel);
 
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
-                Debug.Log(NotePosition);
+              
                 
                 if(noteName == "B" || noteName == "E")
                 {
@@ -377,13 +374,21 @@ public class GridNote : MonoBehaviour
                 {
                     NotePosition.x = NotePosition.x - 1.5f;
                 }
-                GameObject noteObject = Instantiate(m_Note, notePos, Quaternion.identity);
+
+                if(noteChannel == 0)
+                {
+                    channelCheck = true;
+                }
+                else
+                {
+                    channelCheck = false;
+                }
+                Vector3 obj = new Vector3(NotePosition.x,noteTime,-1);
                 
-                //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName);
-                noteObject.SetActive(true);
-                noteObject.name = noteNameOctave;
-                noteObject.tag = "Note";
+                CreateNoteBlock(x,y,obj,obj,channelCheck,false);
+     
+
+
             }     
             
 
