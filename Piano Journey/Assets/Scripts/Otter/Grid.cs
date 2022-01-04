@@ -48,7 +48,7 @@ public class Grid
         worldPosition.y = Mathf.Floor(worldPosition.y / cellSize)+0.01f;
         
         Gridposition = new Vector3(worldPosition.x * cellSize, worldPosition.y * cellSize,0);
-        Debug.Log("Neue Position: " + Gridposition);
+//        Debug.Log("Neue Position: " + Gridposition);
         return Gridposition;
 
     }

@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 using UnityEngine;
 using SimpleFileBrowser;
+using Melanchall.DryWetMidi.Devices;
 
 public class GridNote : MonoBehaviour
 {
@@ -54,6 +56,9 @@ public class GridNote : MonoBehaviour
     public bool m_LoadState;
     public bool m_ClickState;
     private bool m_AllowedPlay;
+    private bool m_PlayStatus;
+    public static Playback m_playback;
+    private OutputDevice[] m_OutputDevice;
     private TrackChunk m_trackChunk = new TrackChunk();
 
 
@@ -68,6 +73,7 @@ public class GridNote : MonoBehaviour
         m_AllowedPlay = true;
         FileBrowser.SetDefaultFilter(".mid");
         FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
+        m_File = new MidiFile();
         CreateNoteArray();
         Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
         CreateGrid(StartPosition);
@@ -114,7 +120,7 @@ public class GridNote : MonoBehaviour
             CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick);
         }   */
 
-        if (Input.GetKey(KeyCode.Mouse2) && Input.GetKey(KeyCode.Space) && m_ClickState == true)
+        if (Input.GetKey(KeyCode.Mouse2) && m_ClickState == true)
         {
             newPos = new Vector3();
             newPos.y = Input.GetAxis("Mouse Y") * dragSpeed * Time.deltaTime;
@@ -153,6 +159,24 @@ public class GridNote : MonoBehaviour
         {
             m_ClickState = false;
             LoadFile();
+        }
+
+        if (Input.GetKey(KeyCode.Space) && m_ClickState == true && m_PlayStatus == false)
+        {
+            Playback(m_File);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && m_ClickState == true && m_PlayStatus == true)
+        {
+           
+            if (m_playback.IsRunning == true)
+            {
+                m_playback.Stop();
+                Debug.Log("Playback stopped");
+                m_PlayStatus = false;
+            }
+           
+            
         }
 
     }
@@ -283,7 +307,8 @@ public class GridNote : MonoBehaviour
                     Velocity = (SevenBitNumber)45
 
                 }); 
-            m_NotesManager.SaveChanges();
+                m_NotesManager.SaveChanges();
+                
             }
             else
             {
@@ -314,11 +339,6 @@ public class GridNote : MonoBehaviour
         
     }
 
-    private void CheckForParent (List<int> NoteArray)
-    {
-
-    }
-
     public void LoadFile()
     {
         m_LoadState = false;
@@ -329,8 +349,7 @@ public class GridNote : MonoBehaviour
     IEnumerator ShowLoadDialogCoroutine()
     {
         yield return FileBrowser.WaitForLoadDialog( FileBrowser.PickMode.FilesAndFolders, true, null, null, "Load Files and Folders", "Load" );
-        Debug.Log( FileBrowser.Success );
-
+       
 		if( FileBrowser.Success )
 		{
 			// Print paths of the selected files (FileBrowser.Result) (null, if FileBrowser.Success is false)
@@ -359,10 +378,7 @@ public class GridNote : MonoBehaviour
                 var noteName = note.NoteName.ToString();
                 var noteOctave = note.Octave.ToString();
                 string noteNameOctave = noteName + noteOctave;
-                float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
                 float noteChannel = note.Channel;
-                Debug.Log("NoteChannel: " + noteChannel);
-
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
               
                 
@@ -419,11 +435,31 @@ public class GridNote : MonoBehaviour
             }
 			m_Path = FileBrowser.Result[0];	
             m_Path = m_Path + ".mid";
-            m_File = new MidiFile();
-            m_File.Chunks.Add(m_trackChunk);
         //TimedObjectUtilities.ToFile(m_NotesManager);
+        m_File.Chunks.Add(m_trackChunk);
         m_File.Write(m_Path,true);
 		}
         m_ClickState = true;
+    }
+
+    private void Playback(MidiFile File)
+    {
+        Debug.Log("Playback Function");
+        m_OutputDevice = OutputDevice.GetAll().ToArray();
+        m_playback = File.GetPlayback(m_OutputDevice[0]);
+        Debug.Log("Infos: " + m_OutputDevice[0] + " " + File.IsEmpty());
+        m_playback.InterruptNotesOnStop = true;
+        m_playback.Start(); 
+        m_playback.Loop = true;
+        m_PlayStatus = true;
+        Debug.Log(m_PlayStatus);
+    }
+
+    private void OnApplicationQuit()
+    {
+            m_playback.Stop();
+            m_playback.Dispose();
+            PlaybackCurrentTimeWatcher.Instance.Dispose();
+            m_OutputDevice[0].Dispose();
     }
 }
