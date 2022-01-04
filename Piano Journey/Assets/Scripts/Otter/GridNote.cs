@@ -57,9 +57,10 @@ public class GridNote : MonoBehaviour
     public bool m_ClickState;
     private bool m_AllowedPlay;
     private bool m_PlayStatus;
-    public static Playback m_playback;
+    public Playback m_playback;
     private OutputDevice[] m_OutputDevice;
     private TrackChunk m_trackChunk = new TrackChunk();
+    private bool m_StatusForPlayback;
 
 
     // Start is called before the first frame update
@@ -161,22 +162,20 @@ public class GridNote : MonoBehaviour
             LoadFile();
         }
 
-        if (Input.GetKey(KeyCode.Space) && m_ClickState == true && m_PlayStatus == false)
+        if (Input.GetKeyDown(KeyCode.Space) && m_ClickState == true)
         {
-            Playback(m_File);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && m_ClickState == true && m_PlayStatus == true)
-        {
-           
-            if (m_playback.IsRunning == true)
+            Playback(m_File, m_StatusForPlayback);
+            if(m_PlayStatus == true) 
             {
+
                 m_playback.Stop();
-                Debug.Log("Playback stopped");
                 m_PlayStatus = false;
             }
-           
-            
+            else
+            {
+                m_PlayStatus = true;
+                m_playback.Start();
+            }
         }
 
     }
@@ -442,17 +441,18 @@ public class GridNote : MonoBehaviour
         m_ClickState = true;
     }
 
-    private void Playback(MidiFile File)
+    private void Playback(MidiFile File, bool Status)
     {
-        Debug.Log("Playback Function");
-        m_OutputDevice = OutputDevice.GetAll().ToArray();
-        m_playback = File.GetPlayback(m_OutputDevice[0]);
-        Debug.Log("Infos: " + m_OutputDevice[0] + " " + File.IsEmpty());
-        m_playback.InterruptNotesOnStop = true;
-        m_playback.Start(); 
-        m_playback.Loop = true;
-        m_PlayStatus = true;
-        Debug.Log(m_PlayStatus);
+        if(Status == false)
+        {
+            Debug.Log("Playback Function");
+            m_OutputDevice = OutputDevice.GetAll().ToArray();
+            m_playback = File.GetPlayback(m_OutputDevice[0]);
+            m_playback.InterruptNotesOnStop = true;
+            m_playback.Start(); 
+            m_playback.Loop = true;
+            m_StatusForPlayback = true;
+        }
     }
 
     private void OnApplicationQuit()
