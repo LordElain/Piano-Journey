@@ -1398,6 +1398,7 @@ GameObject:
   - component: {fileID: 1798916829}
   - component: {fileID: 1798916828}
   - component: {fileID: 1798916827}
+  - component: {fileID: 1798916830}
   m_Layer: 0
   m_Name: Note
   m_TagString: Note
@@ -1532,3 +1533,16 @@ MonoBehaviour:
   m_ZPos: 60
   m_Text: {fileID: 1798916827}
   m_NoteName: 
+--- !u!65 &1798916830
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798916824}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.18, y: 0.18, z: 0.20000003}
+  m_Center: {x: 0.09, y: 0.09, z: 0}

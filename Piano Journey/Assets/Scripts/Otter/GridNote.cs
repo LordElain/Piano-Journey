@@ -62,7 +62,6 @@ public class GridNote : MonoBehaviour
     private TrackChunk m_trackChunk = new TrackChunk();
     private bool m_StatusForPlayback;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -140,15 +139,12 @@ public class GridNote : MonoBehaviour
             } 
         }
 
-        if(Input.GetKey(KeyCode.E) && m_ClickState == true)
+        if(Input.GetKeyDown(KeyCode.E) && m_ClickState == true)
         {//Delete
-
+            mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+            DeleteBlock(mousePos);
         }
 
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Z) && m_ClickState == true)
-        {//Reverse Last Action
-        
-        }
       
         if (m_SaveState == true)
         {
@@ -212,6 +208,7 @@ public class GridNote : MonoBehaviour
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
         note.SetActive(true);   
+        note.tag = "Note";
     
         m_NoteSprite = Sprite.Create(m_Tex, new Rect(0f,0f,m_Tex.width,m_Tex.height),new Vector2(0,0),100f);
         m_sr.sprite = m_NoteSprite;
@@ -332,12 +329,36 @@ public class GridNote : MonoBehaviour
                 }
             }
             m_NoteCounterArray.Add(note);
-           
             m_NoteCounter++;
         }
         
     }
-
+    
+    public void DeleteBlock(Vector3 MousePos)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+ 
+        Physics.Raycast(ray, out hit);
+        GameObject result = m_NoteCounterArray.Find(
+            delegate(GameObject ob)
+            {
+                return ob.transform.name == hit.transform.name;
+            });
+            if (result != null)
+            {
+           
+                m_NoteCounterArray.Remove(result);
+                result.SetActive(false);
+                Destroy(result);
+            }
+            else
+            {
+                Debug.Log("NO HIT");
+            }
+        
+      
+    }
     public void LoadFile()
     {
         m_LoadState = false;
