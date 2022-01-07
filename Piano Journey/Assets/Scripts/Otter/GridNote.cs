@@ -478,9 +478,17 @@ public class GridNote : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (m_playback != null)
+        {
             m_playback.Stop();
             m_playback.Dispose();
-            PlaybackCurrentTimeWatcher.Instance.Dispose();
+        }
+            
+        PlaybackCurrentTimeWatcher.Instance.Dispose();
+        if (m_OutputDevice != null)
+        {
             m_OutputDevice[0].Dispose();
+        }
+        
     }
 }
