@@ -18,7 +18,14 @@ public class Twitch : MonoBehaviour
     private StreamReader m_reader; // 3
     private StreamWriter m_writer; 
     private float m_reconnectTimer; // 4 
-    private float m_reconnectAfter; 
+    private float m_reconnectAfter;
+
+    [System.Serializable]
+    public class ChatMessage
+    {
+        public string user;
+        public string message;
+    } 
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +70,7 @@ public class Twitch : MonoBehaviour
         
     }
 
-    public void ReadChat()
+    public ChatMessage ReadChat()
     {
         if (m_twitchClient.Available > 0) // 1
         {
@@ -73,22 +80,25 @@ public class Twitch : MonoBehaviour
 
             if (message.Contains("PRIVMSG")) // 2
             {
-                //Get the users name by splitting it from the string
-                var splitPoint = message.IndexOf("!", 1);
-                var chatName = message.Substring(0, splitPoint);
+                int splitPoint = message.IndexOf("!", 1); // 2
+                string chatName = message.Substring(0, splitPoint); 
                 chatName = chatName.Substring(1);
 
-                //Get the users message by splitting it from the string
-                splitPoint = message.IndexOf(":", 1);
+                //Get the message
+                splitPoint = message.IndexOf(":", 1); 
                 message = message.Substring(splitPoint + 1);
-                print(String.Format("{0}: {1}", chatName, message));
-                //chatBox.text = chatBox.text + "\n" + String.Format("{0}: {1}", chatName, message);
+                ChatMessage chatMessage = new ChatMessage(); // 3
+                chatMessage.user = chatName;
+                chatMessage.message = message.ToLower();
+                return chatMessage;
+                
             }
         }
         else
         {
             print("NOT AVAILABLE");
         }
+        return null; // 4
     }
 
 }

@@ -405,9 +405,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d5047eedd8c944983ba5ae014a717b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_username: Elain
+  m_username: elain
   m_password: oauth:i5084z44p661baj6j4dhfgqxmoky0m
-  m_channelName: Elain
+  m_channelName: elain
 --- !u!1 &740452682
 GameObject:
   m_ObjectHideFlags: 0

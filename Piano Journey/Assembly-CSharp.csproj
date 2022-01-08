@@ -441,6 +441,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Chord\ChordParser.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\Quantizer\Base\Quantizer.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\MusicTheory\Chord\Chord.cs" />
+     <Compile Include="Assets\Scripts\Otter\Twitch.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Core\Exceptions\UnknownChunkException.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\MidiDeviceException.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Common\MathUtilities.cs" />
@@ -538,7 +539,6 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\OutputDevice\OutputDeviceType.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimedObject\TimedObjectsCollection.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\CsvUtilities.cs" />
-     <Compile Include="Assets\Scripts\Otter\Twitch.cs" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\MultiTrack\Middle\pilgrim.txt" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\MultiSequence\Large\tiedemo.txt" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\SingleTrack\Small\12str.txt" />
