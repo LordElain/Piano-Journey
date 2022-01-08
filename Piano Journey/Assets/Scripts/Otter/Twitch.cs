@@ -101,19 +101,19 @@ public class Twitch : MonoBehaviour
     private void GameInputs(string ChatInputs)
     {
         Debug.Log(ChatInputs);
-        var msg = ChatInputs.IndexOf(" ");
+        var msg = ChatInputs.IndexOf("-");
         var commandString = ChatInputs.Substring(0,msg);
         var commandSong = ChatInputs.Substring(msg+1);
         Debug.Log("command: " + commandString);
         Debug.Log("command: " + commandSong);
-        if(commandString.ToLower() == "!padd")
+        if(commandString.ToLower() == "!sr")
         {
             Debug.Log("ADD COMMAND");
             Debug.Log(commandSong);
             m_SongList.Add(commandSong);
             Debug.Log(m_SongList.Count);
         }
-        if(commandString.ToLower() == "!pdel")
+        if(commandString.ToLower() == "!del")
         {
             Debug.Log("DELETE COMMAND");
             m_SongList.Remove(commandSong);
