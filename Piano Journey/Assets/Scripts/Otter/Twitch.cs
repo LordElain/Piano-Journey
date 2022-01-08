@@ -20,6 +20,9 @@ public class Twitch : MonoBehaviour
     private float m_reconnectTimer; // 4 
     private float m_reconnectAfter;
 
+     
+    public List<String> m_SongList = new List<String>();
+
     [System.Serializable]
     public class ChatMessage
     {
@@ -70,35 +73,51 @@ public class Twitch : MonoBehaviour
         
     }
 
-    public ChatMessage ReadChat()
+    public void ReadChat() // 1
     {
-        if (m_twitchClient.Available > 0) // 1
+        if (m_twitchClient.Available > 0)
         {
             string message = m_reader.ReadLine();
-            Debug.Log(message);
-            
 
-            if (message.Contains("PRIVMSG")) // 2
+            if (message.Contains("PRIVMSG"))
             {
-                int splitPoint = message.IndexOf("!", 1); // 2
-                string chatName = message.Substring(0, splitPoint); 
+                //Get the users name by splitting it from the string
+                var splitPoint = message.IndexOf("!", 1);
+                var chatName = message.Substring(0, splitPoint);
                 chatName = chatName.Substring(1);
 
-                //Get the message
-                splitPoint = message.IndexOf(":", 1); 
+                //Get the users message by splitting it from the string
+                splitPoint = message.IndexOf(":", 1);
                 message = message.Substring(splitPoint + 1);
-                ChatMessage chatMessage = new ChatMessage(); // 3
-                chatMessage.user = chatName;
-                chatMessage.message = message.ToLower();
-                return chatMessage;
-                
+                print(String.Format("{0}: {1}", chatName, message));
+
+                GameInputs(message);
             }
+            
         }
-        else
-        {
-            print("NOT AVAILABLE");
-        }
-        return null; // 4
     }
 
+
+    private void GameInputs(string ChatInputs)
+    {
+        Debug.Log(ChatInputs);
+        var msg = ChatInputs.IndexOf(" ");
+        var commandString = ChatInputs.Substring(0,msg);
+        var commandSong = ChatInputs.Substring(msg+1);
+        Debug.Log("command: " + commandString);
+        Debug.Log("command: " + commandSong);
+        if(commandString.ToLower() == "!padd")
+        {
+            Debug.Log("ADD COMMAND");
+            Debug.Log(commandSong);
+            m_SongList.Add(commandSong);
+            Debug.Log(m_SongList.Count);
+        }
+        if(commandString.ToLower() == "!pdel")
+        {
+            Debug.Log("DELETE COMMAND");
+            m_SongList.Remove(commandSong);
+            Debug.Log(m_SongList.Count);
+        }
+    }
 }
