@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleFileBrowser;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuLogic : MonoBehaviour
 {
@@ -13,8 +14,15 @@ public class MainMenuLogic : MonoBehaviour
     public GameObject m_MainEditor;
     public GameObject m_MainOption;
     public GameObject m_MainExit;
+    public bool m_PressedState;
+    public bool m_Confirmation;
 
-    public static string m_Path;
+    public InputField m_TwitchInput_User;
+    public InputField m_TwitchInput_Channel;
+    public InputField m_TwitchInput_Token;
+    public InputField m_PianoInput;
+    public GameObject m_MainOptionTwitch;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +32,10 @@ public class MainMenuLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            m_Confirmation = true;
+        }
     }
 
     public void MainMenuButton()
@@ -32,6 +43,7 @@ public class MainMenuLogic : MonoBehaviour
         m_MainMenu.SetActive(true);
         m_MainMenu_Game.SetActive(false);
         m_MainMenu_Option.SetActive(false);
+        m_PressedState = false;
     }
 
     public void MainGameButton()
@@ -69,6 +81,39 @@ public class MainMenuLogic : MonoBehaviour
         m_MainMenu.SetActive(false);
     }
 
+    public void MainOptionTwitch()
+    {
+        if(m_PressedState == false)
+        {
+            m_MainOptionTwitch.SetActive(true);
+            if (m_Confirmation == true)
+            {
+                setTwitchCredentials(m_TwitchInput_User.text, m_TwitchInput_Channel.text, m_TwitchInput_Token.text);
+            }
+            
+            
+            
+        }
+        else
+        {
+            m_MainOptionTwitch.SetActive(false);
+        }
+        
+    }
+
+     public void setTwitchCredentials (string usr, string channel, string token)
+    {
+        PlayerPrefs.SetString("user", usr);
+        PlayerPrefs.SetString("channel", usr);
+        DataManager.m_Token = token;
+
+    }
+
+    public void MainCloseButton(GameObject Scene)
+    {
+        m_PressedState = false;
+        Scene.SetActive(false);
+    }
     public void MainExitButton()
     {
         Application.Quit();
@@ -78,5 +123,6 @@ public class MainMenuLogic : MonoBehaviour
     {
         m_MainMenu.SetActive(true);
         Scene.SetActive(false);
+        m_PressedState = false;
     }
 }

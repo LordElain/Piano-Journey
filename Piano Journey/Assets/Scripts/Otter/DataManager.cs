@@ -6,6 +6,7 @@ public class DataManager : MonoBehaviour
 {
 
     public static string m_Path {get; set;}
+    public static string m_Token {get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -17,4 +18,6 @@ public class DataManager : MonoBehaviour
     {
         
     }
+
+   
 }

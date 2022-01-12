@@ -240,6 +240,7 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\MidiFileSplitter\SliceMidiFileMarkers.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\DevicesConnector\DevicesConnectorEventCallback.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\MidiFile\FromCsv\EventParser.cs" />
+     <Compile Include="Assets\Scripts\Otter\DataManager.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimeSpan\Parsers\MetricTimeSpanParser.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\Utilities\TrackChunkUtilities.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\ValueLine\ValueLine.cs" />
@@ -540,7 +541,6 @@
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Devices\OutputDevice\OutputDeviceType.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Interaction\TimedObject\TimedObjectsCollection.cs" />
      <Compile Include="Assets\MIDI\drywetmidi-5.2.1\DryWetMidi\Tools\CsvConverter\CsvUtilities.cs" />
-     <Compile Include="Assets\Scripts\Otter\DataManager.cs" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\MultiTrack\Middle\pilgrim.txt" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\MultiSequence\Large\tiedemo.txt" />
      <None Include="Assets\MIDI\drywetmidi-5.2.1\Resources\MIDI files\ValidReferences\SingleTrack\Small\12str.txt" />
