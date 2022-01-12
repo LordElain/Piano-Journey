@@ -43,6 +43,7 @@ public class NotesController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_Path = DataManager.m_Path;
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
         
@@ -55,7 +56,7 @@ public class NotesController : MonoBehaviour
        
 
         StartCoroutine(DisplayNotes(m_File, m_Duration, m_Prefab_Notes));
-        StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera));
+        StartCoroutine(PlayMidi(m_File, m_OutputDevices,m_Duration, m_PlayStatus, m_Camera)); 
         //WriteNotes(m_InputDevices, m_OutputDevices);
         
         

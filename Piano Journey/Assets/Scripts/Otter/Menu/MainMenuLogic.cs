@@ -53,7 +53,7 @@ public class MainMenuLogic : MonoBehaviour
        
 		if( FileBrowser.Success )
 		{
-            m_Path = FileBrowser.Result[0];	
+            DataManager.m_Path = FileBrowser.Result[0];	
             UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName);
         }
     }
