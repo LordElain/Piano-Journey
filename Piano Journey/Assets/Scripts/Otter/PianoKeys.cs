@@ -15,7 +15,6 @@ public class PianoKeys : MonoBehaviour
 
     public Text m_Text;
     public int m_MaxNotesOctave; //Notes per Octave
-    public int m_MaxAllKeys; //All Keys on Piano
     public float m_KeyHeight; //Pixel Height
     public float m_FinalKeyPosX;
     public string Object_KeyID;
@@ -43,10 +42,10 @@ public class PianoKeys : MonoBehaviour
     {
         m_FinalKeyPosX = 0;
         FillArray_Numbers();
-        KeyObjects = new GameObject[m_MaxAllKeys];
-        HeightOffsetArray = new float [m_MaxAllKeys];
-        m_KeyPositions = new float [m_MaxAllKeys];
-        //m_AllKeys = new string [m_MaxAllKeys];
+        KeyObjects = new GameObject[DataManager.m_MaxAllKeys];
+        HeightOffsetArray = new float [DataManager.m_MaxAllKeys];
+        m_KeyPositions = new float [DataManager.m_MaxAllKeys];
+        //m_AllKeys = new string [DataManager.m_MaxAllKeys];
         GenerateWhiteKeys(m_WhitePianoKeysObject);
         
     }
@@ -62,17 +61,26 @@ public class PianoKeys : MonoBehaviour
     {
         
         int MaxOctave = 8;
-        int AllKeyCounter = 1;
+        int AllKeyCounter = 0;
+        m_AllKeys = new string[DataManager.m_MaxAllKeys];
+        print(m_AllKeys.Length);
         //Create WhiteKeys
         for (int i = 0; i < MaxOctave; i++)
         {  
             for (int j = 0; j <= m_NoteKeys.Length-1; j++)
             {    
-                m_AllKeys[AllKeyCounter] = m_NoteKeys[j]+i;
-                AllKeyCounter++;
+                
+                if(AllKeyCounter < m_AllKeys.Length-1)
+                {
+                    m_AllKeys[AllKeyCounter] = m_NoteKeys[j]+i;
+                    AllKeyCounter++;
+                }
+                
+                Debug.Log("Counter: " + AllKeyCounter + "Key: " + m_AllKeys[AllKeyCounter]);
             }; 
            
         };
+        print (m_AllKeys.Length);
     }
 
     public void GenerateWhiteKeys(GameObject[] WhitePianoKeysObject)
@@ -96,148 +104,169 @@ public class PianoKeys : MonoBehaviour
 
         float KeyHeight = 0;
         var KeyPos = new Vector3(m_Camera.transform.position.x - 75,0,0);
+        m_KeyID = -1;
        
         
         //KeyGenerating WhiteKeys
-        for (int i = 0; i < m_MaxNotesOctave-1; i++)
-        {
-            KeyPos.x++;   
-            
-            for (int j = 0; j < WhitePianoKeysObject.Length; j++)
+            for (int i = 0; i < m_MaxNotesOctave-1; i++)
             {
-              GameObject PKeyObject = Instantiate(WhitePianoKeysObject[j], KeyPos, Quaternion.identity);
-              PKeyObject.tag = "Key";
-              SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
-              KeyZPos = 0;
-              KeyHeight = 0;
-              m_KeyID++; 
-                   
-                
-                    switch(j)
+                KeyPos.x++;   
+                if(m_KeyID < m_AllKeys.Length-1)
+                {    
+                    for (int j = 0; j < WhitePianoKeysObject.Length; j++)
                     {
-                        case 0:
+                    GameObject PKeyObject = Instantiate(WhitePianoKeysObject[j], KeyPos, Quaternion.identity);
+                    PKeyObject.SetActive(false);
+                    PKeyObject.tag = "Key";
+                    SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
+                    KeyZPos = 0;
+                    KeyHeight = 0;
+                    m_KeyID++;
+                    
+                        
+                        
+                            switch(j)
+                            {
+                                case 0:
+                                        {
+                                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left2);
+                                            KeyZPos = KeyZPos_White;
+                                            break;
+                                        }
+                                case 1:
+                                        {
+                                            KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackFirst);
+                                            KeyZPos = KeyZPos_Black;
+                                            KeyHeight = m_KeyHeightBlack;
+                                            BlackCheck = true;
+                                            break;
+                                        }
+                                case 2:
+                                        {
+                                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Middle);
+                                            KeyZPos = KeyZPos_White;
+                                            break;
+                                        }
+                                case 3:
+                                        {
+                                            KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackSecond);
+                                            KeyZPos = KeyZPos_Black;
+                                            KeyHeight = m_KeyHeightBlack;
+                                            BlackCheck = true;
+                                            break;
+                                        }
+                                case 4:
+                                        {
+                                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Right);
+                                            m_SpriteRenderer.flipX = true;
+                                            KeyZPos = KeyZPos_White;
+                                            break;
+                                        }
+                                case 5:
+                                        {
+                                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left);
+                                            KeyZPos = KeyZPos_White;
+                                            break;
+                                        }
+                                case 6:
+                                        {
+                                            KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackThird);
+                                            KeyZPos = KeyZPos_Black;
+                                            KeyHeight = m_KeyHeightBlack;
+                                            BlackCheck = true;
+                                            break;
+                                        }
+                                case 7:
+                                        {
+                                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Middle);
+                                            KeyZPos = KeyZPos_White;
+                                            break;
+                                        }
+                                case 8:
+                                        {
+                                            KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackSecond);
+                                            KeyZPos = KeyZPos_Black;
+                                            KeyHeight = m_KeyHeightBlack;
+                                            BlackCheck = true;
+                                            break;
+                                        }
+                                case 9:
+                                        {
+                                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Middle);
+                                            KeyZPos = KeyZPos_White;
+                                            break;
+                                        }
+                                case 10:
+                                        {
+                                            KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackSecond);
+                                            KeyZPos = KeyZPos_Black;
+                                            KeyHeight = m_KeyHeightBlack;
+                                            BlackCheck = true;
+                                            break;
+                                        }
+                                case 11:
+                                        {
+                                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Right);
+                                            m_SpriteRenderer.flipX = true;
+                                            KeyZPos = KeyZPos_White;
+                                            break;
+                                        }
+                                default: 
                                 {
                                     KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left2);
                                     KeyZPos = KeyZPos_White;
                                     break;
                                 }
-                        case 1:
-                                {
-                                    KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackFirst);
-                                    KeyZPos = KeyZPos_Black;
-                                    KeyHeight = m_KeyHeightBlack;
-                                    BlackCheck = true;
-                                    break;
+                            }
+                            
+                            
+                            if (BlackCheck == false)
+                            {
+                                if(m_KeyID < m_AllKeys.Length-1)
+                                { 
+                                PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KeyOffset,KeyHeight, KeyZPos);
+                                PKeyObject.SetActive(true);
+                                PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
+                                FillKeyArray(PKeyObject, KeyHeight);
                                 }
-                        case 2:
-                                {
-                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Middle);
-                                    KeyZPos = KeyZPos_White;
-                                    break;
+                                    
+                            }
+                            else
+                            {
+                                print (m_KeyID);
+                                if(m_KeyID < m_AllKeys.Length-1)
+                                { 
+                                PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KOB_Base,KeyHeight, KeyZPos);
+                                PKeyObject.SetActive(true);
+                                PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
+                                FillKeyArray(PKeyObject, KeyHeight);
                                 }
-                        case 3:
-                                {
-                                    KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackSecond);
-                                    KeyZPos = KeyZPos_Black;
-                                    KeyHeight = m_KeyHeightBlack;
-                                    BlackCheck = true;
-                                    break;
-                                }
-                        case 4:
-                                {
-                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Right);
-                                    m_SpriteRenderer.flipX = true;
-                                    KeyZPos = KeyZPos_White;
-                                    break;
-                                }
-                        case 5:
-                                {
-                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left);
-                                    KeyZPos = KeyZPos_White;
-                                    break;
-                                }
-                        case 6:
-                                {
-                                    KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackThird);
-                                    KeyZPos = KeyZPos_Black;
-                                    KeyHeight = m_KeyHeightBlack;
-                                    BlackCheck = true;
-                                    break;
-                                }
-                        case 7:
-                                {
-                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Middle);
-                                    KeyZPos = KeyZPos_White;
-                                    break;
-                                }
-                        case 8:
-                                {
-                                    KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackSecond);
-                                    KeyZPos = KeyZPos_Black;
-                                    KeyHeight = m_KeyHeightBlack;
-                                    BlackCheck = true;
-                                    break;
-                                }
-                        case 9:
-                                {
-                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Middle);
-                                    KeyZPos = KeyZPos_White;
-                                    break;
-                                }
-                        case 10:
-                                {
-                                    KOB_Base = KeyOffsetAddition(KeyOffset, KeyOffsetBlackSecond);
-                                    KeyZPos = KeyZPos_Black;
-                                    KeyHeight = m_KeyHeightBlack;
-                                    BlackCheck = true;
-                                    break;
-                                }
-                        case 11:
-                                {
-                                    KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Right);
-                                    m_SpriteRenderer.flipX = true;
-                                    KeyZPos = KeyZPos_White;
-                                    break;
-                                }
-                        default: 
-                        {
-                            KeyOffset = KeyOffsetAddition(KeyOffset, KeyOffset_Left2);
-                            KeyZPos = KeyZPos_White;
-                            break;
-                        }
-                    }
-                    
-
-                    if (BlackCheck == false)
-                    {
-                        PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KeyOffset,KeyHeight, KeyZPos);
-                        PKeyObject.SetActive(true);
-                        PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
-                        FillKeyArray(PKeyObject, KeyHeight);
+                        
+                            }
+                                BlackCheck = false;
+                            
                              
+                                
+                            
+
+                            
+                            
+                            
+                            
+                        }
                     }
                     else
                     {
-                        PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KOB_Base,KeyHeight, KeyZPos);
-                        PKeyObject.SetActive(true);
-                        PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
-                        FillKeyArray(PKeyObject, KeyHeight);
-                
+                        print("DONE");
                     }
-                    BlackCheck = false;
-                    
-                    
-                    
-            }
-
-               
-        }
-       
+            }               
+        
     }
 
     public void FillKeyArray(GameObject PianoKeyObject, float Offset)
     {
-        if(m_Counter < m_MaxAllKeys-1)
+
+        if(m_Counter < DataManager.m_MaxAllKeys)
         {
             KeyObjects[m_Counter] = PianoKeyObject;
             HeightOffsetArray[m_Counter] = Offset;
@@ -256,7 +285,7 @@ public class PianoKeys : MonoBehaviour
     {
         m_KeyName = PianoKeys;
         m_FinalKeyPosX = KeyPos.x+KeyOffset;
-        m_KeyPositions = new float [120];
+        m_KeyPositions = new float [DataManager.m_MaxAllKeys];
         m_KeyPositions[KeyID] = m_FinalKeyPosX;
         transform.position = new Vector3(m_FinalKeyPosX,KeyHeight, KeyZ);
     }

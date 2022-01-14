@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MainMenuLogic : MonoBehaviour
 {
+    //MainMenu
     public GameObject m_MainMenu;
     public GameObject m_MainMenu_Option;
     public GameObject m_MainMenu_Game;
@@ -17,11 +18,16 @@ public class MainMenuLogic : MonoBehaviour
     public bool m_PressedState;
     public bool m_Confirmation;
 
+//Twitch Overlay
+    public GameObject m_MainOptionTwitch;
     public InputField m_TwitchInput_User;
     public InputField m_TwitchInput_Channel;
     public InputField m_TwitchInput_Token;
+
+//Piano Overlay
     public InputField m_PianoInput;
-    public GameObject m_MainOptionTwitch;
+    public GameObject m_MainOptionPiano;
+
 
     // Start is called before the first frame update
     void Start()
@@ -85,20 +91,19 @@ public class MainMenuLogic : MonoBehaviour
     {
         if(m_PressedState == false)
         {
-            m_MainOptionTwitch.SetActive(true);
-            if (m_Confirmation == true)
-            {
-                setTwitchCredentials(m_TwitchInput_User.text, m_TwitchInput_Channel.text, m_TwitchInput_Token.text);
-            }
-            
-            
-            
+            m_MainOptionTwitch.SetActive(true);  
         }
         else
         {
             m_MainOptionTwitch.SetActive(false);
         }
         
+    }
+
+    public void MainOptionTwitchSubmit()
+    {
+        setTwitchCredentials(m_TwitchInput_User.text, m_TwitchInput_Channel.text, m_TwitchInput_Token.text);
+        Debug.Log("Submit");
     }
 
      public void setTwitchCredentials (string usr, string channel, string token)
@@ -124,5 +129,24 @@ public class MainMenuLogic : MonoBehaviour
         m_MainMenu.SetActive(true);
         Scene.SetActive(false);
         m_PressedState = false;
+    }
+
+    public void MainOptionPiano()
+    {
+        if (m_PressedState == false)
+        {
+            m_MainOptionPiano.SetActive(true);
+            
+        }
+        else
+        {
+            m_MainOptionTwitch.SetActive(false);
+        }
+    }
+
+    public void MainOptionPianoSubmit()
+    {
+        DataManager.m_MaxAllKeys = int.Parse(m_PianoInput.text);
+        Debug.Log("Submit");
     }
 }

@@ -408,6 +408,7 @@ MonoBehaviour:
   m_username: elain
   m_password: oauth:i5084z44p661baj6j4dhfgqxmoky0m
   m_channelName: elain
+  m_SongList: []
 --- !u!1 &740452682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,7 +1074,7 @@ MonoBehaviour:
   m_Camera: {fileID: 756007501}
   m_Text: {fileID: 0}
   m_MaxNotesOctave: 8
-  m_MaxAllKeys: 120
+  m_MaxAllKeys: 0
   m_KeyHeight: 10
   m_FinalKeyPosX: 0
   Object_KeyID: 
