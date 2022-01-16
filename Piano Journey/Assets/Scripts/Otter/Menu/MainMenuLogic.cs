@@ -146,7 +146,7 @@ public class MainMenuLogic : MonoBehaviour
 
     public void MainOptionPianoSubmit()
     {
-        DataManager.m_MaxAllKeys = int.Parse(m_PianoInput.text);
+        PlayerPrefs.SetInt("maxKey", int.Parse(m_PianoInput.text));
         Debug.Log("Submit");
     }
 }

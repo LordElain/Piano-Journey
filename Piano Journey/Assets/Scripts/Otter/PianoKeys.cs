@@ -18,6 +18,7 @@ public class PianoKeys : MonoBehaviour
     public float m_KeyHeight; //Pixel Height
     public float m_FinalKeyPosX;
     public string Object_KeyID;
+    public int m_MaxAllKeys;
 
     public string[] m_NoteKeys;
     public string[] m_AllKeys;
@@ -41,10 +42,12 @@ public class PianoKeys : MonoBehaviour
     void Start()
     {
         m_FinalKeyPosX = 0;
-        FillArray_Numbers();
-        KeyObjects = new GameObject[DataManager.m_MaxAllKeys];
-        HeightOffsetArray = new float [DataManager.m_MaxAllKeys];
-        m_KeyPositions = new float [DataManager.m_MaxAllKeys];
+        m_MaxAllKeys = setMaxAllKeys();
+        FillArray_Numbers(m_MaxAllKeys);
+        
+        KeyObjects = new GameObject[m_MaxAllKeys];
+        HeightOffsetArray = new float [m_MaxAllKeys];
+        m_KeyPositions = new float [m_MaxAllKeys];
         //m_AllKeys = new string [DataManager.m_MaxAllKeys];
         GenerateWhiteKeys(m_WhitePianoKeysObject);
         
@@ -56,13 +59,19 @@ public class PianoKeys : MonoBehaviour
         TransForm(m_Camera, KeyObjects);
     }
 
+    public int setMaxAllKeys()
+    {
+        var i =PlayerPrefs.GetInt("maxKey");
+        return i;
+        
+    }
      
-    public void FillArray_Numbers() 
+    public void FillArray_Numbers(int maxAll) 
     {
         
         int MaxOctave = 8;
         int AllKeyCounter = 0;
-        m_AllKeys = new string[DataManager.m_MaxAllKeys];
+        m_AllKeys = new string[maxAll];
         print(m_AllKeys.Length);
         //Create WhiteKeys
         for (int i = 0; i < MaxOctave; i++)
@@ -76,7 +85,7 @@ public class PianoKeys : MonoBehaviour
                     AllKeyCounter++;
                 }
                 
-                Debug.Log("Counter: " + AllKeyCounter + "Key: " + m_AllKeys[AllKeyCounter]);
+                
             }; 
            
         };
@@ -243,16 +252,7 @@ public class PianoKeys : MonoBehaviour
                                 }
                         
                             }
-                                BlackCheck = false;
-                            
-                             
-                                
-                            
-
-                            
-                            
-                            
-                            
+                                BlackCheck = false;   
                         }
                     }
                     else
@@ -266,7 +266,7 @@ public class PianoKeys : MonoBehaviour
     public void FillKeyArray(GameObject PianoKeyObject, float Offset)
     {
 
-        if(m_Counter < DataManager.m_MaxAllKeys)
+        if(m_Counter < m_MaxAllKeys)
         {
             KeyObjects[m_Counter] = PianoKeyObject;
             HeightOffsetArray[m_Counter] = Offset;
@@ -285,8 +285,8 @@ public class PianoKeys : MonoBehaviour
     {
         m_KeyName = PianoKeys;
         m_FinalKeyPosX = KeyPos.x+KeyOffset;
-        m_KeyPositions = new float [DataManager.m_MaxAllKeys];
-        m_KeyPositions[KeyID] = m_FinalKeyPosX;
+        /* m_KeyPositions = new float [m_MaxAllKeys];
+        m_KeyPositions[KeyID] = m_FinalKeyPosX; */
         transform.position = new Vector3(m_FinalKeyPosX,KeyHeight, KeyZ);
     }
 
