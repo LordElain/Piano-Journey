@@ -62,6 +62,10 @@ public class GridNote : MonoBehaviour
     private TrackChunk m_trackChunk = new TrackChunk();
     private bool m_StatusForPlayback;
 
+    //Menu
+
+    public GameObject m_OverlayMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -91,15 +95,20 @@ public class GridNote : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && m_ClickState == true)
         {
             //Right Hand Notes
+            
             mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
             mousePosUp = new Vector3 (0,0,0);
             mousePos.z = 0;
             m_LeftClick = true;
             m_AllowedPlay = true;
-            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick, m_AllowedPlay);
+            if (HitBoxCheck(mousePos) == false)
+            {
+                CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick, m_AllowedPlay);
+            }
+            
         }
 
-        if (Input.GetMouseButtonDown(1) && m_ClickState == true)
+        if (Input.GetMouseButtonDown(1) && m_ClickState == true )
         {
             //Left Hand Notes
             mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
@@ -107,7 +116,10 @@ public class GridNote : MonoBehaviour
             mousePos.z = 0;
             m_LeftClick = false;
             m_AllowedPlay = true;
-            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick,m_AllowedPlay);
+            if (HitBoxCheck(mousePos) == false)
+            {
+                CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick, m_AllowedPlay);
+            }
         } 
 
         /* if (Input.GetMouseButton(0))
@@ -127,8 +139,6 @@ public class GridNote : MonoBehaviour
             m_Camera.transform.Translate(-newPos);
             var GridOffset = m_GridHeight + 80;
 
-            Debug.Log(m_Camera.transform.position);
-            Debug.Log(m_GridHeight);
             if (m_Camera.transform.position.y >= GridOffset)
             {
                 m_GridHeight = m_GridHeight + 100;
@@ -145,6 +155,20 @@ public class GridNote : MonoBehaviour
             DeleteBlock(mousePos);
         }
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (m_ClickState == true)
+            {
+                m_ClickState = false;
+                m_OverlayMenu.SetActive(true);
+            }
+            else
+            {
+                m_ClickState = true;
+                m_OverlayMenu.SetActive(false);
+            }
+            
+        }
       
         if (m_SaveState == true)
         {
@@ -174,6 +198,39 @@ public class GridNote : MonoBehaviour
             }
         }
 
+    }
+
+    public void OverlayBackButton()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN MENU");
+    }
+    private bool HitBoxCheck(Vector3 mousePos)
+    {
+        bool HitStatus;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        print("Check");
+        if(Physics.Raycast(ray, out hit))
+        {
+            print("Hit");
+            Debug.Log(hit.transform.tag);
+            if (hit.transform.tag == "Key" || hit.transform.tag == "Button")
+            {
+                HitStatus = true;
+            }
+            else
+            {
+                HitStatus = false;
+            }
+        }
+        else
+        {
+            print("No hit");
+            HitStatus = false;
+        }
+        
+        Debug.Log("Hit Status: " + HitStatus);
+        return HitStatus;
     }
 
     private void CreateNoteArray()
