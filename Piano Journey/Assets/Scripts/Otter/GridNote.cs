@@ -198,6 +198,13 @@ public class GridNote : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.R) && m_ClickState == true)
+        {
+            Playback(m_File, m_StatusForPlayback);
+            m_playback.Stop();
+            m_PlayStatus = false;
+        }
+
     }
 
     public void OverlayBackButton()

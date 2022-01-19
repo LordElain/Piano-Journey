@@ -40,6 +40,12 @@ public class NotesController : MonoBehaviour
     public GameObject m_Prefab_Notes;
 
 
+    //Menu & Overlay
+
+    public GameObject m_PauseMenu;
+    private bool m_Pressed;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,10 +83,38 @@ public class NotesController : MonoBehaviour
             CameraMovement(m_Camera);
         }
          
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (m_Pressed == false)
+            {
+                
+                m_PlayStatus = false;
+                m_PauseMenu.SetActive(true);
+                m_Pressed = true;
+            }
+            
+            else
+            {
+                m_PauseMenu.SetActive(false);
+                m_Pressed = false;
+                m_PlayStatus = true;
+            }
+
+        }
 
        
     }
 
+    public void PauseResumeButton()
+    {
+        m_PauseMenu.SetActive(false);
+        m_Pressed = false;
+        m_PlayStatus = true;
+    }
+    public void PauseBackButton()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN MENU");
+    }
     private MidiFile ReadFile(string Path)
     {
         //Read MidiFile with ReadingSettings
