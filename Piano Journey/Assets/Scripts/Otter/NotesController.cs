@@ -38,6 +38,7 @@ public class NotesController : MonoBehaviour
 
     //Notes Generating
     public GameObject m_Prefab_Notes;
+    
 
 
     //Menu & Overlay
@@ -49,7 +50,7 @@ public class NotesController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Path = DataManager.m_Path;
+        //m_Path = DataManager.m_Path;
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
         
@@ -181,7 +182,7 @@ public class NotesController : MonoBehaviour
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes();
 
-        var notePos = new Vector3(-4f,0,0);        
+        var notePos = new Vector3(-3f,0,0);        
         
         
         //int KeyName = m_Piano.gameObject.;
@@ -198,14 +199,14 @@ public class NotesController : MonoBehaviour
                 
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
                 
-                if(noteName == "B" || noteName == "E")
+                 if(noteName == "B" || noteName == "E")
                 {
-                    NotePosition.x = NotePosition.x - 2.5f;
+                    //NotePosition.x = NotePosition.x - 0.1f;
                 }
                 else
                 {
-                    NotePosition.x = NotePosition.x - 1.5f;
-                }
+                    /* NotePosition.x = NotePosition.x - 1f; */
+                } 
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
                 //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
@@ -218,11 +219,6 @@ public class NotesController : MonoBehaviour
           
     }
 
-    private float NoteOffsetAddition(float NoteOffset, float NoteOffsetAdd)
-    {
-        NoteOffset += NoteOffsetAdd;
-        return NoteOffset;
-    }
 
     private void WriteNotes(InputDevice[] InputPiano, OutputDevice[] Output)
     {

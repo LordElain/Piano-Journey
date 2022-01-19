@@ -38,6 +38,9 @@ public class PianoKeys : MonoBehaviour
     private float[] HeightOffsetArray;
     private int m_Counter;
 
+    public Vector3 m_OffsetPerScene;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +64,7 @@ public class PianoKeys : MonoBehaviour
 
     public int setMaxAllKeys()
     {
-        var i =PlayerPrefs.GetInt("maxKey");
+        var i = PlayerPrefs.GetInt("maxKey");
         return i;
         
     }
@@ -112,7 +115,17 @@ public class PianoKeys : MonoBehaviour
         float KeyZPos_Black = -10;
 
         float KeyHeight = 0;
-        var KeyPos = new Vector3(m_Camera.transform.position.x - 75,0,0);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "GAME")
+        {
+            m_OffsetPerScene = new Vector3(75,0,0);
+        }
+        else
+        {
+            m_OffsetPerScene = new Vector3(75,0,0);
+        }
+        var StartPos = m_Camera.transform.position.x - m_OffsetPerScene.x;
+        var KeyPos = new Vector3(StartPos,0,0);
+        
         m_KeyID = -1;
        
         
@@ -127,6 +140,7 @@ public class PianoKeys : MonoBehaviour
                     GameObject PKeyObject = Instantiate(WhitePianoKeysObject[j], KeyPos, Quaternion.identity);
                     PKeyObject.SetActive(false);
                     PKeyObject.tag = "Key";
+                    
                     SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
                     KeyZPos = 0;
                     KeyHeight = 0;
@@ -233,22 +247,30 @@ public class PianoKeys : MonoBehaviour
                             {
                                 if(m_KeyID < m_AllKeys.Length-1)
                                 { 
-                                PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KeyOffset,KeyHeight, KeyZPos);
-                                PKeyObject.SetActive(true);
-                                PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
-                                FillKeyArray(PKeyObject, KeyHeight);
+                                    PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KeyOffset,KeyHeight, KeyZPos);
+                                    PKeyObject.SetActive(true);
+                                    PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
+                                    FillKeyArray(PKeyObject, KeyHeight);
+                                    if(PKeyObject.name[0] == 'C')
+                                    {
+                                        var t = PKeyObject.GetComponentInChildren<Text>();
+                                        t.text = m_AllKeys[m_KeyID];
+                                    }
+                                    else
+                                    {
+                                        m_Text.text = " ";
+                                    }
                                 }
                                     
                             }
                             else
                             {
-                                print (m_KeyID);
                                 if(m_KeyID < m_AllKeys.Length-1)
                                 { 
-                                PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KOB_Base,KeyHeight, KeyZPos);
-                                PKeyObject.SetActive(true);
-                                PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
-                                FillKeyArray(PKeyObject, KeyHeight);
+                                    PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KOB_Base,KeyHeight, KeyZPos);
+                                    PKeyObject.SetActive(true);
+                                    PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
+                                    FillKeyArray(PKeyObject, KeyHeight);
                                 }
                         
                             }
