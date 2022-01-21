@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,6 +63,55 @@ public class PianoKeys : MonoBehaviour
         TransForm(m_Camera, KeyObjects);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        var Status = KeyGameLogic.m_NowKeyStatus;
+        var Name = KeyGameLogic.m_NoteName;
+        var Trigger = KeyGameLogic.m_Trigger;
+            Color KeyColor;
+            if(Trigger == true)
+                   { 
+                        switch (other.tag)
+                        {
+                            case "EARLY":
+                            {
+                                KeyColor = Color.yellow;
+                                break;
+                            }
+                            case "RIGHT":
+                            {
+                                KeyColor = Color.green;
+                                break;
+                            }
+                            case "LATE":
+                            {
+                                KeyColor = Color.blue;
+                                break;
+                            }
+                            case null:
+                            {
+                                KeyColor = Color.red;
+                                break;
+                            }
+                            default:
+                            {
+                                KeyColor = Color.white;
+                                break;
+                            }
+                        }
+                        GetComponent<SpriteRenderer>().color = KeyColor;
+                    }
+                    
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
+            
+           
+            
+    
     public int setMaxAllKeys()
     {
         var i = PlayerPrefs.GetInt("maxKey");
@@ -75,7 +125,7 @@ public class PianoKeys : MonoBehaviour
         int MaxOctave = 8;
         int AllKeyCounter = 0;
         m_AllKeys = new string[maxAll];
-        print(m_AllKeys.Length);
+
         //Create WhiteKeys
         for (int i = 0; i < MaxOctave; i++)
         {  
@@ -92,7 +142,6 @@ public class PianoKeys : MonoBehaviour
             }; 
            
         };
-        print (m_AllKeys.Length);
     }
 
     public void GenerateWhiteKeys(GameObject[] WhitePianoKeysObject)

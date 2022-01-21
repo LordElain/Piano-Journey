@@ -3694,7 +3694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7985984609465059632, guid: b9e239969763ad34d85c42bfe5092ba8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7985984609465059632, guid: b9e239969763ad34d85c42bfe5092ba8, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3752,7 +3752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
+  m_ZPos: 15
   m_Text: {fileID: 0}
   m_NoteName: 
 --- !u!50 &1380185673
@@ -5830,7 +5830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3627278380011599654, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_Size.z
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3627278380011599654, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_Center.y
@@ -6282,7 +6282,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.04, y: 0.2, z: 20}
+  m_Size: {x: 0.04, y: 0.2, z: 100}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4580052353244357241
 Rigidbody:
@@ -6396,7 +6396,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 0.13, z: 20}
+  m_Size: {x: 0.05, y: 0.13, z: 100}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8654498156344948051
 Rigidbody:

@@ -199,7 +199,7 @@ public class NotesController : MonoBehaviour
                 
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
                 
-                 if(noteName == "B" || noteName == "E")
+                if(noteName == "B" || noteName == "E")
                 {
                     //NotePosition.x = NotePosition.x - 0.1f;
                 }
@@ -311,6 +311,5 @@ public class NotesController : MonoBehaviour
     {
         ContactPoint contact = collision.contacts[0];
         Debug.Log(contact + " Counter Zähler");
-
     }
 }
