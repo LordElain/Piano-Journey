@@ -12,12 +12,12 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public float m_MissingPoints;
 
     public Text m_ScoreText;
-    public static bool m_Trigger;
+    public bool m_Trigger;
     private string m_TriggerCase;
 
-    public static string m_NoteName;
+    public string m_NoteName;
     public enum m_KeyStatus {EARLY, RIGHT, LATE, MISSING, START};
-    public static Color m_NowKeyStatus;
+    public Color m_NowKeyStatus;
     public GameObject m_TriggerBox;
     public bool m_AllowCollider;
     public int m_Counter;
@@ -30,8 +30,9 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         m_Score = 0;
         controls = new PianoJourney();
         controls.Player.SetCallbacks(this);
-        controls.Enable(); 
+        controls.Enable();
         
+       
     }
 
     // Update is called once per frame
@@ -52,21 +53,34 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 /* Debug.Log(note.shortDisplayName);
                 Debug.Log(m_Trigger); */
                 m_Trigger = true;
+                //print("ON PIANO");
                 if (m_AllowCollider == false)
                 {
+                    //print(m_NoteName + note.shortDisplayName);
                     if (m_NoteName == note.shortDisplayName)
                     {
-                        Check(m_NoteName);
+                        Check();
                     }
                     else
                     {
                         m_Score -= m_MissingPoints;
+                        //GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 }
+                else
+                {
+                    //GetComponent<SpriteRenderer>().color = Color.white;
+                }
+                
+                
                
             };
+            miniMidiDevice.onWillNoteOff += (velocity) =>
+            {
+                GetComponent<SpriteRenderer>().color = Color.white;
+            };
         }
-
+        
     }
 
 
@@ -80,6 +94,10 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 m_NoteName = other.transform.parent.name;
                 m_AllowCollider = false;
             }
+            else
+            {
+                GetComponent<SpriteRenderer>().color = Color.red;
+            }
             //other.transform.parent.gameObject.SetActive(false);
 
         
@@ -91,40 +109,44 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         if (m_Counter == 0)
         m_AllowCollider = true;
         m_Trigger = false;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-    public void Check(string NoteName)
+    public void Check()
      {
-        
         switch(m_TriggerCase)
         {
                             case "EARLY":
                             {
+                                
                                 m_Score += m_EarlyPoints;
-                                m_NowKeyStatus = Color.yellow;
+                                GetComponent<SpriteRenderer>().color = Color.yellow;
                                 break;
                             }
                                 
                             case "RIGHT":
                             {
+                                
                                 m_Score += m_RightPoints;
-                                m_NowKeyStatus = Color.green;
+                                GetComponent<SpriteRenderer>().color = Color.green;
                                 break;
                             }
                                 
                             case "LATE":
                             {
+                                
                                 m_Score += m_LatePoints;
-                                m_NowKeyStatus = Color.blue;
+                                GetComponent<SpriteRenderer>().color = Color.blue;
                                 break;
                             }
                             
                             default:
-                            m_Score -= m_MissingPoints;
-                            m_NowKeyStatus = Color.red;
-                            m_Trigger = false;
+                            
+                            //m_Score -= m_MissingPoints;
+                            GetComponent<SpriteRenderer>().color = Color.white;
                             break;
         }
+
      }
 
 

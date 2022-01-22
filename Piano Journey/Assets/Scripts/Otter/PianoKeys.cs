@@ -42,7 +42,7 @@ public class PianoKeys : MonoBehaviour
     public Vector3 m_OffsetPerScene;
     
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update/* 
     void Start()
     {
         m_FinalKeyPosX = 0;
@@ -63,7 +63,7 @@ public class PianoKeys : MonoBehaviour
         TransForm(m_Camera, KeyObjects);
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         var Status = KeyGameLogic.m_NowKeyStatus;
         var Name = KeyGameLogic.m_NoteName;
@@ -107,7 +107,7 @@ public class PianoKeys : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         GetComponent<SpriteRenderer>().color = Color.white;
-    }
+    } */
             
            
             
