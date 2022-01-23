@@ -11,7 +11,6 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public float m_LatePoints;
     public float m_MissingPoints;
 
-    public Text m_ScoreText;
     public bool m_Trigger;
     private string m_TriggerCase;
 
@@ -38,9 +37,13 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     // Update is called once per frame
     void Update()
     {
-       // m_ScoreText.text = m_Score.ToString();
     }
 
+    public void UpdateScore(float Score)
+    {
+        ScoreCounter.m_ScoreText = Score;
+        print(Score);
+    }
     
     public void OnPianoNotes(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
@@ -64,6 +67,9 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                     else
                     {
                         m_Score -= m_MissingPoints;
+                        if(m_Score < 0)
+                        m_Score = 0;
+                        UpdateScore(m_Score);
                         //GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 }
@@ -97,6 +103,10 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
             else
             {
                 GetComponent<SpriteRenderer>().color = Color.red;
+                m_Score -= m_MissingPoints;
+                if(m_Score < 0)
+                m_Score = 0;
+                UpdateScore(m_Score);
             }
             //other.transform.parent.gameObject.SetActive(false);
 
@@ -121,6 +131,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                                 
                                 m_Score += m_EarlyPoints;
                                 GetComponent<SpriteRenderer>().color = Color.yellow;
+                                UpdateScore(m_Score);
                                 break;
                             }
                                 
@@ -129,6 +140,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                                 
                                 m_Score += m_RightPoints;
                                 GetComponent<SpriteRenderer>().color = Color.green;
+                                UpdateScore(m_Score);
                                 break;
                             }
                                 
@@ -137,6 +149,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                                 
                                 m_Score += m_LatePoints;
                                 GetComponent<SpriteRenderer>().color = Color.blue;
+                                UpdateScore(m_Score);
                                 break;
                             }
                             
