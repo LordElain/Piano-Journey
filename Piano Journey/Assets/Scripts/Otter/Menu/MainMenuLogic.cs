@@ -27,7 +27,7 @@ public class MainMenuLogic : MonoBehaviour
 //Piano Overlay
     public InputField m_PianoInput;
     public GameObject m_MainOptionPiano;
-
+    public GameObject m_TwitchScript;
 
 
     // Start is called before the first frame update
@@ -104,6 +104,7 @@ public class MainMenuLogic : MonoBehaviour
     public void MainOptionTwitchSubmit()
     {
         setTwitchCredentials(m_TwitchInput_User.text, m_TwitchInput_Channel.text, m_TwitchInput_Token.text);
+        m_TwitchScript.SetActive(true);
         Debug.Log("Submit");
     }
 

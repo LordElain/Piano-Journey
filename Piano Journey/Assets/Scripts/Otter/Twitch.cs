@@ -20,6 +20,8 @@ public class Twitch : MonoBehaviour
     private float m_reconnectTimer; // 4 
     private float m_reconnectAfter;
 
+    public Text m_DisplayText;
+
      
     public List<String> m_SongList = new List<String>();
 
@@ -34,6 +36,9 @@ public class Twitch : MonoBehaviour
     void Start()
     {
         m_reconnectAfter = 60.0f;
+        m_username = PlayerPrefs.GetString("user");
+        m_channelName = PlayerPrefs.GetString("channel");
+        m_password = DataManager.m_Token;
         Connect();   
     }
 
@@ -57,6 +62,7 @@ public class Twitch : MonoBehaviour
         }
 
         ReadChat();
+
     }
 
     private void Connect()
@@ -70,6 +76,9 @@ public class Twitch : MonoBehaviour
         m_writer.WriteLine("JOIN #" + m_channelName); 
         m_writer.Flush(); 
         print("CONNECTED");
+        print(m_username);
+        print(m_channelName);
+        print(m_password);
         
     }
 
@@ -101,23 +110,36 @@ public class Twitch : MonoBehaviour
     private void GameInputs(string ChatInputs)
     {
         Debug.Log(ChatInputs);
+
         var msg = ChatInputs.IndexOf("-");
-        var commandString = ChatInputs.Substring(0,msg);
+        var msg1 = ChatInputs.IndexOf(" ");
+        var commandString = ChatInputs.Substring(0,msg1);
         var commandSong = ChatInputs.Substring(msg+1);
-        Debug.Log("command: " + commandString);
-        Debug.Log("command: " + commandSong);
+        var commandArtist = ChatInputs.Substring(0,msg);
+        commandArtist = commandArtist.Remove(0,4);
+        print(commandArtist);
         if(commandString.ToLower() == "!sr")
         {
-            Debug.Log("ADD COMMAND");
-            Debug.Log(commandSong);
-            m_SongList.Add(commandSong);
-            Debug.Log(m_SongList.Count);
+            m_SongList.Add(commandSong + " " + commandArtist);
+            UpdateList();
+            print(commandSong);
         }
         if(commandString.ToLower() == "!del")
         {
-            Debug.Log("DELETE COMMAND");
-            m_SongList.Remove(commandSong);
-            Debug.Log(m_SongList.Count);
+            m_SongList.Remove(commandSong + " " + commandArtist);
+            UpdateList();
         }
+    }
+
+    private void UpdateList()
+    {
+        string tex;
+        Debug.Log(m_SongList.Count);
+        foreach(string msg in m_SongList)
+         {
+            tex = msg.ToString() + "\n";
+            m_DisplayText.text = tex;
+         }
+        
     }
 }
