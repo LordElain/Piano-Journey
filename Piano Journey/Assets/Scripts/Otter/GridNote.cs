@@ -265,7 +265,7 @@ public class GridNote : MonoBehaviour
     private void CreateNoteBlock(int x, int y, Vector3 mousePos, Vector3 mousePosUp, bool mouseclick, bool isAllowedPlay)
     {
         GameObject note = Instantiate(m_Note,mousePos, Quaternion.identity);
-        var noteEndTime = note.transform.position.y + transform.lossyScale.y;
+        var noteEndTime = Mathf.Floor((note.transform.position.y + transform.lossyScale.y) / m_CellSize);
         var noteonEvent = new NoteOnEvent();
         var PositionTest = Mathf.Floor(mousePos.x);
         Texture2D m_Tex = new Texture2D(x,y);
@@ -356,13 +356,14 @@ public class GridNote : MonoBehaviour
                 var allKeyResultNote = m_AllKeys[result.BoxID];
                 string resultNote = Char.ToString(allKeyResultNote[0]);
                 int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[allKeyResultNote.Length-1]);
+                var NotePos = Mathf.Floor(note.transform.position.y/m_CellSize);
 
 
                 var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
                 notes.Add(new Melanchall.DryWetMidi.Interaction.Note(parsedNote.NoteName,resultOctave)
                 {
-                    Time = Convert.ToInt64(note.transform.position.y),
-                    Length = Convert.ToInt64(noteEndTime),
+                    Time = Convert.ToInt64(NotePos),
+                    Length = 4,
                     Channel = noteonEvent.Channel,
                     Velocity = (SevenBitNumber)45
 
