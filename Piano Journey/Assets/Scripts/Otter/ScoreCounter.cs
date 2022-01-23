@@ -17,7 +17,6 @@ public class ScoreCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(m_ScoreText);
         m_Text.text = m_ScoreText.ToString();
     }
 }

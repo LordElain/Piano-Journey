@@ -42,7 +42,6 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public void UpdateScore(float Score)
     {
         ScoreCounter.m_ScoreText = Score;
-        print(Score);
     }
     
     public void OnPianoNotes(UnityEngine.InputSystem.InputAction.CallbackContext context)
