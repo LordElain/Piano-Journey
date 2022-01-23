@@ -34,7 +34,8 @@ public class NotesController : MonoBehaviour
     public GameObject m_Piano;
     public GameObject[] Key_List;
 
-
+    public float m_ZPos;
+    public bool m_BlackCheck;
 
     //Notes Generating
     public GameObject m_Prefab_Notes;
@@ -53,6 +54,7 @@ public class NotesController : MonoBehaviour
         //m_Path = DataManager.m_Path;
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
+        m_BlackCheck = false;
         
 
         
@@ -194,6 +196,14 @@ public class NotesController : MonoBehaviour
                 var noteName = note.NoteName.ToString();
                 var noteOctave = note.Octave.ToString();
                 string noteNameOctave = noteName + noteOctave;
+                if(noteNameOctave[1] == 'S')
+                {
+                    m_BlackCheck = true;
+                }
+                else
+                {
+                    m_BlackCheck = false;
+                }
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
                 float noteChannel = note.Channel;
                 
@@ -210,7 +220,15 @@ public class NotesController : MonoBehaviour
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
                 //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName);
+                if(m_BlackCheck == false)
+                {
+                    m_ZPos = 0;
+                }
+                else
+                {
+                    m_ZPos = -15;
+                }
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName, m_ZPos);
                 noteObject.SetActive(true);
                 noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";

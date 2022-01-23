@@ -25,13 +25,12 @@ public class GameNote : MonoBehaviour
 
     }
 
-    public void InitGameNote(float timeOfNote,float noteNumber,float duration,float instrument, string NoteNameOctave, string NoteName)
+    public void InitGameNote(float timeOfNote,float noteNumber,float duration,float instrument, string NoteNameOctave, string NoteName, float ZPos)
     {
         m_Text.text = NoteNameOctave;
         m_NoteName = NoteNameOctave;
         transform.localScale = new Vector2(1, duration/12f);
-        m_ZPos = 15f;
-        transform.position = new Vector3(noteNumber,timeOfNote,m_ZPos);
+        transform.position = new Vector3(noteNumber,timeOfNote,ZPos);
         //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
         //GetComponent<SpriteRenderer>().size = new Vector3(10f, duration,30);
         GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);

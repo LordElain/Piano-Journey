@@ -3907,6 +3907,8 @@ MonoBehaviour:
   m_Camera: {fileID: 519420028}
   m_Piano: {fileID: 6241339406355341706}
   Key_List: []
+  m_ZPos: 0
+  m_BlackCheck: 0
   m_Prefab_Notes: {fileID: 144536599}
   m_PauseMenu: {fileID: 1851153183}
 --- !u!224 &1380185670 stripped
@@ -6004,7 +6006,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3627278380011599654, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_Size.z
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3627278380011599654, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_Center.y
@@ -6456,7 +6458,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.04, y: 0.2, z: 50}
+  m_Size: {x: 0.04, y: 0.2, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4580052353244357241
 Rigidbody:
@@ -6585,8 +6587,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 0.13, z: 100}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.05, y: 0.13, z: 10}
+  m_Center: {x: 0, y: 0, z: -5}
 --- !u!54 &8654498156344948051
 Rigidbody:
   m_ObjectHideFlags: 0
