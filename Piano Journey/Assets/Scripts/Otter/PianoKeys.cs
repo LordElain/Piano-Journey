@@ -20,6 +20,7 @@ public class PianoKeys : MonoBehaviour
     public float m_FinalKeyPosX;
     public string Object_KeyID;
     public int m_MaxAllKeys;
+    public int m_MaxAllKeys2;
 
     public string[] m_NoteKeys;
     public string[] m_AllKeys;
@@ -46,7 +47,8 @@ public class PianoKeys : MonoBehaviour
     void Start()
     {
         m_FinalKeyPosX = 0;
-        m_MaxAllKeys = setMaxAllKeys();
+        m_MaxAllKeys = 88;
+        m_MaxAllKeys2 = setMaxAllKeys();
         FillArray_Numbers(m_MaxAllKeys);
         
         KeyObjects = new GameObject[m_MaxAllKeys];
@@ -75,7 +77,7 @@ public class PianoKeys : MonoBehaviour
         
         int MaxOctave = 8;
         int AllKeyCounter = 0;
-        m_AllKeys = new string[maxAll];
+        m_AllKeys = new string[120];
 
         //Create WhiteKeys
         for (int i = 0; i < MaxOctave; i++)
@@ -275,6 +277,26 @@ public class PianoKeys : MonoBehaviour
                         
                             }
                                 BlackCheck = false;   
+
+                            switch(m_MaxAllKeys2)
+                            {
+                                case 71:
+                                        {
+
+                                            if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '1' || PKeyObject.name[PKeyObject.name.Length-7] == '2'|| PKeyObject.name[PKeyObject.name.Length-7] == '7')
+                                            {
+                                                print(PKeyObject.name);
+                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = false;
+                                            }
+                                            else
+                                            {
+                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = true;
+                                            }
+                                            break;
+                                        }
+                                default:
+                                break;
+                            }
                         }
                     }
                     else
