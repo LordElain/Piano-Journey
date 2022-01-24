@@ -51,7 +51,7 @@ public class NotesController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //m_Path = DataManager.m_Path;
+        m_Path = DataManager.m_Path;
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
         m_BlackCheck = false;

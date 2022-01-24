@@ -2011,8 +2011,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 75, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2166940608673239581}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4352,7 +4351,7 @@ MonoBehaviour:
   m_BPM: 0
   m_Position: 0
   m_TimePlayed: 0
-  m_Path: E:\PROGS\Piano-Journey\Piano Journey\Assets\MIDI_SONGS\joe_hisaishione_summers_day.mid
+  m_Path: 
   m_PlayStatus: 1
   m_Camera: {fileID: 519420028}
   m_Piano: {fileID: 6241339406355341706}
@@ -6702,11 +6701,23 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 519420032}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1747735313234002053, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166940609386067438, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166940609386067438, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166940609386067438, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 136.54001
       objectReference: {fileID: 0}
     - target: {fileID: 2166940609386067438, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7157,11 +7168,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.41, z: 2}
   m_Center: {x: 0, y: -0.72, z: 0}
---- !u!224 &2166940608673239581 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2166940609386067438, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
-  m_PrefabInstance: {fileID: 2055563251}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4580052353244357239 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4580052352263193988, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
