@@ -283,7 +283,7 @@ public class PianoKeys : MonoBehaviour
                                 case 71:
                                         {
 
-                                            if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '1' || PKeyObject.name[PKeyObject.name.Length-7] == '2'|| PKeyObject.name[PKeyObject.name.Length-7] == '7')
+                                            if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '7')
                                             {
                                                 print(PKeyObject.name);
                                                 PKeyObject.GetComponent<SpriteRenderer>().enabled = false;

@@ -672,6 +672,7 @@ MonoBehaviour:
   m_username: elain
   m_password: oauth:i5084z44p661baj6j4dhfgqxmoky0m
   m_channelName: elain
+  m_DisplayText: {fileID: 0}
   m_SongList: []
 --- !u!1 &740452682
 GameObject:
@@ -974,7 +975,7 @@ MonoBehaviour:
   m_GridWidth: 81
   m_GridHeight: 100
   m_CellSize: 1.85
-  m_Path: 
+  m_Path: E:\PROGS\Piano-Journey\Piano Journey\Assets\MIDI_SONGS\Jingle Bells - EASY.mid
   m_FileName: 
   m_SaveState: 0
   m_LoadState: 0
@@ -1786,6 +1787,7 @@ MonoBehaviour:
   m_FinalKeyPosX: 0
   Object_KeyID: 
   m_MaxAllKeys: 0
+  m_MaxAllKeys2: 0
   m_NoteKeys:
   - C
   - CSharp

@@ -116,7 +116,14 @@ public class NotesController : MonoBehaviour
     }
     public void PauseBackButton()
     {
+        m_playback.Stop();
+        m_playback.Dispose();
+        PlaybackCurrentTimeWatcher.Instance.Dispose();
+        m_OutputDevices[0].Dispose();
+        m_OutputDevices[1].Dispose();
+        m_InputDevices[0].Dispose();
         UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN MENU");
+
     }
     private MidiFile ReadFile(string Path)
     {

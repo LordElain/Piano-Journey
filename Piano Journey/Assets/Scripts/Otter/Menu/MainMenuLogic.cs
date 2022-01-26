@@ -15,6 +15,7 @@ public class MainMenuLogic : MonoBehaviour
     public GameObject m_MainEditor;
     public GameObject m_MainOption;
     public GameObject m_MainExit;
+
     public bool m_PressedState;
     public bool m_Confirmation;
 
@@ -28,6 +29,17 @@ public class MainMenuLogic : MonoBehaviour
     public InputField m_PianoInput;
     public GameObject m_MainOptionPiano;
     public GameObject m_TwitchScript;
+
+//Skin Overlay
+    public GameObject m_MainOptionColor;
+    public InputField m_R;
+    public InputField m_G;
+    public InputField m_B;
+    public bool m_IsPrimaryHand;
+    public GameObject m_MainColorPrimaryKey;
+    public GameObject m_MainColorSecondKey;
+    public GameObject m_MainColorInputBoard;
+
 
 
     // Start is called before the first frame update
@@ -101,6 +113,61 @@ public class MainMenuLogic : MonoBehaviour
         
     }
 
+    public void MainOptionColor()
+    {
+        if (m_PressedState == false)
+        {
+            m_MainOptionColor.SetActive(true);
+            m_IsPrimaryHand = true;
+            m_MainColorInputBoard.SetActive(true);
+        }
+        else
+        {
+            m_MainOptionColor.SetActive(false);
+            m_MainColorInputBoard.SetActive(false);
+        }
+    }
+
+    public void MainOptionColorSubmit()
+    {
+        setColorSettings(m_R.text, m_G.text, m_B.text, m_IsPrimaryHand);
+
+    }
+
+    public void MainOptionChangeButton()
+    {
+        if(m_MainColorPrimaryKey.activeSelf == true)
+        {
+            m_MainColorPrimaryKey.SetActive(false);
+            m_MainColorSecondKey.SetActive(true);
+            m_IsPrimaryHand = false;
+        }
+        else
+        {
+            m_MainColorPrimaryKey.SetActive(true);
+            m_MainColorSecondKey.SetActive(false);
+            m_IsPrimaryHand = true;
+        }
+
+    }
+
+    public void setColorSettings(string RED, string GREEN, string BLUE, bool PrimaryHand)
+    {
+        if (PrimaryHand == true)
+        {
+            PlayerPrefs.SetInt("Color_R", int.Parse(RED));
+            PlayerPrefs.SetInt("Color_G", int.Parse(GREEN));
+            PlayerPrefs.SetInt("Color_B", int.Parse(BLUE));
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Color_SR", int.Parse(RED));
+            PlayerPrefs.SetInt("Color_SG", int.Parse(GREEN));
+            PlayerPrefs.SetInt("Color_SB", int.Parse(BLUE));
+        }
+        
+    }
+
     public void MainOptionTwitchSubmit()
     {
         setTwitchCredentials(m_TwitchInput_User.text, m_TwitchInput_Channel.text, m_TwitchInput_Token.text);
@@ -119,6 +186,10 @@ public class MainMenuLogic : MonoBehaviour
     public void MainCloseButton(GameObject Scene)
     {
         m_PressedState = false;
+        if(m_MainColorInputBoard.activeSelf == true)
+        {
+            m_MainColorInputBoard.SetActive(false);
+        }
         Scene.SetActive(false);
     }
     public void MainExitButton()
