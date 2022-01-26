@@ -190,6 +190,7 @@ public class NotesController : MonoBehaviour
         //Create Note Blocks
         TempoMap tempo = File.GetTempoMap();
         IEnumerable<Note> notes = File.GetNotes();
+        int noteCounter = 0;
 
         var notePos = new Vector3(-3f,0,0);        
         
@@ -198,6 +199,7 @@ public class NotesController : MonoBehaviour
         
          foreach (var note in notes)
             {
+                noteCounter++;
                 float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
                 int noteNumber = note.NoteNumber;
                 var noteName = note.NoteName.ToString();
@@ -235,7 +237,7 @@ public class NotesController : MonoBehaviour
                 {
                     m_ZPos = -15;
                 }
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName, m_ZPos);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName, m_ZPos, noteCounter);
                 noteObject.SetActive(true);
                 noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";

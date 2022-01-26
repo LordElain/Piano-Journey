@@ -471,7 +471,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 20275217}
   m_NoteName: 
 --- !u!212 &133239655
@@ -537,7 +536,6 @@ GameObject:
   - component: {fileID: 144536601}
   - component: {fileID: 144536602}
   - component: {fileID: 144536603}
-  - component: {fileID: 144536604}
   m_Layer: 0
   m_Name: Note
   m_TagString: Note
@@ -631,7 +629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 1431584414}
   m_NoteName: 
 --- !u!223 &144536603
@@ -655,22 +652,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!54 &144536604
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 144536599}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &158136808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,7 +1443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 1759452169}
   m_NoteName: 
 --- !u!212 &378347682
@@ -1608,7 +1588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 1518718545}
   m_NoteName: 
 --- !u!212 &453666769
@@ -1803,7 +1782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 158136810}
   m_NoteName: 
 --- !u!212 &487565899
@@ -2517,7 +2495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 585302336}
   m_NoteName: 
 --- !u!212 &806009736
@@ -2663,7 +2640,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 1762289526}
   m_NoteName: 
 --- !u!212 &822512571
@@ -2979,7 +2955,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 787, y: 388}
+  m_AnchoredPosition: {x: 738, y: 261}
   m_SizeDelta: {x: 131.74768, y: 45.44452}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &929719720
@@ -3447,7 +3423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 1576673713}
   m_NoteName: 
 --- !u!212 &1114948364
@@ -3743,7 +3718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 987626328}
   m_NoteName: 
 --- !u!212 &1266578430
@@ -3889,7 +3863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 1893069232}
   m_NoteName: 
 --- !u!212 &1269848891
@@ -4377,7 +4350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 15
   m_Text: {fileID: 0}
   m_NoteName: 
 --- !u!50 &1380185673
@@ -4872,7 +4844,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 850991736}
   m_NoteName: 
 --- !u!212 &1486731372
@@ -5309,6 +5280,7 @@ MonoBehaviour:
   m_FinalKeyPosX: 0
   Object_KeyID: 
   m_MaxAllKeys: 120
+  m_MaxAllKeys2: 0
   m_NoteKeys:
   - C
   - CSharp
@@ -6075,7 +6047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42d533b7912f645a1eff21e215dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZPos: 60
   m_Text: {fileID: 954346904}
   m_NoteName: 
 --- !u!212 &1718898465

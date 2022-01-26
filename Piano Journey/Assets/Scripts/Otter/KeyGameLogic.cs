@@ -20,6 +20,10 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public GameObject m_TriggerBox;
     public bool m_AllowCollider;
     public int m_Counter;
+    public bool m_Pressed;
+
+    public int m_NoteID;
+    public int m_oldID;
 
 
     PianoJourney controls;
@@ -55,25 +59,26 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 /* Debug.Log(note.shortDisplayName);
                 Debug.Log(m_Trigger); */
                 m_Trigger = true;
+                m_Pressed = true;
                 //print("ON PIANO");
                 if (m_AllowCollider == false)
                 {
-                    //print(m_NoteName + note.shortDisplayName);
                     if (m_NoteName == note.shortDisplayName)
                     {
-                        Check();
+                        m_oldID = Check(m_NoteID, m_oldID);
                     }
-                    else
+                    else 
                     {
                         m_Score -= m_MissingPoints;
                         if(m_Score < 0)
                         m_Score = 0;
                         UpdateScore(m_Score);
-                        //GetComponent<SpriteRenderer>().color = Color.red;
+                        GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 }
                 else
                 {
+                   GetComponent<SpriteRenderer>().color = Color.white;
                     //GetComponent<SpriteRenderer>().color = Color.white;
                 }
                 
@@ -91,13 +96,13 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
 
     public void OnTriggerEnter(Collider other)
     {
+            
             if(m_Trigger == true)
             {
-                m_TriggerCase = other.gameObject.tag;
-                m_TriggerBox = other.gameObject;
-                m_Counter++;
+                m_NoteID = other.gameObject.GetComponentInParent<GameNote>().m_NID;
                 m_NoteName = other.transform.parent.name;
                 m_AllowCollider = false;
+                m_TriggerCase = other.name;
             }
             else
             {
@@ -105,7 +110,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 m_Score -= m_MissingPoints;
                 if(m_Score < 0)
                 m_Score = 0;
-                UpdateScore(m_Score);
+                UpdateScore(m_Score); 
             }
             //other.transform.parent.gameObject.SetActive(false);
 
@@ -114,17 +119,22 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
 
     public void OnTriggerExit(Collider other)
     {
-        m_Counter--;
-        if (m_Counter == 0)
+      /*   m_Counter--;
+        if (m_Counter == 0) */
         m_AllowCollider = true;
         m_Trigger = false;
         GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-    public void Check()
+    public int Check(int ID, int oldID)
      {
-        switch(m_TriggerCase)
+        
+        if (oldID != ID)
         {
+            print("Not Same");
+            print (m_TriggerCase);
+            switch(m_TriggerCase)
+            {
                             case "EARLY":
                             {
                                 
@@ -155,9 +165,17 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                             default:
                             
                             //m_Score -= m_MissingPoints;
-                            GetComponent<SpriteRenderer>().color = Color.white;
+                            GetComponent<SpriteRenderer>().color = Color.red;
                             break;
+            }
+            oldID = ID;
         }
+        else
+        {
+         
+        }
+
+        return oldID;
 
      }
 
