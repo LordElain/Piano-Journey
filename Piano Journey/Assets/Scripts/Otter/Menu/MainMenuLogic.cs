@@ -168,6 +168,11 @@ public class MainMenuLogic : MonoBehaviour
         
     }
 
+    public void MainOptionTwitchLink()
+    {
+        Application.OpenURL("https://twitchapps.com/tmi/");
+    }
+
     public void MainOptionTwitchSubmit()
     {
         setTwitchCredentials(m_TwitchInput_User.text, m_TwitchInput_Channel.text, m_TwitchInput_Token.text);

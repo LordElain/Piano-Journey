@@ -60,7 +60,6 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 Debug.Log(m_Trigger); */
                 m_Trigger = true;
                 m_Pressed = true;
-                //print("ON PIANO");
                 if (m_AllowCollider == false)
                 {
                     if (m_NoteName == note.shortDisplayName)
@@ -73,13 +72,12 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                         if(m_Score < 0)
                         m_Score = 0;
                         UpdateScore(m_Score);
-                        GetComponent<SpriteRenderer>().color = Color.red;
+                        
                     }
                 }
                 else
                 {
                    GetComponent<SpriteRenderer>().color = Color.white;
-                    //GetComponent<SpriteRenderer>().color = Color.white;
                 }
                 
                 
@@ -176,7 +174,6 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         }
 
         return oldID;
-
      }
 
 

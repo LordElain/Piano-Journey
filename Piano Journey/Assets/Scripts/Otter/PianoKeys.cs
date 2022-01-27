@@ -285,7 +285,6 @@ public class PianoKeys : MonoBehaviour
 
                                             if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '7')
                                             {
-                                                print(PKeyObject.name);
                                                 PKeyObject.GetComponent<SpriteRenderer>().enabled = false;
                                             }
                                             else
@@ -294,6 +293,31 @@ public class PianoKeys : MonoBehaviour
                                             }
                                             break;
                                         }
+                                case 61:
+                                        {
+                                            if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '1'|| PKeyObject.name[PKeyObject.name.Length-7] == '6'|| PKeyObject.name[PKeyObject.name.Length-7] == '7')
+                                            {
+                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = false;
+                                            }
+                                            else
+                                            {
+                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = true;
+                                            }
+                                            break;
+                                        }
+                                case 25:
+                                        {
+                                            if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '1'|| PKeyObject.name[PKeyObject.name.Length-7] == '6'|| PKeyObject.name[PKeyObject.name.Length-7] == '7')
+                                            {
+                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = false;
+                                            }
+                                            else
+                                            {
+                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = true;
+                                            }
+                                            break;
+                                        }
+
                                 default:
                                 break;
                             }
