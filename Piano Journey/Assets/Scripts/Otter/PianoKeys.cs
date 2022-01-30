@@ -44,6 +44,9 @@ public class PianoKeys : MonoBehaviour
     public List<GameObject> m_KeyList = new List<GameObject>();
     public bool m_ListStatus;
 
+    public Vector3 m_CameraSettings;
+    public Vector3 m_Offset;
+
     // Start is called before the first frame update/* 
     void Start()
     {
@@ -51,13 +54,15 @@ public class PianoKeys : MonoBehaviour
         m_FinalKeyPosX = 0;
         m_MaxAllKeys = 88;
         m_MaxAllKeys2 = setMaxAllKeys();
+        m_Offset = new Vector3(0,0,0);
         FillArray_Numbers(m_MaxAllKeys);
-        
+        m_CameraSettings = new Vector3(0,0,0);
         KeyObjects = new GameObject[m_MaxAllKeys];
         HeightOffsetArray = new float [m_MaxAllKeys];
         m_KeyPositions = new float [m_MaxAllKeys];
         //m_AllKeys = new string [DataManager.m_MaxAllKeys];
-        GenerateWhiteKeys(m_WhitePianoKeysObject);
+        m_CameraSettings = CameraSettings(m_CameraSettings);
+        GenerateWhiteKeys(m_WhitePianoKeysObject, m_CameraSettings);
         m_ListStatus = true;
     }
 
@@ -67,6 +72,69 @@ public class PianoKeys : MonoBehaviour
         TransForm(m_Camera, KeyObjects);
     }
               
+    public Vector3 CameraSettings(Vector3 StartPos)
+    {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "GAME")
+        {
+            m_OffsetPerScene = new Vector3(75,0,0);
+        }
+        else
+        {
+            m_OffsetPerScene = new Vector3(75,0,0);
+        }
+        StartPos.x = m_Camera.transform.position.x - m_OffsetPerScene.x;
+        var height = m_Camera.scaledPixelHeight;
+        string aspect = m_Camera.aspect.ToString();
+        var k = aspect.Substring(0,3);
+        
+        print(k);
+        switch (height)
+        {
+            case 1080:
+                m_Camera.orthographicSize = 41.76f;
+                m_Offset = new Vector3(0,35,0);
+            break;
+
+            case 768:
+                m_Camera.orthographicSize = 41.76f;
+                m_Offset = new Vector3(0,35,0);
+            break;
+
+            case 1440:
+                m_Camera.orthographicSize = 41.76f;
+                m_Offset = new Vector3(0,35,0);
+            break;
+
+            case 2160:
+                m_Camera.orthographicSize = 41.76f;
+                m_Offset = new Vector3(0,35,0);
+            break;
+            default:
+                m_Camera.orthographicSize = 35.06151f;
+                m_Offset = new Vector3(0,28,0);
+            break;
+        }
+
+        switch (k)
+        {
+            case "1.7":
+                m_Camera.orthographicSize = 41.76f;
+                m_Offset = new Vector3(0,35,0);
+            break;
+
+            case "1.5":
+                print("HERE");
+                m_Camera.orthographicSize = 46.44f;
+                m_Offset = new Vector3(0,39,0);
+            break;
+            default:
+                m_Camera.orthographicSize = 35.06151f;
+                m_Offset = new Vector3(0,28,0);
+            break;
+        }
+
+        return StartPos;
+    }
     public int setMaxAllKeys()
     {
         var i = PlayerPrefs.GetInt("maxKey");
@@ -99,7 +167,7 @@ public class PianoKeys : MonoBehaviour
         };
     }
 
-    public void GenerateWhiteKeys(GameObject[] WhitePianoKeysObject)
+    public void GenerateWhiteKeys(GameObject[] WhitePianoKeysObject, Vector3 StartPos)
     {
         float KeyOffset_Left = 3f; //White Key Left Offset
         float KeyOffset_Left2 = 2f; //White Key Left Offset
@@ -119,16 +187,8 @@ public class PianoKeys : MonoBehaviour
         float KeyZPos_Black = -10;
 
         float KeyHeight = 0;
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "GAME")
-        {
-            m_OffsetPerScene = new Vector3(75,0,0);
-        }
-        else
-        {
-            m_OffsetPerScene = new Vector3(75,0,0);
-        }
-        var StartPos = m_Camera.transform.position.x - m_OffsetPerScene.x;
-        var KeyPos = new Vector3(StartPos,0,0);
+        
+        var KeyPos = new Vector3(StartPos.x,0,0);
         
         m_KeyID = -1;
        
@@ -343,6 +403,7 @@ public class PianoKeys : MonoBehaviour
 
         if(m_Counter < m_MaxAllKeys)
         {
+            print(Offset);
             KeyObjects[m_Counter] = PianoKeyObject;
             HeightOffsetArray[m_Counter] = Offset;
             m_Counter++;
@@ -371,12 +432,12 @@ public class PianoKeys : MonoBehaviour
     }
     public void TransForm (Camera Kamera, GameObject[] PianoKeys)
     {
-        var Offfset = new Vector3(0,28,0);
+        
         for (int i = 0; i <= m_Counter-1; i++)
         {
             Vector3 ypos = PianoKeys[i].transform.position;
             ypos.y = Kamera.transform.position.y + HeightOffsetArray[i];
-            PianoKeys[i].transform.position = ypos - Offfset;
+            PianoKeys[i].transform.position = ypos - m_Offset;
         }
     }
        
