@@ -249,10 +249,10 @@ public class GridNote : MonoBehaviour
 
     private void CreateNoteArray()
     {
-        int MaxOctave = 8;
+        int MaxOctave = 7;
         int AllKeyCounter = 1;
         //Create WhiteKeys
-        for (int i = 0; i < MaxOctave; i++)
+        for (int i = 0; i <= MaxOctave; i++)
         {  
             for (int j = 0; j <= m_NoteKeys.Length-1; j++)
             {    

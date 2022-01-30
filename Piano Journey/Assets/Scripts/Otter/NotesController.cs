@@ -217,15 +217,6 @@ public class NotesController : MonoBehaviour
                 float noteChannel = note.Channel;
                 
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
-                
-                if(noteName == "B" || noteName == "E")
-                {
-                    //NotePosition.x = NotePosition.x - 0.1f;
-                }
-                else
-                {
-                    /* NotePosition.x = NotePosition.x - 1f; */
-                } 
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
                 //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);

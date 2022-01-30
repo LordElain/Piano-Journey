@@ -41,11 +41,13 @@ public class PianoKeys : MonoBehaviour
     private int m_Counter;
 
     public Vector3 m_OffsetPerScene;
-    
+    public List<GameObject> m_KeyList = new List<GameObject>();
+    public bool m_ListStatus;
 
     // Start is called before the first frame update/* 
     void Start()
     {
+        
         m_FinalKeyPosX = 0;
         m_MaxAllKeys = 88;
         m_MaxAllKeys2 = setMaxAllKeys();
@@ -56,7 +58,7 @@ public class PianoKeys : MonoBehaviour
         m_KeyPositions = new float [m_MaxAllKeys];
         //m_AllKeys = new string [DataManager.m_MaxAllKeys];
         GenerateWhiteKeys(m_WhitePianoKeysObject);
-        
+        m_ListStatus = true;
     }
 
     // Update is called once per frame
@@ -80,7 +82,7 @@ public class PianoKeys : MonoBehaviour
         m_AllKeys = new string[120];
 
         //Create WhiteKeys
-        for (int i = 0; i < MaxOctave; i++)
+        for (int i = 1; i <= MaxOctave; i++)
         {  
             for (int j = 0; j <= m_NoteKeys.Length-1; j++)
             {    
@@ -142,7 +144,7 @@ public class PianoKeys : MonoBehaviour
                     GameObject PKeyObject = Instantiate(WhitePianoKeysObject[j], KeyPos, Quaternion.identity);
                     PKeyObject.SetActive(false);
                     PKeyObject.tag = "Key";
-                    
+                    m_KeyList.Add(PKeyObject);
                     SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
                     KeyZPos = 0;
                     KeyHeight = 0;
@@ -315,6 +317,11 @@ public class PianoKeys : MonoBehaviour
                                             {
                                                 PKeyObject.GetComponent<SpriteRenderer>().enabled = true;
                                             }
+                                            break;
+                                        }
+                                case 88:
+                                        {
+                                            PKeyObject.GetComponent<SpriteRenderer>().enabled = true;
                                             break;
                                         }
 

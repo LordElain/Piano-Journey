@@ -8,6 +8,7 @@ public class GameNote : MonoBehaviour
     public Text m_Text;
     public int m_NID;
     public string m_NoteName;
+    public int m_NoteNumber;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,9 +42,10 @@ public class GameNote : MonoBehaviour
         
         m_Text.text = NoteNameOctave;
         m_NoteName = NoteNameOctave;
-        transform.localScale = new Vector2(1.5f, duration/5f);
+        transform.localScale = new Vector2(1.5f, duration/2f);
         transform.position = new Vector3(noteNumber,timeOfNote,ZPos);
         m_NID = NoteID;
+        m_NoteNumber = (int)noteNumber;
         //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
         //GetComponent<SpriteRenderer>().size = new Vector3(10f, duration,30);
         //GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);

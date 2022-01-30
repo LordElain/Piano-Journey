@@ -472,7 +472,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 20275217}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &133239655
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -630,7 +632,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 1431584414}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!223 &144536603
 Canvas:
   m_ObjectHideFlags: 0
@@ -1444,7 +1448,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 1759452169}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &378347682
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1589,7 +1595,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 1518718545}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &453666769
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1783,7 +1791,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 158136810}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &487565899
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2496,7 +2506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 585302336}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &806009736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2641,7 +2653,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 1762289526}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &822512571
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3424,7 +3438,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 1576673713}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &1114948364
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3719,7 +3735,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 987626328}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &1266578430
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3864,7 +3882,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 1893069232}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &1269848891
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4351,7 +4371,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 0}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!50 &1380185673
 Rigidbody2D:
   serializedVersion: 4
@@ -4845,7 +4867,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 850991736}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &1486731372
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5522,6 +5546,8 @@ MonoBehaviour:
   - 0
   - 0
   m_OffsetPerScene: {x: 0, y: 0, z: 0}
+  m_KeyList: []
+  m_ListStatus: 0
 --- !u!50 &1571459928
 Rigidbody2D:
   serializedVersion: 4
@@ -6048,7 +6074,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 954346904}
+  m_NID: 0
   m_NoteName: 
+  m_NoteNumber: 0
 --- !u!212 &1718898465
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7196,6 +7224,15 @@ MonoBehaviour:
   m_TriggerBox: {fileID: 0}
   m_AllowCollider: 0
   m_Counter: 0
+  m_Pressed: 0
+  m_NoteID: 0
+  m_oldID: 0
+  m_TriggerOfNote: 0
+  KeyArray: []
+  m_NotePos: 0
+  m_PianoKeyList: []
+  m_KeyNote: 
+  m_Piano: {fileID: 6241339406355341706}
 --- !u!1 &6241339406355341706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6241339406464075385, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
@@ -7224,6 +7261,15 @@ MonoBehaviour:
   m_TriggerBox: {fileID: 0}
   m_AllowCollider: 0
   m_Counter: 0
+  m_Pressed: 0
+  m_NoteID: 0
+  m_oldID: 0
+  m_TriggerOfNote: 0
+  KeyArray: []
+  m_NotePos: 0
+  m_PianoKeyList: []
+  m_KeyNote: 
+  m_Piano: {fileID: 0}
 --- !u!1 &6320894806483823501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6320894806324219006, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
@@ -7268,6 +7314,15 @@ MonoBehaviour:
   m_TriggerBox: {fileID: 0}
   m_AllowCollider: 0
   m_Counter: 0
+  m_Pressed: 0
+  m_NoteID: 0
+  m_oldID: 0
+  m_TriggerOfNote: 0
+  KeyArray: []
+  m_NotePos: 0
+  m_PianoKeyList: []
+  m_KeyNote: 
+  m_Piano: {fileID: 6241339406355341706}
 --- !u!1 &8654498156344948049 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8654498156453810850, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
@@ -7325,3 +7380,12 @@ MonoBehaviour:
   m_TriggerBox: {fileID: 0}
   m_AllowCollider: 0
   m_Counter: 0
+  m_Pressed: 0
+  m_NoteID: 0
+  m_oldID: 0
+  m_TriggerOfNote: 0
+  KeyArray: []
+  m_NotePos: 0
+  m_PianoKeyList: []
+  m_KeyNote: 
+  m_Piano: {fileID: 6241339406355341706}
