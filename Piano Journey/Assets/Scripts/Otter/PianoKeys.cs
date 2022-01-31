@@ -401,7 +401,6 @@ public class PianoKeys : MonoBehaviour
 
         if(m_Counter < m_MaxAllKeys)
         {
-            print(Offset);
             KeyObjects[m_Counter] = PianoKeyObject;
             HeightOffsetArray[m_Counter] = Offset;
             m_Counter++;

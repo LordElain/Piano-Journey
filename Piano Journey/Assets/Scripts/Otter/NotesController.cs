@@ -17,12 +17,11 @@ public class NotesController : MonoBehaviour
 {
     //MIDI Properties
 
-    public int m_BPM;
+    public double m_BPM;
     public float m_Position;
     public float m_TimePlayed;
-
     public string m_Path;
-
+    private bool m_ButtonPressed;
 
     //Playback Related
     public DevicesConnector m_DeviceConnector;
@@ -33,6 +32,7 @@ public class NotesController : MonoBehaviour
     public GameObject m_Camera;
     public GameObject m_Piano;
     public GameObject[] Key_List;
+    
 
     public float m_ZPos;
     public bool m_BlackCheck;
@@ -55,7 +55,7 @@ public class NotesController : MonoBehaviour
         var m_File = ReadFile(m_Path);
         var m_Duration = GetDuration(m_File);
         m_BlackCheck = false;
-        
+        m_ButtonPressed = false;
 
         
         m_InputDevices = GetInputDevices();
@@ -78,6 +78,9 @@ public class NotesController : MonoBehaviour
         if(m_PlayStatus == false)
         {
             m_playback.Stop();
+            var d = SetPlaybackSpeed();
+            m_playback.Speed = d;
+            m_playback.MoveBack(new MetricTimeSpan(0, 0, 10));
         }
          
         else
@@ -108,6 +111,31 @@ public class NotesController : MonoBehaviour
        
     }
 
+    public double SetPlaybackSpeed()
+    {
+        if(m_ButtonPressed == false)
+        {
+           m_BPM = 1;
+        }
+        else
+        {
+            m_BPM = 0.5;
+        }
+    
+        return m_BPM;
+    }
+
+    public void ChangeSpeedButton()
+    {
+        if(m_ButtonPressed == false)
+        {
+            m_ButtonPressed = true;
+        }
+        else
+        {
+            m_ButtonPressed = false;
+        }
+    }
     public void PauseResumeButton()
     {
         m_PauseMenu.SetActive(false);
@@ -178,12 +206,9 @@ public class NotesController : MonoBehaviour
 
     public TimeSpan GetDuration(MidiFile File)
     {
-        //Get Duration of Midi File
         TimeSpan midiFileDuration = File.GetDuration<MetricTimeSpan>();
-        //Debug.Log("Duration " + midiFileDuration);
         return midiFileDuration;
     }
-    
 
     public IEnumerator DisplayNotes(MidiFile File, TimeSpan Duration, GameObject PrefabNotes)
     {
@@ -237,7 +262,6 @@ public class NotesController : MonoBehaviour
           
     }
 
-
     private void WriteNotes(InputDevice[] InputPiano, OutputDevice[] Output)
     {
         //Write Midi Files
@@ -247,13 +271,12 @@ public class NotesController : MonoBehaviour
         
     }
 
-     private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
+    private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
     {
         var midiDevice = (Melanchall.DryWetMidi.Devices.MidiDevice)sender;
         Debug.Log("Event received from " + midiDevice.Name + ": " + e.Event); 
     }
   
-
     private InputDevice[] GetInputDevices()
     {
         //Get All InputDevices
@@ -298,8 +321,6 @@ public class NotesController : MonoBehaviour
             Console.WriteLine($"Current time is {time}.");
         }
     }
-
- 
 
     private void OnApplicationQuit() 
         {

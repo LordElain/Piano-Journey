@@ -65,7 +65,8 @@ public class MainMenuLogic : MonoBehaviour
         {
             Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
         
-            if (next!= null) {
+            if (next!= null) 
+            {
                             
                 InputField inputfield = next.GetComponent<InputField>();
                 if (inputfield !=null) inputfield.OnPointerClick(new PointerEventData(system));  //if it's an input field, also set the text caret
