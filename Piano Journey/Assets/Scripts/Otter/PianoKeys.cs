@@ -86,8 +86,7 @@ public class PianoKeys : MonoBehaviour
         var height = m_Camera.scaledPixelHeight;
         string aspect = m_Camera.aspect.ToString();
         var k = aspect.Substring(0,3);
-        
-        print(k);
+
         switch (height)
         {
             case 1080:
@@ -123,7 +122,6 @@ public class PianoKeys : MonoBehaviour
             break;
 
             case "1.5":
-                print("HERE");
                 m_Camera.orthographicSize = 46.44f;
                 m_Offset = new Vector3(0,39,0);
             break;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleFileBrowser;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MainMenuLogic : MonoBehaviour
@@ -39,6 +40,9 @@ public class MainMenuLogic : MonoBehaviour
     public GameObject m_MainColorPrimaryKey;
     public GameObject m_MainColorSecondKey;
     public GameObject m_MainColorInputBoard;
+    public GameObject m_MainColorSubmit;
+    public GameObject m_MainColorLook;
+    public  EventSystem system;
 
 
 
@@ -46,6 +50,7 @@ public class MainMenuLogic : MonoBehaviour
     void Start()
     {
         MainMenuButton();
+        system = EventSystem.current;
     }
 
     // Update is called once per frame
@@ -55,8 +60,20 @@ public class MainMenuLogic : MonoBehaviour
         {
             m_Confirmation = true;
         }
-    }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+        
+            if (next!= null) {
+                            
+                InputField inputfield = next.GetComponent<InputField>();
+                if (inputfield !=null) inputfield.OnPointerClick(new PointerEventData(system));  //if it's an input field, also set the text caret
+                            
+                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
+            }
+        }
+    }
     public void MainMenuButton()
     {
         m_MainMenu.SetActive(true);
@@ -131,7 +148,11 @@ public class MainMenuLogic : MonoBehaviour
     public void MainOptionColorSubmit()
     {
         setColorSettings(m_R.text, m_G.text, m_B.text, m_IsPrimaryHand);
-
+        var R = float.Parse(m_R.text);
+        var G = float.Parse(m_G.text);
+        var B = float.Parse(m_B.text);
+        m_MainColorSubmit.GetComponent<Image>().color = new Color(R,G,B,1);
+        m_MainColorLook.SetActive(true);
     }
 
     public void MainOptionChangeButton()
@@ -195,6 +216,7 @@ public class MainMenuLogic : MonoBehaviour
         {
             m_MainColorInputBoard.SetActive(false);
         }
+    
         Scene.SetActive(false);
     }
     public void MainExitButton()
