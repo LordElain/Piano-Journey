@@ -5051,7 +5051,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BPM: 0
-  m_OldBPM: 0
   m_Position: 0
   m_TimePlayed: 0
   m_Path: 
@@ -5092,7 +5091,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1380185668}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -5101,7 +5100,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -5943,7 +5942,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6241339406355341706}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -6278,7 +6277,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -7660,6 +7659,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -34.63
       objectReference: {fileID: 0}
+    - target: {fileID: 2255513443294631439, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6ccecc99976905b4ca521f181c37628f, type: 2}
     - target: {fileID: 3570096773272529550, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_Camera
       value: 
@@ -7728,6 +7731,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4476979553814127690, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e69a8a8b8080002479e608bf0039dc09, type: 2}
     - target: {fileID: 6113284932566100097, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
       propertyPath: m_LocalScale.x
       value: 50
@@ -7760,6 +7767,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9203074366335939092, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f73f074acd337454fa70e7e0e8b3c5d0, type: 2}
     m_RemovedComponents:
     - {fileID: 7893384048646586525, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
     - {fileID: 7215137247747878359, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
@@ -8171,6 +8182,7 @@ MonoBehaviour:
   m_PianoKeyList: []
   m_KeyNote: 
   m_Piano: {fileID: 6241339406355341706}
+  m_Anim: {fileID: 0}
 --- !u!1 &6241339406355341706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6241339406464075385, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
@@ -8208,6 +8220,7 @@ MonoBehaviour:
   m_PianoKeyList: []
   m_KeyNote: 
   m_Piano: {fileID: 0}
+  m_Anim: {fileID: 0}
 --- !u!1 &6320894806483823501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6320894806324219006, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
@@ -8261,6 +8274,7 @@ MonoBehaviour:
   m_PianoKeyList: []
   m_KeyNote: 
   m_Piano: {fileID: 6241339406355341706}
+  m_Anim: {fileID: 0}
 --- !u!1 &8654498156344948049 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8654498156453810850, guid: 91bc72a94d493e84e980b1e05c1cc5ea, type: 3}
@@ -8327,3 +8341,4 @@ MonoBehaviour:
   m_PianoKeyList: []
   m_KeyNote: 
   m_Piano: {fileID: 6241339406355341706}
+  m_Anim: {fileID: 0}

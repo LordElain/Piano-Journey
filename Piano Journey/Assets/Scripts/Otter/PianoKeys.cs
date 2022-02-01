@@ -12,7 +12,6 @@ public class PianoKeys : MonoBehaviour
     public int m_KeyID;
     public GameObject[] m_WhitePianoKeysObject;
     public Camera m_Camera;
-    private GameObject Piano;
 
     public Text m_Text;
     public int m_MaxNotesOctave; //Notes per Octave

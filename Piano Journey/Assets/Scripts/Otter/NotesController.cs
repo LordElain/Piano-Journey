@@ -227,6 +227,7 @@ public class NotesController : MonoBehaviour
                 noteCounter++;
                 float noteTime = note.TimeAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
                 int noteNumber = note.NoteNumber;
+
                 var noteName = note.NoteName.ToString();
                 var noteOctave = note.Octave.ToString();
                 string noteNameOctave = noteName + noteOctave;
@@ -240,7 +241,7 @@ public class NotesController : MonoBehaviour
                 }
                 float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
                 float noteChannel = note.Channel;
-                
+
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
@@ -253,7 +254,7 @@ public class NotesController : MonoBehaviour
                 {
                     m_ZPos = -15;
                 }
-                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName, m_ZPos, noteCounter);
+                noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName, m_ZPos, noteCounter, noteNumber);
                 noteObject.SetActive(true);
                 noteObject.name = noteNameOctave;
                 noteObject.tag = "Note";

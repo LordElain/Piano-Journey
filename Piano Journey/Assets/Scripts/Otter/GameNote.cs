@@ -22,7 +22,7 @@ public class GameNote : MonoBehaviour
 
     }
 
-    public void InitGameNote(float timeOfNote,float noteNumber,float duration,float instrument, string NoteNameOctave, string NoteName, float ZPos, int NoteID)
+    public void InitGameNote(float timeOfNote,float notePos,float duration,float instrument, string NoteNameOctave, string NoteName, float ZPos, int NoteID, int noteNumber)
     {
         int RED = 0;
         int GREEN = 0;
@@ -43,9 +43,9 @@ public class GameNote : MonoBehaviour
         m_Text.text = NoteNameOctave;
         m_NoteName = NoteNameOctave;
         transform.localScale = new Vector2(1.5f, duration/2f);
-        transform.position = new Vector3(noteNumber,timeOfNote,ZPos);
+        transform.position = new Vector3(notePos,timeOfNote,ZPos);
         m_NID = NoteID;
-        m_NoteNumber = (int)noteNumber;
+        m_NoteNumber = noteNumber;
         //GetComponent<SpriteRenderer>().transform.eulerAngles = Vector3.forward * 90;
         //GetComponent<SpriteRenderer>().size = new Vector3(10f, duration,30);
         //GetComponent<SpriteRenderer>().color = Color.HSVToRGB(instrument / 10f, 1f, 1f);

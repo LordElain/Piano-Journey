@@ -32,8 +32,12 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public List<GameObject> m_PianoKeyList = new List<GameObject>();
     public string m_KeyNote;
     public GameObject m_Piano;
-
+    public Animator m_Anim;
     PianoJourney controls;
+    private int m_NoteNumber;
+    private Minis.MidiDevice miniMidiDevice;
+    private List<Animator> m_AnimatorList = new List<Animator>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +45,9 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         controls = new PianoJourney();
         controls.Player.SetCallbacks(this);
         controls.Enable();
-        
-       
+        m_Anim = GetComponent<Animator>();
+        m_PianoKeyList = PianoList();
+        miniMidiDevice = Minis.MidiDevice.current;
     }
 
     // Update is called once per frame
@@ -52,57 +57,52 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
 
     public List<GameObject> PianoList ()
     {
-        KeyArray = GameObject.FindGameObjectsWithTag("Key");
         var o = m_Piano.GetComponent<PianoKeys>();
-
+        foreach(GameObject ob in o.m_KeyList)
+        {
+            m_AnimatorList.Add(ob.GetComponent<Animator>());
+        }
         return o.m_KeyList;  
     }
+
 
     public void UpdateScore(float Score)
     {
         ScoreCounter.m_ScoreText = Score;
     }
     
+    private void Device(GameObject Key, bool Status)
+    {
+        Key.GetComponent<Animator>().SetBool("isPressed",Status);
+        
+    }
     public void OnPianoNotes(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-    
-        var miniMidiDevice = Minis.MidiDevice.current;
-        if(miniMidiDevice.wasUpdatedThisFrame)        
-        {
+        miniMidiDevice = Minis.MidiDevice.current;
+
             miniMidiDevice.onWillNoteOn += (note, velocity) => 
             {
                 m_Trigger = true;
                 m_Pressed = true;
-                
+
                 m_KeyNote = note.shortDisplayName;
-                int k = note.noteNumber;
-                GameObject key = gameObject;
-                int KeyID = 1;
-
-                
-                m_oldID = Check(m_Trigger, m_KeyNote, m_oldID, m_NoteID, key, KeyID, m_NoteName);
-
-                
-
-            /*         else 
-                    {
-                        m_Score -= m_MissingPoints;
-                        if(m_Score < 0)
-                        m_Score = 0;
-                        UpdateScore(m_Score);
-                        
-                    } */
-
-               
+                m_NoteNumber = note.noteNumber - 24;
+                if(m_NoteNumber <= 0)
+                {
+                    m_NoteNumber = 0;
+                }
+                m_oldID = Check(m_Trigger, m_KeyNote, m_oldID, m_NoteID, m_NoteName, m_NoteNumber); 
             };
-            miniMidiDevice.onWillNoteOff += (velocity) =>
+
+             miniMidiDevice.onWillNoteOff += (note) =>
             {
+                m_AnimatorList[m_NoteNumber].SetBool("isPressed", false);
                 GetComponent<SpriteRenderer>().color = Color.white;
                 m_Trigger = false;
-            };
+            }; 
         }
         
-    }
+    
 
 
     public void OnTriggerEnter(Collider other)
@@ -111,50 +111,43 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         m_NoteID = other.gameObject.GetComponentInParent<GameNote>().m_NID;
         m_NoteName = other.transform.parent.name;
         m_NotePos = other.gameObject.GetComponentInParent<GameNote>().m_NoteNumber;
+        m_NotePos = m_NotePos - 24;
+        if(m_NotePos <= 0)
+        m_NotePos = 0;
         m_TriggerCase = other.name;
         m_TriggerOfNote = false;
         string m_StringOfNote = "No";
-        GameObject key = gameObject;
-
-        int oID = -1;
-        int NoteObjectID = 0;
-        oID = Check(m_TriggerOfNote,m_StringOfNote, oID, m_NoteID, key, NoteObjectID, m_KeyNote);
-
-
-
         
+        int oID = -1;
+        
+        oID = Check(m_TriggerOfNote,m_StringOfNote, oID, m_NoteID, m_KeyNote, m_NotePos);
     }
 
     public void OnTriggerExit(Collider other)
     {
         m_TriggerOfNote = false;
-        GetComponent<SpriteRenderer>().color = Color.white;
-        
+        GetComponent<SpriteRenderer>().color = Color.white;        
     }
 
-    public int Check(bool Trigger, string Note, int oldID, int ID, GameObject Key, int ObjectID, string OtherObject)
+    public int Check(bool Trigger, string Note, int oldID, int ID, string OtherObject, int Index)
      {  
-        if(m_Status == false)
-        {
-            m_PianoKeyList = PianoList();
-            m_Status = true;
-        }
+        var Key = m_PianoKeyList[Index];
+        var Anim = m_AnimatorList[Index];
         
-        
+
         if (Trigger == true)
         {
-            var k = m_PianoKeyList.Find(obj => obj.name == Note + " Piano");
-           
-            if (oldID != ID && ObjectID == 1 && Note == OtherObject)
+            
+            Anim.SetBool("isPressed", true);
+            
+            if (oldID != ID  && Note == OtherObject)
             {
-
-                
                 switch(m_TriggerCase)
                 {
                                 case "EARLY":
                                 {
                                     m_Score += m_EarlyPoints;
-                                    k.GetComponent<SpriteRenderer>().color = Color.yellow;
+                                    Key.GetComponent<SpriteRenderer>().color = Color.yellow;
                                     UpdateScore(m_Score);
                                     break;
                                 }
@@ -162,7 +155,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                                 case "RIGHT":
                                 {
                                     m_Score += m_RightPoints;
-                                    k.GetComponent<SpriteRenderer>().color = Color.green;
+                                    Key.GetComponent<SpriteRenderer>().color = Color.green;
                                     UpdateScore(m_Score);
                                     break;
                                 }
@@ -170,7 +163,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                                 case "LATE":
                                 {
                                     m_Score += m_LatePoints;
-                                    k.GetComponent<SpriteRenderer>().color = Color.blue;
+                                    Key.GetComponent<SpriteRenderer>().color = Color.blue;
                                     UpdateScore(m_Score);
                                     break;
                                 }
@@ -203,9 +196,10 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
             m_Score = 0;
             UpdateScore(m_Score);
             Key.GetComponent<SpriteRenderer>().color = Color.red;
+            
         }
        
-
+        
         return oldID;
      }
 
