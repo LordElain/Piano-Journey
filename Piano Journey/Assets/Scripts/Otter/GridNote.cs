@@ -33,6 +33,7 @@ public class GridNote : MonoBehaviour
     public int m_GridWidth;
     public int m_GridHeight;
     public float m_CellSize;
+    public float m_CellSize2;
 
     private NotesManager m_NotesManager;
     private TimedEventsManager m_EventManager;
@@ -79,10 +80,10 @@ public class GridNote : MonoBehaviour
         FileBrowser.SetDefaultFilter(".mid");
         FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
         m_File = new MidiFile();
+      
         CreateNoteArray();
-        Vector3 StartPosition = GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
+        Vector3 StartPosition = GameObject.Find(m_AllKeys[0] + " Piano").transform.position;
         CreateGrid(StartPosition);
-        
     }
 
 
@@ -248,16 +249,25 @@ public class GridNote : MonoBehaviour
     }
 
     private void CreateNoteArray()
-    {
-        int MaxOctave = 7;
-        int AllKeyCounter = 1;
+       {
+        
+        int MaxOctave = 8;
+        int AllKeyCounter = 0;
+        m_AllKeys = new string[120];
+
         //Create WhiteKeys
-        for (int i = 0; i <= MaxOctave; i++)
+        for (int i = 1; i <= MaxOctave; i++)
         {  
             for (int j = 0; j <= m_NoteKeys.Length-1; j++)
             {    
-                m_AllKeys[AllKeyCounter] = m_NoteKeys[j]+i;
-                AllKeyCounter++;
+                
+                if(AllKeyCounter < m_AllKeys.Length-1)
+                {
+                    m_AllKeys[AllKeyCounter] = m_NoteKeys[j]+i;
+                    AllKeyCounter++;
+                }
+                
+                
             }; 
            
         };
@@ -265,7 +275,7 @@ public class GridNote : MonoBehaviour
 
     private void CreateGrid(Vector3 StartPosition)
     {
-        grid = new Grid(m_GridWidth, m_GridHeight, m_CellSize, m_Camera, StartPosition);
+        grid = new Grid(m_GridWidth, m_GridHeight, m_CellSize, m_Camera, StartPosition, m_CellSize2);
     }
 
 
