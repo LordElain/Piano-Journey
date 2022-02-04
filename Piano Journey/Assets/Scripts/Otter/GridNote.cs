@@ -39,6 +39,7 @@ public class GridNote : MonoBehaviour
     private TimedEventsManager m_EventManager;
     private ChordsManager m_ChordsManager;
     private TempoMap m_TempoMapManger;
+    private TempoMap m_TempoMap;
     private List<Melanchall.DryWetMidi.Interaction.Note> m_Notelist;
     private List <Melanchall.DryWetMidi.Interaction.Chord> m_Chordlist;
 
@@ -64,6 +65,9 @@ public class GridNote : MonoBehaviour
     private EventsCollection m_Event;
     private bool m_StatusForPlayback;
 
+    private MidiFile m_TempFile;
+    public int m_MaxOctave;
+
     //Menu
 
     public GameObject m_OverlayMenu;
@@ -80,6 +84,9 @@ public class GridNote : MonoBehaviour
         FileBrowser.SetDefaultFilter(".mid");
         FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
         m_File = new MidiFile();
+        m_TempFile = new MidiFile();
+        m_TempoMap = TempoMap.Default;
+        m_trackChunk = new TrackChunk();
       
         CreateNoteArray();
         Vector3 StartPosition = GameObject.Find(m_AllKeys[0] + " Piano").transform.position;
@@ -103,7 +110,7 @@ public class GridNote : MonoBehaviour
             mousePos.z = 0;
             m_LeftClick = true;
             m_AllowedPlay = true;
-             CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick, m_AllowedPlay);
+            CreateNoteBlock(x,y,mousePos,mousePosUp,m_LeftClick, m_AllowedPlay);
         }
 
         if (Input.GetMouseButtonDown(1) && m_ClickState == true )
@@ -180,24 +187,32 @@ public class GridNote : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && m_ClickState == true)
         {
-            Playback(m_File, m_StatusForPlayback);
+            
             if(m_PlayStatus == true) 
             {
 
                 m_playback.Stop();
                 m_PlayStatus = false;
+                m_playback.Dispose();
+                m_StatusForPlayback = false;
+                Playback(m_TempFile, m_StatusForPlayback);
             }
             else
             {
+                
+                Playback(m_TempFile, m_StatusForPlayback);
                 m_PlayStatus = true;
+                m_playback.Stop();
                 m_playback.Start();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.R) && m_ClickState == true)
         {
-            Playback(m_File, m_StatusForPlayback);
+            m_StatusForPlayback = false;
             m_playback.Stop();
+            Playback(m_TempFile, m_StatusForPlayback);
+            
             m_playback.MoveToStart();
             m_PlayStatus = false;
         } 
@@ -251,12 +266,11 @@ public class GridNote : MonoBehaviour
     private void CreateNoteArray()
        {
         
-        int MaxOctave = 8;
         int AllKeyCounter = 0;
         m_AllKeys = new string[120];
 
         //Create WhiteKeys
-        for (int i = 1; i <= MaxOctave; i++)
+        for (int i = 1; i <= m_MaxOctave; i++)
         {  
             for (int j = 0; j <= m_NoteKeys.Length-1; j++)
             {    
@@ -275,7 +289,11 @@ public class GridNote : MonoBehaviour
 
     private void CreateGrid(Vector3 StartPosition)
     {
-        grid = new Grid(m_GridWidth, m_GridHeight, m_CellSize, m_Camera, StartPosition, m_CellSize2);
+        for (int i = 0; i < m_MaxOctave; i++)
+        {
+            grid = new Grid(m_GridWidth, m_GridHeight, m_CellSize, m_Camera, StartPosition, m_CellSize2);
+            StartPosition.x = StartPosition.x + 12.1f;
+        }
     }
 
 
@@ -285,7 +303,7 @@ public class GridNote : MonoBehaviour
         var noteEndTime = Mathf.Floor((note.transform.position.y + transform.lossyScale.y) / m_CellSize);
         var noteonEvent = new NoteOnEvent();
         var PositionTest = Mathf.Floor(mousePos.x);
-        var m_trackChunk = new TrackChunk();
+       
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
@@ -370,7 +388,7 @@ public class GridNote : MonoBehaviour
           
         
           
-           using(m_NotesManager = m_trackChunk.ManageNotes())
+           using(m_NotesManager = new NotesManager(m_trackChunk.Events))
            { 
                if(result != null)
                 {
@@ -379,17 +397,20 @@ public class GridNote : MonoBehaviour
                     string resultNote = Char.ToString(allKeyResultNote[0]);
                     int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[allKeyResultNote.Length-1]);
                     var NotePos = Mathf.Floor(note.transform.position.y/m_CellSize);
+                   
+                    
 
 
                     var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
                     notes.Add(new Melanchall.DryWetMidi.Interaction.Note(parsedNote.NoteName,resultOctave)
-                    {
+                    { 
                         Time = Convert.ToInt64(NotePos),
-                        Length = 5,
+                        Length = LengthConverter.ConvertFrom(MusicalTimeSpan.Quarter, 0, m_TempoMap),
                         Channel = noteonEvent.Channel,
                         Velocity = (SevenBitNumber)45
 
                     }); 
+                   
                 }
                  
                 else
@@ -399,12 +420,10 @@ public class GridNote : MonoBehaviour
                 }
              
             }
-            m_File.Chunks.Add(m_trackChunk);
-           
-
-            
-        
-        
+            print(m_trackChunk.Events.Count);
+            print(m_trackChunk);
+            m_TempFile.Chunks.Add(m_trackChunk);
+            m_TempFile.Write("T", overwriteFile: true);
 
         
         if (!m_NoteCounterArray.Equals(note))
@@ -547,7 +566,7 @@ public class GridNote : MonoBehaviour
             m_Path = m_Path + ".mid";
         //TimedObjectUtilities.ToFile(m_NotesManager);
         m_File.Chunks.Add(m_trackChunk);
-        m_File.Write(m_Path,true);
+        m_File.Write(m_Path,overwriteFile: true);
 		}
         m_ClickState = true;
     }
@@ -560,10 +579,17 @@ public class GridNote : MonoBehaviour
             m_OutputDevice = OutputDevice.GetAll().ToArray();
             m_playback = File.GetPlayback(m_OutputDevice[0]);
             m_playback.InterruptNotesOnStop = true;
+            m_playback.Stop();
+            m_playback.Finished += PlayBackFinished; 
             m_playback.Start(); 
             m_playback.Loop = false;
             m_StatusForPlayback = true;
         }
+    }
+
+    private void PlayBackFinished(object sender, EventArgs e)
+    {
+        Debug.Log("FINISHED");
     }
 
     private void OnApplicationQuit()

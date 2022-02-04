@@ -276,7 +276,7 @@ namespace Melanchall.DryWetMidi.Core
         /// <exception cref="InvalidOperationException">Time division is <c>null</c>.</exception>
         /// <exception cref="TooManyTrackChunksException">Count of track chunks presented in the file
         /// exceeds maximum value allowed for MIDI file.</exception>
-        public void Write(string filePath, bool overwriteFile = false, MidiFileFormat format = MidiFileFormat.MultiTrack, WritingSettings settings = null)
+        public void Write(string filePath, bool overwriteFile = true, MidiFileFormat format = MidiFileFormat.MultiTrack, WritingSettings settings = null)
         {
             ThrowIfArgument.IsInvalidEnumValue(nameof(format), format);
 

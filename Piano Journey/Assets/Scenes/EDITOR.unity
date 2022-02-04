@@ -168,8 +168,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282.79, y: 2.4}
-  m_SizeDelta: {x: 142.708, y: 467.438}
+  m_AnchoredPosition: {x: 283.27, y: 43.901}
+  m_SizeDelta: {x: 140.581, y: 385.74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &123655861
 MonoBehaviour:
@@ -345,8 +345,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 424.1, y: 2.156}
-  m_SizeDelta: {x: 142.708, y: 467.438}
+  m_AnchoredPosition: {x: 425.6, y: 43.735}
+  m_SizeDelta: {x: 144.09, y: 385.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &272892138
 MonoBehaviour:
@@ -539,6 +539,7 @@ MonoBehaviour:
   m_SaveState: 0
   m_LoadState: 0
   m_ClickState: 0
+  m_MaxOctave: 0
   m_OverlayMenu: {fileID: 0}
 --- !u!1 &408722115
 GameObject:
@@ -973,15 +974,16 @@ MonoBehaviour:
   - 
   m_Note: {fileID: 1798916824}
   dragSpeed: 5
-  m_GridWidth: 85
+  m_GridWidth: 13
   m_GridHeight: 100
-  m_CellSize: 1.76
+  m_CellSize: 1.75
   m_CellSize2: 1.5
   m_Path: E:\PROGS\Piano-Journey\Piano Journey\Assets\MIDI_SONGS\Jingle Bells - EASY.mid
   m_FileName: 
   m_SaveState: 0
   m_LoadState: 0
   m_ClickState: 0
+  m_MaxOctave: 7
   m_OverlayMenu: {fileID: 191621485}
 --- !u!223 &807173526
 Canvas:
@@ -1072,7 +1074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 485, y: 70}
+  m_AnchoredPosition: {x: 488.04, y: 69.84}
   m_SizeDelta: {x: 1477, y: 629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &807173529
@@ -1374,8 +1376,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000024915, y: 2.156}
-  m_SizeDelta: {x: 142.708, y: 467.438}
+  m_AnchoredPosition: {x: 1.924, y: 43.573997}
+  m_SizeDelta: {x: 141.179, y: 385.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1156357696
 MonoBehaviour:
@@ -1449,8 +1451,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -283.2, y: 2.156}
-  m_SizeDelta: {x: 142.708, y: 467.438}
+  m_AnchoredPosition: {x: -282.5, y: 43.264}
+  m_SizeDelta: {x: 142.25, y: 384.463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1213498595
 MonoBehaviour:
@@ -2209,7 +2211,7 @@ MonoBehaviour:
   m_NoteKeys: []
   m_AllKeys: []
   m_Note: {fileID: 0}
-  dragSpeed: 2
+  dragSpeed: 4
   m_GridWidth: 0
   m_GridHeight: 0
   m_CellSize: 0
@@ -2219,6 +2221,7 @@ MonoBehaviour:
   m_SaveState: 0
   m_LoadState: 0
   m_ClickState: 0
+  m_MaxOctave: 0
   m_OverlayMenu: {fileID: 0}
 --- !u!1 &1790284277
 GameObject:
@@ -2254,8 +2257,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 141.3, y: 2.4}
-  m_SizeDelta: {x: 142.708, y: 467.438}
+  m_AnchoredPosition: {x: 142.747, y: 43.574}
+  m_SizeDelta: {x: 140.462, y: 385.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1790284279
 MonoBehaviour:
@@ -2325,7 +2328,7 @@ RectTransform:
   m_GameObject: {fileID: 1798916824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 8, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 807173528}
   m_RootOrder: 0
@@ -2491,8 +2494,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -141.02, y: 2.156}
-  m_SizeDelta: {x: 142.708, y: 467.438}
+  m_AnchoredPosition: {x: -140.02, y: 43.573}
+  m_SizeDelta: {x: 142.708, y: 385.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1827712796
 MonoBehaviour:
@@ -2566,8 +2569,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -425.487, y: 2.156}
-  m_SizeDelta: {x: 142.708, y: 467.438}
+  m_AnchoredPosition: {x: -424.334, y: 43.265}
+  m_SizeDelta: {x: 141.408, y: 384.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1857694693
 MonoBehaviour:
