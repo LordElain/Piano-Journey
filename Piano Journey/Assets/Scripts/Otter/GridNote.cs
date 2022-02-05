@@ -66,6 +66,7 @@ public class GridNote : MonoBehaviour
     private bool m_StatusForPlayback;
 
     private MidiFile m_TempFile;
+    public bool m_Test;
     public int m_MaxOctave;
 
     //Menu
@@ -192,14 +193,14 @@ public class GridNote : MonoBehaviour
             {
 
                 m_playback.Stop();
+                m_playback.InterruptNotesOnStop = true;
                 m_PlayStatus = false;
                 m_playback.Dispose();
+                m_OutputDevice[0].Dispose();
                 m_StatusForPlayback = false;
-                Playback(m_TempFile, m_StatusForPlayback);
             }
             else
             {
-                
                 Playback(m_TempFile, m_StatusForPlayback);
                 m_PlayStatus = true;
                 m_playback.Stop();
@@ -397,7 +398,9 @@ public class GridNote : MonoBehaviour
                     string resultNote = Char.ToString(allKeyResultNote[0]);
                     int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[allKeyResultNote.Length-1]);
                     var NotePos = Mathf.Floor(note.transform.position.y/m_CellSize);
-                   
+                    NotePos = NotePos * 10.0f;
+                  
+
                     
 
 
@@ -420,8 +423,7 @@ public class GridNote : MonoBehaviour
                 }
              
             }
-            print(m_trackChunk.Events.Count);
-            print(m_trackChunk);
+
             m_TempFile.Chunks.Add(m_trackChunk);
             m_TempFile.Write("T", overwriteFile: true);
 

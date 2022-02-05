@@ -59,8 +59,6 @@ public class Grid
     {
         //Convert World Position to Grid
         Vector3 Gridposition;
-        float blockInsideGridX = 0.2f;
-        float blockInsideGridY = 0.1f;
         worldPosition.x = Mathf.Round(worldPosition.x / cellSize);
         worldPosition.y = Mathf.Floor(worldPosition.y / cellSize);
         
