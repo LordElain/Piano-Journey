@@ -9,6 +9,7 @@ using Melanchall.DryWetMidi.MusicTheory;
 using UnityEngine;
 using SimpleFileBrowser;
 using Melanchall.DryWetMidi.Devices;
+using System.Threading;
 
 public class GridNote : MonoBehaviour
 {
@@ -68,6 +69,10 @@ public class GridNote : MonoBehaviour
     private MidiFile m_TempFile;
     public bool m_Test;
     public int m_MaxOctave;
+    private TrackChunk m_NoteChunk;
+    private static Playback m_NotePlayback;
+    private MidiFile m_NoteFile;
+    
 
     //Menu
 
@@ -88,6 +93,8 @@ public class GridNote : MonoBehaviour
         m_TempFile = new MidiFile();
         m_TempoMap = TempoMap.Default;
         m_trackChunk = new TrackChunk();
+        m_NoteFile = new MidiFile();
+        m_NoteChunk = new TrackChunk();
       
         CreateNoteArray();
         Vector3 StartPosition = GameObject.Find(m_AllKeys[0] + " Piano").transform.position;
@@ -210,12 +217,7 @@ public class GridNote : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R) && m_ClickState == true)
         {
-            m_StatusForPlayback = false;
-            m_playback.Stop();
-            Playback(m_TempFile, m_StatusForPlayback);
-            
             m_playback.MoveToStart();
-            m_PlayStatus = false;
         } 
 
     }
@@ -304,7 +306,8 @@ public class GridNote : MonoBehaviour
         var noteEndTime = Mathf.Floor((note.transform.position.y + transform.lossyScale.y) / m_CellSize);
         var noteonEvent = new NoteOnEvent();
         var PositionTest = Mathf.Floor(mousePos.x);
-       
+        
+        
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
@@ -399,10 +402,6 @@ public class GridNote : MonoBehaviour
                     int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[allKeyResultNote.Length-1]);
                     var NotePos = Mathf.Floor(note.transform.position.y/m_CellSize);
                     NotePos = NotePos * 10.0f;
-                  
-
-                    
-
 
                     var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
                     notes.Add(new Melanchall.DryWetMidi.Interaction.Note(parsedNote.NoteName,resultOctave)
@@ -412,8 +411,10 @@ public class GridNote : MonoBehaviour
                         Channel = noteonEvent.Channel,
                         Velocity = (SevenBitNumber)45
 
-                    }); 
+                    });
+                    
                    
+                    PlayNote(parsedNote, resultOctave);
                 }
                  
                 else
@@ -423,9 +424,10 @@ public class GridNote : MonoBehaviour
                 }
              
             }
-
             m_TempFile.Chunks.Add(m_trackChunk);
             m_TempFile.Write("T", overwriteFile: true);
+            
+            
 
         
         if (!m_NoteCounterArray.Equals(note))
@@ -444,7 +446,29 @@ public class GridNote : MonoBehaviour
         }
         
     }
-    
+    private void PlayNote(Melanchall.DryWetMidi.MusicTheory.Note PlayNote, int PlayOctave)
+    {
+        var noteTempoMap = TempoMap.Default;
+        m_NoteChunk.RemoveTimedEvents();
+        m_NoteChunk = new TrackChunk();
+        if(m_OutputDevice != null)
+        {
+            m_OutputDevice[0].Dispose();
+        } 
+        using(var notesManager = m_NoteChunk.ManageNotes())
+        {
+            var length = LengthConverter.ConvertFrom(new MetricTimeSpan(hours: 0, minutes: 0, seconds: 1),0, noteTempoMap);
+            var note = new Melanchall.DryWetMidi.Interaction.Note(PlayNote.NoteName, PlayOctave, length);
+            notesManager.Notes.Add(note);
+        }
+        m_NoteFile.Chunks.Add(m_NoteChunk);
+        m_NoteFile.Write("Note",overwriteFile: true);
+        m_OutputDevice = OutputDevice.GetAll().ToArray();
+        m_NotePlayback = m_NoteFile.GetPlayback(m_OutputDevice[0]);
+
+        m_NotePlayback.Play();        
+    }
+
     public void DeleteBlock(Vector3 MousePos)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -486,8 +510,7 @@ public class GridNote : MonoBehaviour
 			// Print paths of the selected files (FileBrowser.Result) (null, if FileBrowser.Success is false)
 			for( int i = 0; i < FileBrowser.Result.Length; i++ )
             {
-                Debug.Log( FileBrowser.Result[i] );
-                
+                Debug.Log( FileBrowser.Result[i] );              
             }
 			m_Path = FileBrowser.Result[0];	
             m_File = MidiFile.Read(m_Path);
@@ -533,12 +556,7 @@ public class GridNote : MonoBehaviour
                 Vector3 obj = new Vector3(NotePosition.x,noteTime,-1);
                 
                 CreateNoteBlock(x,y,obj,obj,channelCheck,false);
-     
-
-
             }     
-            
-
 		}
         m_ClickState = true;
     }
@@ -577,7 +595,6 @@ public class GridNote : MonoBehaviour
     {
         if(Status == false)
         {
-            Debug.Log("Playback Function");
             m_OutputDevice = OutputDevice.GetAll().ToArray();
             m_playback = File.GetPlayback(m_OutputDevice[0]);
             m_playback.InterruptNotesOnStop = true;
@@ -591,7 +608,10 @@ public class GridNote : MonoBehaviour
 
     private void PlayBackFinished(object sender, EventArgs e)
     {
-        Debug.Log("FINISHED");
+        Playback play = sender as Playback;
+        play.Dispose();
+        m_OutputDevice[0].Dispose();
+
     }
 
     private void OnApplicationQuit()
