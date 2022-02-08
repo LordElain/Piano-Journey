@@ -46,6 +46,9 @@ public class PianoKeys : MonoBehaviour
     public Vector3 m_CameraSettings;
     public Vector3 m_Offset;
 
+    public GameObject m_BackgroundDay;
+    public GameObject m_BackgroundNight;
+
     // Start is called before the first frame update/* 
     void Start()
     {
@@ -62,6 +65,7 @@ public class PianoKeys : MonoBehaviour
         //m_AllKeys = new string [DataManager.m_MaxAllKeys];
         m_CameraSettings = CameraSettings(m_CameraSettings);
         GenerateWhiteKeys(m_WhitePianoKeysObject, m_CameraSettings);
+        setBackground();
         m_ListStatus = true;
     }
 
@@ -69,6 +73,30 @@ public class PianoKeys : MonoBehaviour
     void Update()
     {
         TransForm(m_Camera, KeyObjects);
+    }
+
+    public void setBackground()
+    {
+        int Check = PlayerPrefs.GetInt("Background", -1);
+        print(Check);
+        if(Check != -1)
+        {
+            if(Check == 0)
+            {
+                m_BackgroundDay.SetActive(true);
+                m_BackgroundNight.SetActive(false);
+            }
+            else
+            {
+                m_BackgroundDay.SetActive(false);
+                m_BackgroundNight.SetActive(true);
+            }
+        }
+        else
+        {
+            m_BackgroundDay.SetActive(true);
+            m_BackgroundNight.SetActive(false);
+        }
     }
               
     public Vector3 CameraSettings(Vector3 StartPos)
@@ -184,6 +212,10 @@ public class PianoKeys : MonoBehaviour
         float KeyZPos_Black = -10;
 
         float KeyHeight = 0;
+
+        int RED = 0;
+        int GREEN = 0;
+        int BLUE = 0;
         
         var KeyPos = new Vector3(StartPos.x,0,0);
         
@@ -202,7 +234,8 @@ public class PianoKeys : MonoBehaviour
                     PKeyObject.SetActive(false);
                     PKeyObject.tag = "Key";
                     m_KeyList.Add(PKeyObject);
-                    SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>(); 
+                    SpriteRenderer m_SpriteRenderer = PKeyObject.GetComponent<SpriteRenderer>();
+                
                     KeyZPos = 0;
                     KeyHeight = 0;
                     m_KeyID++;
@@ -311,6 +344,11 @@ public class PianoKeys : MonoBehaviour
                                     PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KeyOffset,KeyHeight, KeyZPos);
                                     PKeyObject.SetActive(true);
                                     PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
+                                    RED = PlayerPrefs.GetInt("Color_WR");
+                                    GREEN = PlayerPrefs.GetInt("Color_WG");
+                                    BLUE = PlayerPrefs.GetInt("Color_WB");
+                                    print("RGB: " + RED + " " + GREEN + " " + BLUE);
+                                    m_SpriteRenderer.color = new Color(RED,GREEN,BLUE);
                                     FillKeyArray(PKeyObject, KeyHeight);
                                     if(PKeyObject.name[0] == 'C')
                                     {
@@ -331,11 +369,16 @@ public class PianoKeys : MonoBehaviour
                                     PKeyObject.GetComponent<PianoKeys>().InitPianoKeys(m_KeyID,m_AllKeys[m_KeyID], KeyPos, KOB_Base,KeyHeight, KeyZPos);
                                     PKeyObject.SetActive(true);
                                     PKeyObject.name = m_AllKeys[m_KeyID]+" Piano";
+                                    RED = PlayerPrefs.GetInt("Color_BR");
+                                    GREEN = PlayerPrefs.GetInt("Color_BG");
+                                    BLUE = PlayerPrefs.GetInt("Color_BB");
+                                    print("RGB: " + RED + " " + GREEN + " " + BLUE);
+                                    m_SpriteRenderer.color = new Color(RED,GREEN,BLUE);
                                     FillKeyArray(PKeyObject, KeyHeight);
                                 }
                         
                             }
-                                BlackCheck = false;   
+                            BlackCheck = false;   
 
                             switch(m_MaxAllKeys2)
                             {

@@ -42,7 +42,16 @@ public class MainMenuLogic : MonoBehaviour
     public GameObject m_MainColorInputBoard;
     public GameObject m_MainColorSubmit;
     public GameObject m_MainColorLook;
+    public GameObject m_MainOptionBackground;
+    public GameObject m_BackgroundDay;
+    public GameObject m_BackgroundNight;
+    public Boolean m_BackgroundCheck;
+    public int m_ColorID;
+    public GameObject m_MainColorWhiteKey;
+    public GameObject m_MainColorBlackKey;
     public  EventSystem system;
+
+
 
 
 
@@ -51,6 +60,24 @@ public class MainMenuLogic : MonoBehaviour
     {
         MainMenuButton();
         system = EventSystem.current;
+        int Check = PlayerPrefs.GetInt("Background", -1);
+        if(Check != -1)
+        { 
+            if(Check == 0)
+            {
+                m_BackgroundCheck = false;
+            }
+            else
+            {
+                m_BackgroundCheck = true;
+            }
+        }
+        else
+        {
+            m_BackgroundCheck = false;
+        }
+        MainOptionBackgroundChange();
+        
     }
 
     // Update is called once per frame
@@ -107,6 +134,24 @@ public class MainMenuLogic : MonoBehaviour
         }
     }
 
+    public void MainOptionBackgroundChange()
+    {
+        if (m_BackgroundCheck == false)
+        {
+            m_BackgroundDay.SetActive(true);
+            m_BackgroundNight.SetActive(false);
+            m_BackgroundCheck = true;
+            PlayerPrefs.SetInt("Background", 0);
+        }
+        else
+        {
+            m_BackgroundDay.SetActive(false);
+            m_BackgroundNight.SetActive(true);
+            m_BackgroundCheck = false;
+            PlayerPrefs.SetInt("Background", 1);
+        }
+
+    }
     public void MainEditorButton()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("EDITOR");
@@ -136,7 +181,7 @@ public class MainMenuLogic : MonoBehaviour
         if (m_PressedState == false)
         {
             m_MainOptionColor.SetActive(true);
-            m_IsPrimaryHand = true;
+            m_ColorID = 0;
             m_MainColorInputBoard.SetActive(true);
         }
         else
@@ -148,46 +193,100 @@ public class MainMenuLogic : MonoBehaviour
 
     public void MainOptionColorSubmit()
     {
-        setColorSettings(m_R.text, m_G.text, m_B.text, m_IsPrimaryHand);
+        if(m_MainColorBlackKey.activeSelf == true)
+        {
+            m_ColorID = 0;
+        }
+        setColorSettings(m_R.text, m_G.text, m_B.text, m_ColorID);
         var R = float.Parse(m_R.text);
         var G = float.Parse(m_G.text);
         var B = float.Parse(m_B.text);
         m_MainColorSubmit.GetComponent<Image>().color = new Color(R,G,B,1);
         m_MainColorLook.SetActive(true);
+        
     }
 
     public void MainOptionChangeButton()
     {
         if(m_MainColorPrimaryKey.activeSelf == true)
         {
+            print(0);
             m_MainColorPrimaryKey.SetActive(false);
             m_MainColorSecondKey.SetActive(true);
-            m_IsPrimaryHand = false;
+            m_MainColorWhiteKey.SetActive(false);
+            m_MainColorBlackKey.SetActive(false);
+            m_ColorID = 1;
+            
         }
-        else
+
+        else if(m_MainColorSecondKey.activeSelf == true)
         {
+            print(1);
+            m_MainColorPrimaryKey.SetActive(false);
+            m_MainColorSecondKey.SetActive(false);
+            m_MainColorWhiteKey.SetActive(true);
+            m_MainColorBlackKey.SetActive(false);
+            m_ColorID = 2;
+        }
+
+        else if(m_MainColorWhiteKey.activeSelf == true)
+        {
+            print(2);
+            m_MainColorPrimaryKey.SetActive(false);
+            m_MainColorSecondKey.SetActive(false);
+            m_MainColorWhiteKey.SetActive(false);
+            m_MainColorBlackKey.SetActive(true);
+            m_ColorID = 3;
+        }
+
+        else if(m_MainColorBlackKey.activeSelf == true)
+        {
+            print(3);
             m_MainColorPrimaryKey.SetActive(true);
             m_MainColorSecondKey.SetActive(false);
-            m_IsPrimaryHand = true;
-        }
+            m_MainColorWhiteKey.SetActive(false);
+            m_MainColorBlackKey.SetActive(false);
+            m_ColorID = 0;
+        } 
+
 
     }
 
-    public void setColorSettings(string RED, string GREEN, string BLUE, bool PrimaryHand)
+    public void setColorSettings(string RED, string GREEN, string BLUE, int SceneID)
     {
-        if (PrimaryHand == true)
+        switch(SceneID)
         {
-            PlayerPrefs.SetInt("Color_R", int.Parse(RED));
-            PlayerPrefs.SetInt("Color_G", int.Parse(GREEN));
-            PlayerPrefs.SetInt("Color_B", int.Parse(BLUE));
-        }
-        else
-        {
-            PlayerPrefs.SetInt("Color_SR", int.Parse(RED));
-            PlayerPrefs.SetInt("Color_SG", int.Parse(GREEN));
-            PlayerPrefs.SetInt("Color_SB", int.Parse(BLUE));
-        }
-        
+            case 0: 
+                {   //PRIMARY KEY
+                    PlayerPrefs.SetInt("Color_R", int.Parse(RED));
+                    PlayerPrefs.SetInt("Color_G", int.Parse(GREEN));
+                    PlayerPrefs.SetInt("Color_B", int.Parse(BLUE));
+                    break;
+                }
+            case 1:
+                {   //SECONDARY KEY
+                    PlayerPrefs.SetInt("Color_SR", int.Parse(RED));
+                    PlayerPrefs.SetInt("Color_SG", int.Parse(GREEN));
+                    PlayerPrefs.SetInt("Color_SB", int.Parse(BLUE));
+                    break;
+                }
+            case 2:
+                {   //WHITE KEY
+                    PlayerPrefs.SetInt("Color_WR", int.Parse(RED));
+                    PlayerPrefs.SetInt("Color_WG", int.Parse(GREEN));
+                    PlayerPrefs.SetInt("Color_WB", int.Parse(BLUE));
+                    break;
+                }
+            case 3:
+                {   //BLACK KEY
+                    PlayerPrefs.SetInt("Color_BR", int.Parse(RED));
+                    PlayerPrefs.SetInt("Color_BG", int.Parse(GREEN));
+                    PlayerPrefs.SetInt("Color_BB", int.Parse(BLUE));
+                    break;
+                }
+            default:
+            break;
+        }        
     }
 
     public void MainOptionTwitchLink()
