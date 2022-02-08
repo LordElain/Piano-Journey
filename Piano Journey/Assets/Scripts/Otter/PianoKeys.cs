@@ -78,7 +78,6 @@ public class PianoKeys : MonoBehaviour
     public void setBackground()
     {
         int Check = PlayerPrefs.GetInt("Background", -1);
-        print(Check);
         if(Check != -1)
         {
             if(Check == 0)
@@ -347,7 +346,6 @@ public class PianoKeys : MonoBehaviour
                                     RED = PlayerPrefs.GetInt("Color_WR");
                                     GREEN = PlayerPrefs.GetInt("Color_WG");
                                     BLUE = PlayerPrefs.GetInt("Color_WB");
-                                    print("RGB: " + RED + " " + GREEN + " " + BLUE);
                                     m_SpriteRenderer.color = new Color(RED,GREEN,BLUE);
                                     FillKeyArray(PKeyObject, KeyHeight);
                                     if(PKeyObject.name[0] == 'C')
@@ -372,7 +370,6 @@ public class PianoKeys : MonoBehaviour
                                     RED = PlayerPrefs.GetInt("Color_BR");
                                     GREEN = PlayerPrefs.GetInt("Color_BG");
                                     BLUE = PlayerPrefs.GetInt("Color_BB");
-                                    print("RGB: " + RED + " " + GREEN + " " + BLUE);
                                     m_SpriteRenderer.color = new Color(RED,GREEN,BLUE);
                                     FillKeyArray(PKeyObject, KeyHeight);
                                 }

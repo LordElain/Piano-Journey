@@ -308,6 +308,10 @@ public class GridNote : MonoBehaviour
         var PositionTest = Mathf.Floor(mousePos.x);
         
         
+        int RED = 0;
+        int GREEN = 0;
+        int BLUE = 0;
+
         Texture2D m_Tex = new Texture2D(x,y);
         m_sr = note.GetComponent<SpriteRenderer>();
         note.name = m_NoteCounter.ToString();
@@ -319,12 +323,18 @@ public class GridNote : MonoBehaviour
 
         if (mouseclick == true)
         {
-            m_sr.color = Color.red;
+            RED = PlayerPrefs.GetInt("Color_R");
+            GREEN = PlayerPrefs.GetInt("Color_G");
+            BLUE = PlayerPrefs.GetInt("Color_B");
+            m_sr.color = new Color(RED,GREEN,BLUE);
             noteonEvent.Channel = (FourBitNumber)0;
         }
         else
         {
-            m_sr.color = Color.yellow;
+            RED = PlayerPrefs.GetInt("Color_SR");
+            GREEN = PlayerPrefs.GetInt("Color_SG");
+            BLUE = PlayerPrefs.GetInt("Color_SB");
+            m_sr.color = new Color(RED,GREEN,BLUE);
             noteonEvent.Channel = (FourBitNumber)1;
         }
         
