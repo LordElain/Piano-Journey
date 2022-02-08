@@ -181,9 +181,6 @@ public class NotesController : MonoBehaviour
             m_playback.Start(); 
             m_playback.Loop = true;
 
-            Debug.Log("Playback started");
-            
-            m_playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
             PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
             PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
             PlaybackCurrentTimeWatcher.Instance.Start();
@@ -197,12 +194,6 @@ public class NotesController : MonoBehaviour
            
        
     }
-    
-    private static void OnNotesPlaybackStarted(object sender, NotesEventArgs e)
-        {
-            /*if (e.Notes.Any(n => n.Length == Melanchall.DryWetMidi.MusicTheory.Interval.Eight))
-                m_playback.Stop();*/
-        }
 
     public TimeSpan GetDuration(MidiFile File)
     {
@@ -239,7 +230,7 @@ public class NotesController : MonoBehaviour
                 {
                     m_BlackCheck = false;
                 }
-                float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000f;
+                float noteLength = note.LengthAs<MetricTimeSpan>(tempo).TotalMicroseconds / 100000.0f;
                 float noteChannel = note.Channel;
 
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
@@ -337,12 +328,12 @@ public class NotesController : MonoBehaviour
     public void CameraMovement(GameObject Kamera)
     {
                 
-                var camerawidth =   Camera.main.orthographicSize*2f;
+                var camerawidth =   Camera.main.orthographicSize * 2f;
                 var cameraheight =  camerawidth * Screen.width / Screen.height;
 
                 var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
 
-                  Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime + cameraheight/8f, Kamera.transform.position.z);
+                Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime + cameraheight/8f, Kamera.transform.position.z);
 
                 m_playback.TickClock();
     }
