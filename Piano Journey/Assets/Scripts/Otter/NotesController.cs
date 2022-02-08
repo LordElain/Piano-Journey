@@ -45,6 +45,9 @@ public class NotesController : MonoBehaviour
     //Menu & Overlay
 
     public GameObject m_PauseMenu;
+    public GameObject m_EndMenu;
+    public GameObject m_Score;
+
     private bool m_Pressed;
 
 
@@ -178,9 +181,10 @@ public class NotesController : MonoBehaviour
            
             m_playback = File.GetPlayback(m_OutputDevices[0]);
             m_playback.InterruptNotesOnStop = true;
+            
             m_playback.Start(); 
-            m_playback.Loop = true;
-
+            m_playback.Loop = false;
+            m_playback.Finished += PlayBackFinished; 
             PlaybackCurrentTimeWatcher.Instance.AddPlayback(m_playback, TimeSpanType.Midi);
             PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnCurrentTimeChanged;
             PlaybackCurrentTimeWatcher.Instance.Start();
@@ -193,6 +197,14 @@ public class NotesController : MonoBehaviour
 
            
        
+    }
+
+    private void PlayBackFinished(object sender, EventArgs e)
+    {
+        Playback play = sender as Playback;
+        m_Score.SetActive(false);
+        m_EndMenu.SetActive(true);
+
     }
 
     public TimeSpan GetDuration(MidiFile File)
