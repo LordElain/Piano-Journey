@@ -37,6 +37,11 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     private int m_NoteNumber;
     private Minis.MidiDevice miniMidiDevice;
     private List<Animator> m_AnimatorList = new List<Animator>();
+    private int m_R;
+    private int m_G;
+    private int m_B;
+    private Color m_Whitekey;
+    private Color m_Blackkey;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +51,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
         controls.Player.SetCallbacks(this);
         controls.Enable();
         m_Anim = GetComponent<Animator>();
+        CreateColor();
         m_PianoKeyList = PianoList();
         miniMidiDevice = Minis.MidiDevice.current;
     }
@@ -69,6 +75,19 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public void UpdateScore(float Score)
     {
         ScoreCounter.m_ScoreText = Score;
+    }
+
+    public void CreateColor()
+    {
+        m_R = PlayerPrefs.GetInt("Color_WR");
+        m_G = PlayerPrefs.GetInt("Color_WG");
+        m_B = PlayerPrefs.GetInt("Color_WB");
+        m_Whitekey = new Color(m_R, m_G, m_B);
+
+        m_R = PlayerPrefs.GetInt("Color_BR");
+        m_G = PlayerPrefs.GetInt("Color_BG");
+        m_B = PlayerPrefs.GetInt("Color_BB");
+        m_Blackkey = new Color(m_R, m_G, m_B);
     }
     
     private void Device(GameObject Key, bool Status)
@@ -94,10 +113,17 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 m_oldID = Check(m_Trigger, m_KeyNote, m_oldID, m_NoteID, m_NoteName, m_NoteNumber); 
             };
 
-             miniMidiDevice.onWillNoteOff += (note) =>
+            miniMidiDevice.onWillNoteOff += (note) =>
             {
                 m_AnimatorList[m_NoteNumber].SetBool("isPressed", false);
-                GetComponent<SpriteRenderer>().color = Color.white;
+                if(m_AnimatorList[m_NoteNumber].ToString()[1] == 'S')
+                {
+                    m_AnimatorList[m_NoteNumber].GetComponent<SpriteRenderer>().color = m_Blackkey;
+                }
+                else
+                {
+                   m_AnimatorList[m_NoteNumber].GetComponent<SpriteRenderer>().color = m_Whitekey; 
+                }
                 m_Trigger = false;
             }; 
         }
@@ -126,7 +152,15 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     public void OnTriggerExit(Collider other)
     {
         m_TriggerOfNote = false;
-        GetComponent<SpriteRenderer>().color = Color.white;        
+        string name = other.transform.parent.name + " Piano";
+        if(m_AnimatorList[m_NoteNumber].ToString()[1] == 'S')
+        {
+            GetComponent<SpriteRenderer>().color = m_Blackkey;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = m_Whitekey; 
+        }      
     }
 
     public int Check(bool Trigger, string Note, int oldID, int ID, string OtherObject, int Index)
@@ -170,9 +204,6 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                                 
                                 default:
                                 {
-                                    /* m_Score += m_LatePoints;
-                                    Key.GetComponent<SpriteRenderer>().color = Color.red;
-                                    UpdateScore(m_Score); */
                                     break;
                                 }
                                 
