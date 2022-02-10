@@ -5,6 +5,10 @@ using SimpleFileBrowser;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Melanchall.DryWetMidi.Devices;
+using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Interaction;
+using System.Linq;
 
 public class MainMenuLogic : MonoBehaviour
 {
@@ -49,6 +53,9 @@ public class MainMenuLogic : MonoBehaviour
     public int m_ColorID;
     public GameObject m_MainColorWhiteKey;
     public GameObject m_MainColorBlackKey;
+
+//Option
+    public Text m_DeviceList;
     public  EventSystem system;
 
 
@@ -77,16 +84,13 @@ public class MainMenuLogic : MonoBehaviour
             m_BackgroundCheck = false;
         }
         MainOptionBackgroundChange();
+        CreateList();
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            m_Confirmation = true;
-        }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -100,6 +104,15 @@ public class MainMenuLogic : MonoBehaviour
                             
                 system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
             }
+        }
+    }
+    
+    public void CreateList()
+    {
+        OutputDevice[] outputList = OutputDevice.GetAll().ToArray();
+        for (int i = 0; i <= outputList.Length-1; i++)
+        {
+            m_DeviceList.text += outputList[i].ToString() + "\n";
         }
     }
     public void MainMenuButton()
@@ -142,6 +155,7 @@ public class MainMenuLogic : MonoBehaviour
             m_BackgroundNight.SetActive(false);
             m_BackgroundCheck = true;
             PlayerPrefs.SetInt("Background", 0);
+            PlayerPrefs.Save();
         }
         else
         {
@@ -149,6 +163,7 @@ public class MainMenuLogic : MonoBehaviour
             m_BackgroundNight.SetActive(true);
             m_BackgroundCheck = false;
             PlayerPrefs.SetInt("Background", 1);
+            PlayerPrefs.Save();
         }
 
     }
@@ -194,6 +209,10 @@ public class MainMenuLogic : MonoBehaviour
     public void MainOptionColorSubmit()
     {
         if(m_MainColorBlackKey.activeSelf == true)
+        {
+            m_ColorID = 3;
+        }
+        else if (m_MainColorPrimaryKey.activeSelf == true)
         {
             m_ColorID = 0;
         }
@@ -286,7 +305,8 @@ public class MainMenuLogic : MonoBehaviour
                 }
             default:
             break;
-        }        
+        }
+        PlayerPrefs.Save();        
     }
 
     public void MainOptionTwitchLink()
@@ -306,6 +326,7 @@ public class MainMenuLogic : MonoBehaviour
         PlayerPrefs.SetString("user", usr);
         PlayerPrefs.SetString("channel", usr);
         DataManager.m_Token = token;
+        PlayerPrefs.Save();
 
     }
 
@@ -348,5 +369,6 @@ public class MainMenuLogic : MonoBehaviour
     {
         PlayerPrefs.SetInt("maxKey", int.Parse(m_PianoInput.text));
         Debug.Log("Submit");
+        PlayerPrefs.Save();
     }
 }

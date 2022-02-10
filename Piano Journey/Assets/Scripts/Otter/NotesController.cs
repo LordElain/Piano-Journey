@@ -345,7 +345,7 @@ public class NotesController : MonoBehaviour
 
                 var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
 
-                Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime + cameraheight/8f, Kamera.transform.position.z);
+                Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime + cameraheight/5.5f, Kamera.transform.position.z);
 
                 m_playback.TickClock();
     }

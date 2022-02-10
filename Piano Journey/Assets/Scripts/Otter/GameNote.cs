@@ -42,7 +42,7 @@ public class GameNote : MonoBehaviour
         
         m_Text.text = NoteNameOctave;
         m_NoteName = NoteNameOctave;
-        transform.localScale = new Vector2(1.5f, duration / 2.5f);
+        transform.localScale = new Vector2(1.5f, duration / 3.75f);
         transform.position = new Vector3(notePos,timeOfNote,ZPos);
         m_NID = NoteID;
         m_NoteNumber = noteNumber;

@@ -138,7 +138,7 @@ public class Twitch : MonoBehaviour
         foreach(string msg in m_SongList)
          {
             tex = msg.ToString() + "\n";
-            m_DisplayText.text = tex;
+            m_DisplayText.text += tex;
          }
         
     }
