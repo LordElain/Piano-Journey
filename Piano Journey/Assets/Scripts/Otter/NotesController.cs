@@ -255,7 +255,7 @@ public class NotesController : MonoBehaviour
                 }
                 else
                 {
-                    m_ZPos = -15;
+                    m_ZPos = -9;
                 }
                 noteObject.GetComponent<GameNote>().InitGameNote(noteTime,NotePosition.x,noteLength,noteChannel,noteNameOctave, noteName, m_ZPos, noteCounter, noteNumber);
                 noteObject.SetActive(true);

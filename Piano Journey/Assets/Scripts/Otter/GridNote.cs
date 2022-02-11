@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Linq;
 using System;
 using System.Collections;
@@ -10,6 +11,7 @@ using UnityEngine;
 using SimpleFileBrowser;
 using Melanchall.DryWetMidi.Devices;
 using System.Threading;
+using UnityEngine.UI;
 
 public class GridNote : MonoBehaviour
 {
@@ -72,6 +74,14 @@ public class GridNote : MonoBehaviour
     private TrackChunk m_NoteChunk;
     private static Playback m_NotePlayback;
     private MidiFile m_NoteFile;
+    //Background
+    public Image m_Octave;
+    public Image m_Octave1;
+    public Image m_Octave2;
+    public Image m_Octave3;
+    public Image m_Octave4;
+    public Image m_Octave5;
+    public Image m_Octave6;
     
 
     //Menu
@@ -97,8 +107,8 @@ public class GridNote : MonoBehaviour
         m_NoteChunk = new TrackChunk();
       
         CreateNoteArray();
-        Vector3 StartPosition = GameObject.Find(m_AllKeys[0] + " Piano").transform.position;
-        CreateGrid(StartPosition);
+        //SetBackground();
+        CreateGrid();
     }
 
 
@@ -153,10 +163,7 @@ public class GridNote : MonoBehaviour
             if (m_Camera.transform.position.y >= GridOffset)
             {
                 m_GridHeight = m_GridHeight + 100;
-                Debug.Log(m_GridHeight  + "New Height");
-                Vector3 NewPosition= GameObject.Find(m_AllKeys[1] + " Piano").transform.position;
-                Debug.Log(NewPosition);
-                CreateGrid(NewPosition);
+                CreateGrid();
             } 
         }
 
@@ -221,7 +228,25 @@ public class GridNote : MonoBehaviour
         } 
 
     }
-
+    public void SetBackground()
+    {
+        Vector3 GO = GameObject.Find(m_AllKeys[0] + " Piano").transform.position;
+        Vector3 GO1 = GameObject.Find(m_AllKeys[12] + " Piano").transform.position;
+        Vector3 GO2 = GameObject.Find(m_AllKeys[24] + " Piano").transform.position;
+        Vector3 GO3 = GameObject.Find(m_AllKeys[36] + " Piano").transform.position;
+        Vector3 GO4 = GameObject.Find(m_AllKeys[48] + " Piano").transform.position;
+        Vector3 GO5 = GameObject.Find(m_AllKeys[60] + " Piano").transform.position;
+        Vector3 GO6 = GameObject.Find(m_AllKeys[72] + " Piano").transform.position;
+        print(GO + " " + GO1 + " " + GO2 + " " + GO3 + " " + GO4 + " " + GO5 + " " + GO6);
+        m_Octave.transform.position = GO;
+        print(m_Octave.transform.position);
+        m_Octave1.transform.position = GO1;
+        m_Octave2.transform.position = GO2;
+        m_Octave3.transform.position = GO3;
+        m_Octave4.transform.position = GO4;
+        m_Octave5.transform.position = GO5;
+        m_Octave6.transform.position = GO6;
+    }
     public void OverlayBackButton()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN MENU");
@@ -290,8 +315,10 @@ public class GridNote : MonoBehaviour
         };
     }
 
-    private void CreateGrid(Vector3 StartPosition)
+    private void CreateGrid()
     {
+        Vector3 StartPosition = GameObject.Find(m_AllKeys[0] + " Piano").transform.position;
+        StartPosition.y = -15f;
         for (int i = 0; i < m_MaxOctave; i++)
         {
             grid = new Grid(m_GridWidth, m_GridHeight, m_CellSize, m_Camera, StartPosition, m_CellSize2);
