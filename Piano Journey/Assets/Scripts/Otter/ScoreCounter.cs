@@ -8,12 +8,6 @@ public class ScoreCounter : MonoBehaviour
 {
     public static float m_ScoreText {get; set;}
     public Text m_Text;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

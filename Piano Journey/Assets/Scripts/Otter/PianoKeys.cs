@@ -377,6 +377,10 @@ public class PianoKeys : MonoBehaviour
                             }
                             BlackCheck = false;   
 
+                            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "EDITOR")
+                            {
+                                m_MaxAllKeys2 = 88;
+                            }
                             switch(m_MaxAllKeys2)
                             {
                                 case 71:
@@ -384,7 +388,13 @@ public class PianoKeys : MonoBehaviour
 
                                             if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '7')
                                             {
+                                                if(PKeyObject.name[0] == 'C' && PKeyObject.name[1] != 'S')
+                                                {
+                                                    var t = PKeyObject.GetComponentInChildren<Text>();
+                                                    t.text = " ";
+                                                }
                                                 PKeyObject.GetComponent<SpriteRenderer>().enabled = false;
+                                                
                                             }
                                             else
                                             {
@@ -396,7 +406,12 @@ public class PianoKeys : MonoBehaviour
                                         {
                                             if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '1'|| PKeyObject.name[PKeyObject.name.Length-7] == '6'|| PKeyObject.name[PKeyObject.name.Length-7] == '7')
                                             {
-                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = false;
+                                                if(PKeyObject.name[0] == 'C' && PKeyObject.name[1] != 'S')
+                                                {
+                                                    var t = PKeyObject.GetComponentInChildren<Text>();
+                                                    t.text = " ";
+                                                }
+                                                PKeyObject.GetComponent<SpriteRenderer>().enabled = false;                                         
                                             }
                                             else
                                             {
@@ -408,6 +423,11 @@ public class PianoKeys : MonoBehaviour
                                         {
                                             if(PKeyObject.name[PKeyObject.name.Length-7] == '0' || PKeyObject.name[PKeyObject.name.Length-7] == '1'|| PKeyObject.name[PKeyObject.name.Length-7] == '6'|| PKeyObject.name[PKeyObject.name.Length-7] == '7')
                                             {
+                                                if(PKeyObject.name[0] == 'C' && PKeyObject.name[1] != 'S')
+                                                {
+                                                    var t = PKeyObject.GetComponentInChildren<Text>();
+                                                    t.text = " ";
+                                                }
                                                 PKeyObject.GetComponent<SpriteRenderer>().enabled = false;
                                             }
                                             else
@@ -423,7 +443,10 @@ public class PianoKeys : MonoBehaviour
                                         }
 
                                 default:
-                                break;
+                                        {
+                                            PKeyObject.GetComponent<SpriteRenderer>().enabled = true;
+                                            break;
+                                        }
                             }
                         }
                     }

@@ -47,13 +47,17 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     void Start()
     {
         m_Score = 0;
-        controls = new PianoJourney();
-        controls.Player.SetCallbacks(this);
-        controls.Enable();
         m_Anim = GetComponent<Animator>();
         CreateColor();
         m_PianoKeyList = PianoList();
         miniMidiDevice = Minis.MidiDevice.current;
+        controls.Enable();
+    }
+
+    private void Awake()
+    {
+        controls = new PianoJourney();
+        controls.Player.SetCallbacks(this); 
     }
 
     // Update is called once per frame

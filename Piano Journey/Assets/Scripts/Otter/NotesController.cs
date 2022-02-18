@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -47,6 +48,7 @@ public class NotesController : MonoBehaviour
     public GameObject m_PauseMenu;
     public GameObject m_EndMenu;
     public GameObject m_Score;
+    public GameObject m_Loop;
 
     private bool m_Pressed;
 
@@ -128,6 +130,20 @@ public class NotesController : MonoBehaviour
         return m_BPM;
     }
 
+    public void LoopSong()
+    {
+        if(m_playback != null)
+        {
+            m_playback.Stop();
+            m_playback.Dispose();
+            PlaybackCurrentTimeWatcher.Instance.Dispose();
+            m_OutputDevices[0].Dispose();
+            m_OutputDevices[1].Dispose();
+            m_InputDevices[0].Dispose();
+        }
+        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GAME");
+    }
     public void ChangeSpeedButton()
     {
         if(m_ButtonPressed == false)
@@ -194,9 +210,6 @@ public class NotesController : MonoBehaviour
                 CameraMovement(Kamera);
                 yield return null;           
             }
-
-           
-       
     }
 
     private void PlayBackFinished(object sender, EventArgs e)
@@ -248,7 +261,6 @@ public class NotesController : MonoBehaviour
                 var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position;
                 GameObject noteObject = Instantiate(PrefabNotes, notePos, Quaternion.identity);
                 
-                //Debug.Log(noteNumber+noteOffset*noteOffset + " " + noteNameOctave);
                 if(m_BlackCheck == false)
                 {
                     m_ZPos = 0;

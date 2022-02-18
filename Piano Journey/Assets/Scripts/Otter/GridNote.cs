@@ -437,7 +437,16 @@ public class GridNote : MonoBehaviour
                     var allKeyResultNote = m_AllKeys[result.BoxID];
                     string resultNote = Char.ToString(allKeyResultNote[0]);
                     int resultOctave = (int)Char.GetNumericValue(allKeyResultNote[allKeyResultNote.Length-1]);
-                    var NotePos = Mathf.Floor(note.transform.position.y/m_CellSize);
+                    string noteNameOctave = resultNote + resultOctave;
+                    var NotePosition = GameObject.Find(noteNameOctave + " Piano").transform.position.y;
+                    if (NotePosition < 0)
+                    {
+                        NotePosition = NotePosition * -1;
+                    }
+                    var NoteposY = note.transform.position.y;
+                    NoteposY = Math.Abs(NotePosition - NoteposY);
+                    var NotePos = Mathf.Floor(NoteposY/m_CellSize);
+                    
                     NotePos = NotePos * 10.0f;
 
                     var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
