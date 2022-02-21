@@ -204,9 +204,7 @@ public class GridNote : MonoBehaviour
         {
             
             if(m_PlayStatus == true) 
-            {
-
-                m_playback.Stop();
+            {   
                 m_playback.InterruptNotesOnStop = true;
                 m_PlayStatus = false;
                 m_playback.Dispose();
@@ -641,6 +639,10 @@ public class GridNote : MonoBehaviour
     {
         if(Status == false)
         {
+            if (m_OutputDevice[0] != null)
+            {
+                m_OutputDevice[0].Dispose();
+            }
             m_OutputDevice = OutputDevice.GetAll().ToArray();
             m_playback = File.GetPlayback(m_OutputDevice[0]);
             m_playback.InterruptNotesOnStop = true;
