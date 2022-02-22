@@ -42,6 +42,7 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
     private int m_B;
     private Color m_Whitekey;
     private Color m_Blackkey;
+    private List<int> m_PressedList = new List<int>();
 
     // Start is called before the first frame update
     void Start()
@@ -114,25 +115,42 @@ public class KeyGameLogic : MonoBehaviour, PianoJourney.IPlayerActions
                 {
                     m_NoteNumber = 0;
                 }
+                m_PressedList.Add(m_NoteNumber);
                 m_oldID = Check(m_Trigger, m_KeyNote, m_oldID, m_NoteID, m_NoteName, m_NoteNumber); 
             };
 
             miniMidiDevice.onWillNoteOff += (note) =>
             {
-                m_AnimatorList[m_NoteNumber].SetBool("isPressed", false);
-                if(m_AnimatorList[m_NoteNumber].ToString()[1] == 'S')
-                {
-                    m_AnimatorList[m_NoteNumber].GetComponent<SpriteRenderer>().color = m_Blackkey;
-                }
-                else
-                {
-                   m_AnimatorList[m_NoteNumber].GetComponent<SpriteRenderer>().color = m_Whitekey; 
-                }
+                
+                
                 m_Trigger = false;
+               
+
+                DisableAnime(m_NoteNumber);
+                m_PressedList.Clear();
             }; 
         }
         
-    
+    private void DisableAnime(int NoteNumber)
+    {
+        if(m_PressedList.Count > 0)
+        {
+            foreach(int note in m_PressedList)
+            {   
+                if(m_AnimatorList[note].ToString()[1] == 'S')
+                {
+                    m_AnimatorList[note].GetComponent<SpriteRenderer>().color = m_Blackkey;
+                }
+                else
+                {
+                    m_AnimatorList[note].GetComponent<SpriteRenderer>().color = m_Whitekey; 
+                }
+                m_AnimatorList[note].SetBool("isPressed", false);
+            }
+            
+        }
+        
+    }
 
 
     public void OnTriggerEnter(Collider other)
