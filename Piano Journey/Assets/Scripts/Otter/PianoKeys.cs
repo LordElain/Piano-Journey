@@ -115,25 +115,11 @@ public class PianoKeys : MonoBehaviour
 
         switch (height)
         {
-            case 1080:
+            case 1080: case 768:   case 1440: case 2160:
                 m_Camera.orthographicSize = 41.76f;
                 m_Offset = new Vector3(0,35,0);
             break;
 
-            case 768:
-                m_Camera.orthographicSize = 41.76f;
-                m_Offset = new Vector3(0,35,0);
-            break;
-
-            case 1440:
-                m_Camera.orthographicSize = 41.76f;
-                m_Offset = new Vector3(0,35,0);
-            break;
-
-            case 2160:
-                m_Camera.orthographicSize = 41.76f;
-                m_Offset = new Vector3(0,35,0);
-            break;
             default:
                 m_Camera.orthographicSize = 35.06151f;
                 m_Offset = new Vector3(0,28,0);
