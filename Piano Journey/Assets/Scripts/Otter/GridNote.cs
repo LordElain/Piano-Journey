@@ -226,39 +226,21 @@ public class GridNote : MonoBehaviour
         } 
 
     }
-    public void SetBackground()
-    {
-        Vector3 GO = GameObject.Find(m_AllKeys[0] + " Piano").transform.position;
-        Vector3 GO1 = GameObject.Find(m_AllKeys[12] + " Piano").transform.position;
-        Vector3 GO2 = GameObject.Find(m_AllKeys[24] + " Piano").transform.position;
-        Vector3 GO3 = GameObject.Find(m_AllKeys[36] + " Piano").transform.position;
-        Vector3 GO4 = GameObject.Find(m_AllKeys[48] + " Piano").transform.position;
-        Vector3 GO5 = GameObject.Find(m_AllKeys[60] + " Piano").transform.position;
-        Vector3 GO6 = GameObject.Find(m_AllKeys[72] + " Piano").transform.position;
-        print(GO + " " + GO1 + " " + GO2 + " " + GO3 + " " + GO4 + " " + GO5 + " " + GO6);
-        m_Octave.transform.position = GO;
-        print(m_Octave.transform.position);
-        m_Octave1.transform.position = GO1;
-        m_Octave2.transform.position = GO2;
-        m_Octave3.transform.position = GO3;
-        m_Octave4.transform.position = GO4;
-        m_Octave5.transform.position = GO5;
-        m_Octave6.transform.position = GO6;
-    }
     public void OverlayBackButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN MENU");
+        
         if (m_playback != null)
         {
-            m_playback.Stop();
             m_playback.Dispose();
+            PlaybackCurrentTimeWatcher.Instance.Dispose();
         }
             
-        PlaybackCurrentTimeWatcher.Instance.Dispose();
+        
         if (m_OutputDevice != null)
         {
             m_OutputDevice[0].Dispose();
         }
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN MENU");
     }
     private bool HitBoxCheck(Vector3 mousePos)
     {

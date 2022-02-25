@@ -61,7 +61,7 @@ public class NotesController : MonoBehaviour
         var m_Duration = GetDuration(m_File);
         m_BlackCheck = false;
         m_ButtonPressed = false;
-
+        m_PlayStatus = true;
         
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
@@ -84,11 +84,11 @@ public class NotesController : MonoBehaviour
         {
             m_playback.Stop();
             var d = SetPlaybackSpeed();
-            m_playback.Speed = d;
-            m_playback.MoveBack(new MetricTimeSpan(0, 0, 10));
+            m_playback.Speed = d; 
+            m_playback.MoveBack(new MetricTimeSpan(0, 0, 0, 10));
         }
          
-        else
+        if(m_PlayStatus == true)
         {
             m_playback.Start();
             CameraMovement(m_Camera);
@@ -124,7 +124,7 @@ public class NotesController : MonoBehaviour
         }
         else
         {
-            m_BPM = 0.5;
+           m_BPM = 0.5;
         }
     
         return m_BPM;
@@ -132,6 +132,7 @@ public class NotesController : MonoBehaviour
 
     public void LoopSong()
     {
+        print("Loop");
         if(m_playback != null)
         {
             m_playback.Stop();
@@ -358,8 +359,7 @@ public class NotesController : MonoBehaviour
                 var currentTime = m_playback.GetCurrentTime<MetricTimeSpan>().TotalMicroseconds / 100000.0f;
 
                 Kamera.transform.position = new Vector3(Kamera.transform.position.x,currentTime + cameraheight/5.5f, Kamera.transform.position.z);
-
-                m_playback.TickClock();
+            
     }
 
     private void OnCollisionEnter(Collision collision) 
