@@ -427,7 +427,7 @@ public class GridNote : MonoBehaviour
                     NoteposY = Math.Abs(NotePosition - NoteposY);
                     var NotePos = Mathf.Floor(NoteposY/m_CellSize);
                     
-                    NotePos = NotePos * 10.0f;
+                    NotePos = NotePos * 100.0f;
 
                     var parsedNote = Melanchall.DryWetMidi.MusicTheory.Note.Parse(allKeyResultNote);
                     notes.Add(new Melanchall.DryWetMidi.Interaction.Note(parsedNote.NoteName,resultOctave)
