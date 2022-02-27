@@ -121,12 +121,12 @@ public class PianoKeys : MonoBehaviour
             break;
 
             default:
-                m_Camera.orthographicSize = 35.06151f;
-                m_Offset = new Vector3(0,28,0);
+                m_Camera.orthographicSize = 49f;
+                m_Offset = new Vector3(0,42,0);
             break;
         }
 
-        switch (k)
+        /* switch (k)
         {
             case "1.7":
                 m_Camera.orthographicSize = 41.76f;
@@ -141,7 +141,7 @@ public class PianoKeys : MonoBehaviour
                 m_Camera.orthographicSize = 35.06151f;
                 m_Offset = new Vector3(0,28,0);
             break;
-        }
+        } */
 
         return StartPos;
     }

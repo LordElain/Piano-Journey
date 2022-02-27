@@ -11,8 +11,7 @@ using Melanchall.DryWetMidi.Devices;
 using Melanchall.DryWetMidi.Standards;
 using System.Threading;
 using System.Linq;
-
-
+using UnityEngine.UI;
 
 public class NotesController : MonoBehaviour
 {
@@ -49,8 +48,10 @@ public class NotesController : MonoBehaviour
     public GameObject m_EndMenu;
     public GameObject m_Score;
     public GameObject m_Loop;
+    public Text m_SpeedDisplay;
 
     private bool m_Pressed;
+    public bool m_End;
 
 
     // Start is called before the first frame update
@@ -62,7 +63,8 @@ public class NotesController : MonoBehaviour
         m_BlackCheck = false;
         m_ButtonPressed = false;
         m_PlayStatus = true;
-        
+        m_End = false;
+        m_EndMenu.SetActive(false);
         m_InputDevices = GetInputDevices();
         m_OutputDevices = GetOutputDevices();
         setDevices(m_InputDevices, m_OutputDevices);
@@ -84,6 +86,7 @@ public class NotesController : MonoBehaviour
         {
             m_playback.Stop();
             var d = SetPlaybackSpeed();
+            m_SpeedDisplay.text = d.ToString();
             m_playback.Speed = d; 
             m_playback.MoveBack(new MetricTimeSpan(0, 0, 0, 10));
         }
@@ -96,7 +99,7 @@ public class NotesController : MonoBehaviour
          
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if (m_Pressed == false)
+            if (m_Pressed == false && m_End == false)
             {
                 
                 m_PlayStatus = false;
@@ -111,6 +114,12 @@ public class NotesController : MonoBehaviour
                 m_PlayStatus = true;
             }
 
+        }
+
+        if (m_End == true)
+        {
+            m_Score.SetActive(false);
+            m_EndMenu.SetActive(true);
         }
 
        
@@ -215,10 +224,10 @@ public class NotesController : MonoBehaviour
 
     private void PlayBackFinished(object sender, EventArgs e)
     {
-        Playback play = sender as Playback;
-        m_Score.SetActive(false);
-        m_EndMenu.SetActive(true);
-
+        
+        //Playback play = sender as Playback;
+        m_End = true;
+        
     }
 
     public TimeSpan GetDuration(MidiFile File)

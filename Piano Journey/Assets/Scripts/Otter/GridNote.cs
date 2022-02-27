@@ -584,7 +584,7 @@ public class GridNote : MonoBehaviour
                 CreateNoteBlock(x,y,obj,obj,channelCheck,false);
             }     
 		}
-        m_ClickState = true;
+        m_ClickState = false;
     }
     public void SaveFile()
     {
@@ -614,7 +614,7 @@ public class GridNote : MonoBehaviour
         m_File.Chunks.Add(m_trackChunk);
         m_File.Write(m_Path,overwriteFile: true);
 		}
-        m_ClickState = true;
+        m_ClickState = false;
     }
 
     private void Playback(MidiFile File, bool Status)
